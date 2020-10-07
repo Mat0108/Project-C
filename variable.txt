@@ -1,0 +1,22 @@
+
+tableau de 2 dimension : avec quatre etats possible :
+	- 0 case libre 
+	- 1 case position de joueurs
+	- 2 case mur cassable
+	- 3 case mur incassable
++ graphique /photo / structure que visuelle representant le tableau
+
+direction dans 2 dimension ex :
+	on peux avancer à droite si la case suivant est libre (etat 0)
+-> deux fonctions (ou 4 ) pour gerer les deplacements
+
+variable : x,y,dx ,dy , speed 
+
+bombes 
+rayon d'action sous forme de "+" 
+ 	- si la case dans le rayon d'explosion est à 1 alors elle passe à 0
+	- sinon elle reste dans son etat 
+variable : (par default on les modifient pas, mais bien de le précreer pour tester)
+	-B_rayon  
+	-B_nombre (nombre de bombes placable, par default 1)
+	-B_timer constante (temps d'explostion)
