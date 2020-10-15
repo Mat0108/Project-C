@@ -4,6 +4,7 @@
 
 int main()
 {
+
     // IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
     const int RT = 21; //taille rectangle
     const int CT = 40; // taille d'une case graphique
