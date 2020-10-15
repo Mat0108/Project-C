@@ -62,13 +62,13 @@ void AffichageAllegro(int tableau[21][21])
             switch(tableau[i][j])
             {
             case 0 :
-                rectfill(screen,40*(i),40*j,40*(i+1),40*(j+1),makecol(90,205,80)); //rectfill(BITMAP *bmp, int x1, int y1, int x2, int y2, int color)
+                rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(90,205,80)); //rectfill(BITMAP *bmp, int x1, int y1, int x2, int y2, int color)
                 break;
             case 1 :
-                rectfill(screen,40*(i),40*j,40*(i+1),40*(j+1),makecol(255,55,55));
+                rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(255,55,55));
                 break;
             case 2 :
-                rectfill(screen,40*(i),40*j,40*(i+1),40*(j+1),makecol(119,129,121));
+                rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(119,129,121));
                 break;
 
             }
