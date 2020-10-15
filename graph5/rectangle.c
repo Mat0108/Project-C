@@ -9,22 +9,24 @@ void Create(int *tableau[21][21])
     const int RT = 21;
     int i,j;
     srand(time(NULL)); //initiatilisation random
-    for(i=0; i<RT;i++)
+    for(i=0; i<RT;i++) //Case bordure
     {
         tableau[i][0] = 2;
         tableau[i][RT-1] = 2;
         tableau[0][i] = 2;
         tableau[RT-1][i] = 2;
     }
-    for (i=1;i<RT-1;i++)
+    for (i=1;i<RT-1;i++) //Aleatoire des case
     {
         for (j=1;j<RT-1;j++)
         {
-            tableau[i][j] = ((rand()%18)/10);
-            if(i%2 == 0 && j%2 == 0) tableau[i][j] = 2;
+            tableau[i][j] = ((rand()%30)/10); //Pour modifier le random, changer %30 (inversement)
+            if(tableau[i][j] > 1) tableau[i][j] = 1;
+            if(i%2 == 0 && j%2 == 0) tableau[i][j] = 2; //case special
+
         }
     }
-    for (i=1;i<3;i++)
+    for (i=1;i<3;i++) //eviter soucis spawn kill
     {
         tableau[i][1]=0;
         tableau[RT-i-1][1]=0;
