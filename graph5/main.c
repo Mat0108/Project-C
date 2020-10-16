@@ -10,7 +10,7 @@ int main()
     const int CT = 40; // taille d'une case graphique
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
     int rectangle2[21][21]  = {0};
-    Create(rectangle,1); //0 niveau aléatoire, 1 niveau 1, 2 niveau 2...
+    Create(rectangle,0); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
     affichage(rectangle);
 
 

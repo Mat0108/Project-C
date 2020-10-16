@@ -36,16 +36,84 @@ void MethodeCreate(int *tableau[21][21],int choix) // 0 Aleatoire, 1 niveau 1, 2
 {
     int i,j;
     const int RT = 21;
+    char adress[100];
     FILE *niveau;
 
-    switch(choix)
+    if (choix > 5)
     {
-    case 0:
+        for(i=0; i<RT;i++) //Case bordure
+        {
+            tableau[i][0] = 2;
+            tableau[i][RT-1] = 2;
+            tableau[0][i] = 2;
+            tableau[RT-1][i] = 2;
+        }
         for (i=1;i<RT-1;i++) //Aleatoire des cases
         {
             for (j=1;j<RT-1;j++)
             {
-                tableau[i][j] = ((rand()%20)/10); //Pour modifier le random, changer %30 et /6 (inversement)
+                tableau[i][j] = ((rand()%15)/10); //Pour modifier le random, changer %30 et /10(inversement)
+                if(tableau[i][j] > 1) tableau[i][j] = 1;
+                if(i%2 == 0 && j%2 == 0) tableau[i][j] = 2; //case special
+
+            }
+        }
+        for (i=1;i<3;i++) //eviter soucis spawn kill
+        {
+            tableau[i][1]=0;
+            tableau[RT-i-1][1]=0;
+            tableau[1][RT-i-1]=0;
+            tableau[RT-i-1][RT-2]=0;
+        }
+        tableau[RT-2][2]=0;
+        tableau[2][RT-2]=0;
+        tableau[RT-2][RT-3]=0;
+        tableau[1][2]=0;
+    }
+    else
+    {
+        sprintf(adress,"niveau/niveau %d.txt", choix);
+        printf("%s\n",adress);
+        niveau = fopen(adress,"r");
+        Load(tableau,niveau);
+    }
+}
+/*
+    switch(choix)
+    {
+    case 0:
+        niveau = fopen("niveau/niveau 0.txt","r");
+        Load(tableau,niveau);
+        break;
+    case 1:
+        niveau = fopen("niveau/niveau 1.txt","r");
+        Load(tableau,niveau);
+        break;
+    case 2:
+        niveau = fopen("niveau/niveau 2.txt","r");
+        Load(tableau,niveau);
+        break;
+    case 3:
+        niveau = fopen("niveau/niveau 3.txt","r");
+        Load(tableau,niveau);
+        break;
+    case 4:
+        niveau = fopen("niveau/niveau 4.txt","r");
+        Load(tableau,niveau);
+        break;
+    default:
+        for(i=0; i<RT;i++) //Case bordure
+        {
+            tableau[i][0] = 2;
+            tableau[i][RT-1] = 2;
+            tableau[0][i] = 2;
+            tableau[RT-1][i] = 2;
+        }
+        for (i=1;i<RT-1;i++) //Aleatoire des cases
+        {
+            for (j=1;j<RT-1;j++)
+            {
+                tableau[i][j] = ((rand()%15)/10); //Pour modifier le random, changer %30 et /10(inversement)
                 if(tableau[i][j] > 1) tableau[i][j] = 1;
                 if(i%2 == 0 && j%2 == 0) tableau[i][j] = 2; //case special
 
@@ -63,20 +131,9 @@ void MethodeCreate(int *tableau[21][21],int choix) // 0 Aleatoire, 1 niveau 1, 2
         tableau[RT-2][RT-3]=0;
         tableau[1][2]=0;
         break;
-    case 1:
-        niveau = fopen("niveau/niveau 1.txt","r");
-        Load(tableau,niveau);
-        break;
-    case 2:
-        niveau = fopen("niveau/niveau 2.txt","r");
-        Load(tableau,niveau);
-        break;
-    case 3:
-        niveau = fopen("niveau/niveau 3.txt","r");
-        Load(tableau,niveau);
-        break;
     }
-}
+
+}*/
 
 void Create(int *tableau[21][21],int choixniveau)
 {
@@ -85,16 +142,7 @@ void Create(int *tableau[21][21],int choixniveau)
     char niv[RT*2];
     int i,j;
     srand(time(NULL)); //initiatilisation random
-    for(i=0; i<RT;i++) //Case bordure
-    {
-        tableau[i][0] = 2;
-        tableau[i][RT-1] = 2;
-        tableau[0][i] = 2;
-        tableau[RT-1][i] = 2;
-    }
     MethodeCreate(tableau,choixniveau);
-
-
 }
 
 void affichage(int tableau[21][21])
