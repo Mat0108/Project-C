@@ -388,17 +388,19 @@
 1602781802 c:\users\matthieu\desktop\test\graph5\rectangle.h
 	<stdbool.h>
 
-1602784242 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
+1602843116 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
 
-1602785319 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
+1602843147 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
+	<string.h>
 
-1602781802 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
-	<stdbool.h>
+1602842838 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
+	<stdio.h>
+	<stdlib.h>
 

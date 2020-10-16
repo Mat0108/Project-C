@@ -9,8 +9,8 @@ int main()
     const int RT = 21; //taille rectangle
     const int CT = 40; // taille d'une case graphique
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
-    int i,j;
-    Create(rectangle);
+    int rectangle2[21][21]  = {0};
+    Create(rectangle,1); //0 niveau aléatoire, 1 niveau 1, 2 niveau 2...
     affichage(rectangle);
 
 
