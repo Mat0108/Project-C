@@ -44,5 +44,6 @@ int PersoDeplacementY(int *tableau[21][21],int x_perso, int y_perso, int delta_p
     }
     return y_perso;
 }
+//int bombesInit(int *tableau[21][21],int x,int y)
 
 

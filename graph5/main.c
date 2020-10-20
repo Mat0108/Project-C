@@ -14,9 +14,11 @@ int valeur=0;
 void timer()
 {
     BITMAP *image;
+    image=load_bitmap("image/chrono.bmp",NULL);
+    blit(image,screen,0,0,40*18,0,image->w, image->h);
     image=load_bitmap("image/brick grey.bmp",NULL);
     blit(image,screen,0,0,40*19,0,image->w, image->h);
-    textprintf_ex(screen,font,770,20,makecol(255,255,255),-1,"%03d",valeur);
+    textprintf_ex(screen,font,770,20,makecol(0,0,0),-1,"%03d",valeur);
     valeur++;
 }
 int main()
