@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <allegro.h>
 #include <string.h>
+
 void PersoAffichage(x_perso,y_perso)
 {
     BITMAP *perso;
@@ -24,7 +25,7 @@ int PersoDeplacementX(int *tableau[21][21],int x_perso, int y_perso, int delta_p
             if (dy == 1) y_perso += delta_perso;
             if (dx == -1) x_perso -= delta_perso;
             if (dy == -1) y_perso -= delta_perso;
-            AffichageAllegro(tableau);
+            AffichageAllegro(tableau,1);
             PersoAffichage(x_perso,y_perso);
     }
     return x_perso;
@@ -38,11 +39,10 @@ int PersoDeplacementY(int *tableau[21][21],int x_perso, int y_perso, int delta_p
             if (dy == 1) y_perso += delta_perso;
             if (dx == -1) x_perso -= delta_perso;
             if (dy == -1) y_perso -= delta_perso;
-            AffichageAllegro(tableau);
+            AffichageAllegro(tableau,1);
             PersoAffichage(x_perso,y_perso);
     }
     return y_perso;
-
 }
 
 

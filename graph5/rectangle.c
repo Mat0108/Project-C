@@ -101,12 +101,12 @@ void affichage(int tableau[21][21])
         printf("\n");
     }
 }
-void AffichageAllegro(int tableau[21][21])
+void AffichageAllegro(int tableau[21][21],int debut)
 {
     BITMAP *image;
     int i,j;
     const int RT = 21;
-    for (i = 0;i<RT;i++)
+    for (i = debut;i<RT;i++)
     {
         for (j=0;j<RT;j++)
         {
