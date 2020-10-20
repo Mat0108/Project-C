@@ -411,3 +411,30 @@
 	<allegro.h>
 	<string.h>
 
+1603187010 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\rectangle.c
+	"rectangle.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+
+1603194029 d:\users\alexa\onedrive\documents\github\project-c\graph5\rectangle.h
+	<stdio.h>
+	<stdlib.h>
+
+1603191490 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\main.c
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1603101584 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\personnage.c
+	"rectangle.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+
