@@ -133,5 +133,27 @@ int AffichageAllegro(int tableau[21][21],int debut,int *BombeList[5][3])
     return BombeAffichage(BombeList);
 }
 
+void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso)
+{
+    BITMAP *image;
+    switch(tableau[x_perso][y_perso])
+    {
+    case 0 :
+        image=load_bitmap("image/sol2.bmp",NULL);
+        blit(image,screen,0,0,40*x_perso,40*y_perso,image->w, image->h);
+        //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(90,205,80)); //rectfill(BITMAP *bmp, int x1, int y1, int x2, int y2, int color)
+        break;
+    case 1 :
+        image=load_bitmap("image/brick red.bmp",NULL);
+        blit(image,screen,0,0,40*x_perso,40*y_perso,image->w, image->h);
+        //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(255,55,55));
+        break;
+    case 2 :
+        image=load_bitmap("image/brick grey.bmp",NULL);
+        blit(image,screen,0,0,40*x_perso,40*y_perso,image->w, image->h);
+        //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(119,129,121));
+        break;
+    }
+}
 
 

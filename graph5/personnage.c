@@ -4,46 +4,59 @@
 #include <allegro.h>
 #include <string.h>
 #include <time.h>
+#include <process.h>
+#include <winalleg.h>
+#include <windows.h>
 void PersoAffichage(x_perso,y_perso)
 {
     BITMAP *perso;
     perso = load_bitmap("image/perso3.bmp",NULL);
     blit(perso,screen,0,0,10+40*x_perso,10+40*y_perso,perso->w, perso->h);
 }
-
-int PersoDeplacementX(int *tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int *BombeList[5][2])
-{
-
-    if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
-    {
-            if (dx == 1) x_perso += delta_perso;
-            if (dy == 1) y_perso += delta_perso;
-            if (dx == -1) x_perso -= delta_perso;
-            if (dy == -1) y_perso -= delta_perso;
-            AffichageAllegro(tableau,1,BombeList);
-            PersoAffichage(x_perso,y_perso);
-    }
-    return x_perso;
-}
-int PersoDeplacementY(int *tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int *BombeList[5][2])
-{
-
-    if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
-    {
-            if (dx == 1) x_perso += delta_perso;
-            if (dy == 1) y_perso += delta_perso;
-            if (dx == -1) x_perso -= delta_perso;
-            if (dy == -1) y_perso -= delta_perso;
-            AffichageAllegro(tableau,1,BombeList);
-            PersoAffichage(x_perso,y_perso);
-    }
-    return y_perso;
-}
 void BombePlace(int x,int y)
 {
     BITMAP *BOMBE;
     BOMBE = load_bitmap("image/bombe/bombe_item_sol.bmp",NULL);
     blit(BOMBE,screen,0,0,40*x,40*y,BOMBE->w, BOMBE->h);
+}
+
+int PersoDeplacementX(int *tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int *BombeList[5][2])
+{
+    int i;
+    if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
+    {
+        AfffichagePosition(tableau,x_perso,y_perso);
+        for (i=0;i<5;i++)
+        {
+            if (BombeList[i][0] == x_perso && BombeList[i][1] ==y_perso) BombePlace(x_perso,y_perso);
+        }
+        if (dx == 1) x_perso += delta_perso;
+        if (dy == 1) y_perso += delta_perso;
+        if (dx == -1) x_perso -= delta_perso;
+        if (dy == -1) y_perso -= delta_perso;
+        PersoAffichage(x_perso,y_perso);
+    }
+    Sleep(300);
+    return x_perso;
+}
+int PersoDeplacementY(int *tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int *BombeList[5][2])
+{
+    int i;
+    if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
+    {
+        AfffichagePosition(tableau,x_perso,y_perso);
+        for (i=0;i<5;i++)
+        {
+            if (BombeList[i][0] == x_perso && BombeList[i][1] ==y_perso) BombePlace(x_perso,y_perso);
+        }
+        if (dx == 1) x_perso += delta_perso;
+        if (dy == 1) y_perso += delta_perso;
+        if (dx == -1) x_perso -= delta_perso;
+        if (dy == -1) y_perso -= delta_perso;
+        PersoAffichage(x_perso,y_perso);
+    }
+    Sleep(300);
+    return y_perso;
 }
 
 int BombeAffichage(int *BombeList[5][3])
@@ -84,12 +97,7 @@ int BombeEffect(int x,int y,int rayon,int *tableau[21][21])
         for(i=1;i<rayon;i++)
         {
             BOMBE = load_bitmap("image/bombe/ligne_1.bmp",NULL);
-            if (!BOMBE)
-            {
-                allegro_message("pas pu trouver/charger mon_image.bmp");
-                allegro_exit();
-                exit(EXIT_FAILURE);
-            }
+
             blit(BOMBE,screen,0,0,40*(x-1*i),40*y+10,BOMBE->w, BOMBE->h);
             blit(BOMBE,screen,0,0,40*(x+1*i),40*y+10,BOMBE->w, BOMBE->h);
             BOMBE = load_bitmap("image/bombe/ligne_2.bmp",NULL);
@@ -101,4 +109,13 @@ int BombeEffect(int x,int y,int rayon,int *tableau[21][21])
     BombeEffect2(x,y,rayon,tableau,-1,0,3);
     BombeEffect2(x,y,rayon,tableau,0,1,4);
     BombeEffect2(x,y,rayon,tableau,0,-1,2);
+}
+void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21])
+{
+    int i;
+    for(i=0;i<=2*rayon+1;i++)
+    {
+    AfffichagePosition(tableau,i,y);
+    AfffichagePosition(tableau,x,i);
+    }
 }

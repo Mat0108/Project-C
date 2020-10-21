@@ -43,7 +43,7 @@ int main()
     int i,j;
 
 
-    Create(rectangle,1); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
+    Create(rectangle,0); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
     affichage(rectangle);
 
 
@@ -72,6 +72,8 @@ int main()
         if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeList);
         if (key[KEY_SPACE])
         {
+            nb_Bombe=0;
+            while (BombeList[nb_Bombe][0] != 0) BombeList;
             nb_Bombe = AffichageAllegro(rectangle,1,BombeList); // affichage de labyrinthe
             BombeList[nb_Bombe][0] = x_perso;
             BombeList[nb_Bombe][1] = y_perso;
@@ -91,8 +93,7 @@ int main()
             }
             if (BombeList[i][2]+1 == timeInfos->tm_sec && BombeList[i][2] != 0)
             {
-                BombeEffect(BombeList[i][0],BombeList[i][1],rayon,rectangle);
-                for (j=0;j<2*rayon+1;j++)
+                for (j=0;j<=2*rayon+1;j++)
                 {
                     if(rectangle[BombeList[i][1]][j+BombeList[i][0]-rayon] == 1)rectangle[BombeList[i][1]][j+BombeList[i][0]-rayon]=0;
                     if(rectangle[j+BombeList[i][1]-rayon][BombeList[i][0]] == 1)rectangle[j+BombeList[i][1]-rayon][BombeList[i][0]]=0;
@@ -105,11 +106,12 @@ int main()
                     }
                     */
                 }
+                BombeEffectInv(BombeList[i][0],BombeList[i][1],rayon,rectangle);
                 BombeList[i][0] = 0;
                 BombeList[i][1] = 0;
                 BombeList[i][2] = 0;
-                nb_Bombe = AffichageAllegro(rectangle,1,BombeList); // affichage de labyrinthe
-                PersoAffichage(x_perso,y_perso);
+                //nb_Bombe = AffichageAllegro(rectangle,1,BombeList); // affichage de labyrinthe
+                //PersoAffichage(x_perso,y_perso);
             }
         }
     }
