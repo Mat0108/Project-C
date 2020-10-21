@@ -101,7 +101,7 @@ void affichage(int tableau[21][21])
         printf("\n");
     }
 }
-void AffichageAllegro(int tableau[21][21],int debut)
+int AffichageAllegro(int tableau[21][21],int debut,int *BombeList[5][3])
 {
     BITMAP *image;
     int i,j;
@@ -127,11 +127,10 @@ void AffichageAllegro(int tableau[21][21],int debut)
                 blit(image,screen,0,0,40*j,40*i,image->w, image->h);
                 //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(119,129,121));
                 break;
-
             }
         }
     }
-
+    return BombeAffichage(BombeList);
 }
 
 
