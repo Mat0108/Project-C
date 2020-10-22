@@ -2,12 +2,12 @@
 #define _rectangle_h
 #include <stdio.h>
 #include <stdlib.h>
-void Load(int *tableau[21][21],FILE *niveau);
-void MethodeCreate(int *tableau[21][21],int Choix);
-void Create(int *tableau[21][21],int choixniveau);
-void affichage(int tableau[21][21]);
-int AffichageAllegro(int tableau[21][21],int debut,int *BombeList[5][3]);
-void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso);
+void Load(int *tableau[21][21],FILE *niveau,int CT);
+void MethodeCreate(int *tableau[21][21],int Choix, int CT);
+void Create(int *tableau[21][21],int choixniveau, int CT);
+void affichage(int *tableau[21][21],int CT);
+void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT);
+void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT);
 
 
 #endif

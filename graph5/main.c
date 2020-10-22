@@ -11,40 +11,53 @@
 #define NOIR al_map_rgb(0,0,0)
 #define BLANC al_map_rgb(255,255,255)
 int timerval=0;
-int TimerListBombes[5] = {0};
+
+const int RT = 30; //taille d'une image
+// IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
+const int CT = 21; // taille d'une case graphique
 
 void timer()
 {
     BITMAP *image;
-    image=load_bitmap("image/chrono.bmp",NULL);
-    blit(image,screen,0,0,40*18,0,image->w, image->h);
-    image=load_bitmap("image/brick grey.bmp",NULL);
-    blit(image,screen,0,0,40*19,0,image->w, image->h);
-    textprintf_ex(screen,font,770,20,makecol(0,0,0),-1,"%03d",timerval);
+    char adress[100];
+    sprintf(adress, "image/%d/chrono.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    blit(image,screen,0,0,RT*18,0,image->w, image->h);
+    sprintf(adress, "image/%d/brick grey.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    blit(image,screen,0,0,RT*19,0,image->w, image->h);
+    textprintf_ex(screen,font,RT*19,RT/2,makecol(0,0,0),-1,"%03d",timerval);
     timerval++;
-
 }
-
+void testload(BITMAP *image,char adress[100])
+{
+    char nom[100];
+    sprintf(nom,"Impossible de trouver l'image ayant  l'adress %s",adress);
+     if (!image)
+    {
+        allegro_message(nom);
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+}
 
 int main()
 {
-
-    // IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
-    const int RT = 21; //taille rectangle
-    const int CT = 40; // taille d'une case graphique
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
     int x_perso = 1;
     int y_perso = 1;
     int delta_perso = 1;
 
-    int BombeList[5][3] = {0}; //x,y,timer
+    int BombeX[5] = {0};
+    int BombeY[5] = {0};
+    int BombeTimer[5] = {0};
     int nb_Bombe= 0;
-    int rayon = 1;
+    int rayon = 3;
     int i,j;
 
 
-    Create(rectangle,0); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
-    affichage(rectangle);
+    Create(rectangle,1,CT); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
+    //affichage(rectangle,CT);
 
 
 
@@ -56,62 +69,73 @@ int main()
 
     // définir un mode graphique
     set_color_depth(desktop_color_depth());
-    set_gfx_mode(GFX_AUTODETECT_WINDOWED,CT*RT,CT*RT,0,0);
+    if (RT == 40) set_gfx_mode(GFX_AUTODETECT_WINDOWED,RT*CT,RT*CT,0,0);
+    if (RT == 30) set_gfx_mode(GFX_AUTODETECT_WINDOWED,RT*CT+10,RT*CT,0,0);
 
-
-        nb_Bombe = AffichageAllegro(rectangle,0,BombeList); // affichage de labyrinthe
-        PersoAffichage(x_perso,y_perso);
+    AffichageAllegro(rectangle,0,RT,CT); // affichage de labyrinthe
+    PersoAffichage(x_perso,y_perso,RT);
 
     install_int_ex(timer,BPS_TO_TIMER(1));
 
     while (!key[KEY_ESC])
     {
-        if (key[KEY_RIGHT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeList);
-        if (key[KEY_LEFT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeList);
-        if (key[KEY_UP]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeList);
-        if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeList);
+        if (key[KEY_RIGHT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT);
+        if (key[KEY_LEFT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT);
+        if (key[KEY_UP]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT);
+        if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT);
         if (key[KEY_SPACE])
         {
-            nb_Bombe=0;
-            while (BombeList[nb_Bombe][0] != 0) BombeList;
-            nb_Bombe = AffichageAllegro(rectangle,1,BombeList); // affichage de labyrinthe
-            BombeList[nb_Bombe][0] = x_perso;
-            BombeList[nb_Bombe][1] = y_perso;
+            BombeX[nb_Bombe] = x_perso;
+            BombeY[nb_Bombe] = y_perso;
             time_t timestamp = time( NULL );
             struct tm * timeInfos = localtime( & timestamp );
-            BombeList[nb_Bombe][2] = timeInfos->tm_sec+10;
-            if (BombeList[nb_Bombe][2] >= 60) BombeList[nb_Bombe][2] = BombeList[nb_Bombe][2] - 60;
-            PersoAffichage(x_perso,y_perso);
+            BombeTimer[nb_Bombe] = timeInfos->tm_sec+10;
+            if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
+            AfffichagePosition(rectangle,x_perso,y_perso,RT);
+            BombePlace(x_perso,y_perso,RT);
+            PersoAffichage(x_perso,y_perso,RT);
+            nb_Bombe++;
+            Sleep(300);
         }
         time_t timestamp = time( NULL );
         struct tm * timeInfos = localtime( & timestamp );
         for (i=0;i<5;i++)
         {
-            if (BombeList[i][2] == timeInfos->tm_sec && BombeList[i][2] != 0)
+            if (BombeTimer[i] == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] != 0)
             {
-                BombeEffect(BombeList[i][0],BombeList[i][1],rayon,rectangle);
+                BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT);
             }
-            if (BombeList[i][2]+1 == timeInfos->tm_sec && BombeList[i][2] != 0)
+            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] !=0)
             {
                 for (j=0;j<=2*rayon+1;j++)
                 {
-                    if(rectangle[BombeList[i][1]][j+BombeList[i][0]-rayon] == 1)rectangle[BombeList[i][1]][j+BombeList[i][0]-rayon]=0;
-                    if(rectangle[j+BombeList[i][1]-rayon][BombeList[i][0]] == 1)rectangle[j+BombeList[i][1]-rayon][BombeList[i][0]]=0;
-                    /*
-                    if (j+BombeList[i][0]-rayon == y_perso || j+BombeList[i][1]-rayon == x_perso)
+                    if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1) rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
+                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1) rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
+                    if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
                     {
                         allegro_message("Vous avez perdu");
                         allegro_exit();
                         exit(EXIT_FAILURE);
                     }
-                    */
+
                 }
-                BombeEffectInv(BombeList[i][0],BombeList[i][1],rayon,rectangle);
-                BombeList[i][0] = 0;
-                BombeList[i][1] = 0;
-                BombeList[i][2] = 0;
-                //nb_Bombe = AffichageAllegro(rectangle,1,BombeList); // affichage de labyrinthe
-                //PersoAffichage(x_perso,y_perso);
+                BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,RT);
+                nb_Bombe--;
+                for (i=0;i<5;i++)
+                {
+                    if (BombeX[i+1] !=0)
+                    {
+                        BombeX[i] = BombeX[i+1];
+                        BombeY[i] = BombeY[i+1];
+                        BombeTimer[i] = BombeTimer[i+1];
+                    }
+                    else
+                    {
+                        BombeX[i] = 0;
+                        BombeY[i] = 0;
+                        BombeTimer[i] = 0;
+                    }
+                }
             }
         }
     }

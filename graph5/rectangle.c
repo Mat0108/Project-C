@@ -4,14 +4,13 @@
 #include <allegro.h>
 #include <string.h>
 
-void Load(int *tableau[21][21],FILE *niveau) //fonction pour un charger un niveau précreer
+void Load(int *tableau[21][21],FILE *niveau,int CT) //fonction pour un charger un niveau précreer
 {
     int i,j;
-    const int RT = 21;
     int niv;
-    for(i=0;i<RT+1;i++)
+    for(i=0;i<CT+1;i++)
     {
-        for (j=0;j<RT+1;j++)
+        for (j=0;j<CT+1;j++)
         {
             niv = fgetc(niveau);
             if (niv != EOF)
@@ -19,38 +18,37 @@ void Load(int *tableau[21][21],FILE *niveau) //fonction pour un charger un nivea
                 switch(niv)
                 {
                 case '0':
-                tableau[i][j] = 0;
-                break;
+                    tableau[i][j] = 0;
+                    break;
                 case '1':
-                tableau[i][j] = 1;
-                break;
+                    tableau[i][j] = 1;
+                    break;
                 case '2':
-                tableau[i][j] = 2;
-                break;
+                    tableau[i][j] = 2;
+                    break;
                 }
             }
         }
     }
 }
-void MethodeCreate(int *tableau[21][21],int choix) // 0 Aleatoire, 1 niveau 1, 2 niveau 2...
+void MethodeCreate(int *tableau[21][21],int choix,int CT) // 0 Aleatoire, 1 niveau 1, 2 niveau 2...
 {
     int i,j;
-    const int RT = 21;
     char adress[100];
     FILE *niveau;
 
     if (choix > 5)
     {
-        for(i=0; i<RT;i++) //Case bordure
+        for(i=0; i<CT;i++) //Case bordure
         {
             tableau[i][0] = 2;
-            tableau[i][RT-1] = 2;
+            tableau[i][CT-1] = 2;
             tableau[0][i] = 2;
-            tableau[RT-1][i] = 2;
+            tableau[CT-1][i] = 2;
         }
-        for (i=1;i<RT-1;i++) //Aleatoire des cases
+        for (i=1;i<CT-1;i++) //Aleatoire des cases
         {
-            for (j=1;j<RT-1;j++)
+            for (j=1;j<CT-1;j++)
             {
                 tableau[i][j] = ((rand()%15)/10); //Pour modifier le random, changer %30 et /10(inversement)
                 if(tableau[i][j] > 1) tableau[i][j] = 1;
@@ -61,97 +59,98 @@ void MethodeCreate(int *tableau[21][21],int choix) // 0 Aleatoire, 1 niveau 1, 2
         for (i=1;i<3;i++) //eviter soucis spawn kill
         {
             tableau[i][1]=0;
-            tableau[RT-i-1][1]=0;
-            tableau[1][RT-i-1]=0;
-            tableau[RT-i-1][RT-2]=0;
+            tableau[CT-i-1][1]=0;
+            tableau[1][CT-i-1]=0;
+            tableau[CT-i-1][CT-2]=0;
         }
-        tableau[RT-2][2]=0;
-        tableau[2][RT-2]=0;
-        tableau[RT-2][RT-3]=0;
+        tableau[CT-2][2]=0;
+        tableau[2][CT-2]=0;
+        tableau[CT-2][CT-3]=0;
         tableau[1][2]=0;
     }
     else
     {
         sprintf(adress,"niveau/niveau %d.txt", choix);
         niveau = fopen(adress,"r");
-        Load(tableau,niveau);
+        Load(tableau,niveau,CT);
     }
 }
 
-void Create(int *tableau[21][21],int choixniveau)
+void Create(int *tableau[21][21],int choixniveau,int CT)
 {
-    const int RT = 21;
-    FILE *niveau;
-    char niv[RT*2];
-    int i,j;
     srand(time(NULL)); //initiatilisation random
-    MethodeCreate(tableau,choixniveau);
+    MethodeCreate(tableau,choixniveau,CT);
 }
 
-void affichage(int tableau[21][21])
+void affichage(int *tableau[21][21],int CT)
 {
     int i,j;
-    const int RT = 21;
-    for (i = 0;i<RT;i++)
+    for (i = 0;i<CT;i++)
     {
-        for (j=0;j<RT;j++)
+        for (j=0;j<CT;j++)
         {
             printf("%d ",tableau[i][j]);
         }
         printf("\n");
     }
 }
-int AffichageAllegro(int tableau[21][21],int debut,int *BombeList[5][3])
+void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT)
 {
     BITMAP *image;
     int i,j;
-    const int RT = 21;
-    for (i = debut;i<RT;i++)
+    char adress[100];
+    for (i = debut;i<CT;i++)
     {
-        for (j=0;j<RT;j++)
+        for (j=0;j<CT;j++)
         {
             switch(tableau[i][j])
             {
             case 0 :
-                image=load_bitmap("image/sol2.bmp",NULL);
-                blit(image,screen,0,0,40*j,40*i,image->w, image->h);
-                //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(90,205,80)); //rectfill(BITMAP *bmp, int x1, int y1, int x2, int y2, int color)
+                sprintf(adress, "image/%d/sol2.bmp",RT);
+                image=load_bitmap(adress,NULL);
+                testload(image,adress);
+                blit(image,screen,0,0,RT*j,RT*i,image->w, image->h);
                 break;
             case 1 :
-                image=load_bitmap("image/brick red.bmp",NULL);
-                blit(image,screen,0,0,40*j,40*i,image->w, image->h);
-                //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(255,55,55));
+                sprintf(adress, "image/%d/brick red.bmp",RT);
+                image=load_bitmap(adress,NULL);
+                testload(image,adress);
+                blit(image,screen,0,0,RT*j,RT*i,image->w, image->h);
                 break;
             case 2 :
-                image=load_bitmap("image/brick grey.bmp",NULL);
-                blit(image,screen,0,0,40*j,40*i,image->w, image->h);
-                //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(119,129,121));
+                sprintf(adress, "image/%d/brick grey.bmp",RT);
+                image=load_bitmap(adress,NULL);
+                testload(image,adress);
+                blit(image,screen,0,0,RT*j,RT*i,image->w, image->h);
                 break;
             }
         }
     }
-    return BombeAffichage(BombeList);
 }
 
-void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso)
+void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT)
 {
     BITMAP *image;
-    switch(tableau[x_perso][y_perso])
+    char adress[100];
+    switch(tableau[y_perso][x_perso])
     {
     case 0 :
-        image=load_bitmap("image/sol2.bmp",NULL);
-        blit(image,screen,0,0,40*x_perso,40*y_perso,image->w, image->h);
-        //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(90,205,80)); //rectfill(BITMAP *bmp, int x1, int y1, int x2, int y2, int color)
+        sprintf(adress, "image/%d/sol2.bmp",RT);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*x_perso,RT*y_perso,image->w, image->h);
         break;
     case 1 :
-        image=load_bitmap("image/brick red.bmp",NULL);
-        blit(image,screen,0,0,40*x_perso,40*y_perso,image->w, image->h);
-        //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(255,55,55));
+        sprintf(adress, "image/%d/brick red.bmp",RT);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*x_perso,RT*y_perso,image->w, image->h);
         break;
     case 2 :
-        image=load_bitmap("image/brick grey.bmp",NULL);
-        blit(image,screen,0,0,40*x_perso,40*y_perso,image->w, image->h);
-        //rectfill(screen,40*(j),40*i,40*(j+1),40*(i+1),makecol(119,129,121));
+        sprintf(adress, "image/%d/brick grey.bmp",RT);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*x_perso,RT*y_perso,image->w, image->h);
         break;
     }
 }
