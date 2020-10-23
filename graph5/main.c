@@ -51,6 +51,7 @@ void testload(BITMAP *image,char adress[100])
 int main()
 {
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
+    int choix_perso = 4; //Pour changer le perso affiché
     int x_perso = 1;
     int y_perso = 1;
     int delta_perso = 1;
@@ -80,19 +81,18 @@ int main()
     if (RT == 30) set_gfx_mode(GFX_AUTODETECT_WINDOWED,RT*CT+10,RT*CT,0,0);
 
     AffichageAllegro(rectangle,0,RT,CT); // affichage de labyrinthe
-    PersoAffichage(x_perso,y_perso,RT);
+    PersoAffichage(x_perso,y_perso,RT,choix_perso);
 
     install_int_ex(timer,BPS_TO_TIMER(1));
 
     while (!key[KEY_ESC])
     {
-        if (key[KEY_RIGHT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT);
-        if (key[KEY_LEFT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT);
-        if (key[KEY_UP]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT);
-        if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT);
+        if (key[KEY_RIGHT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT,choix_perso);
+        if (key[KEY_LEFT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,choix_perso);
+        if (key[KEY_UP]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,choix_perso);
+        if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,choix_perso);
         if (key[KEY_SPACE])
         {
-            printf("%d\n",nb_Bombe);
             BombeX[nb_Bombe] = x_perso;
             BombeY[nb_Bombe] = y_perso;
             time_t timestamp = time( NULL );
@@ -101,7 +101,7 @@ int main()
             if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
             AfffichagePosition(rectangle,x_perso,y_perso,RT);
             BombePlace(x_perso,y_perso,RT);
-            PersoAffichage(x_perso,y_perso,RT);
+            PersoAffichage(x_perso,y_perso,RT,choix_perso);
             nb_Bombe++;
             Sleep(300);
         }
@@ -113,7 +113,7 @@ int main()
             {
                 if(rectangle[BombeY[i]][BombeX[i]] == 0) BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT);
             }
-            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] !=0)
+            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0)
             {
                 for (j=0;j<=2*rayon+1;j++)
                 {

@@ -7,15 +7,15 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
-void PersoAffichage(int x_perso,int y_perso,int RT)
+void PersoAffichage(int x_perso,int y_perso,int RT,int choix)
 {
 
     char adress[100];
     BITMAP *perso;
-    sprintf(adress, "image/%d/perso3.bmp",RT);
+    sprintf(adress, "image/%d/perso/Perso%d.bmp",RT,choix);
     perso = load_bitmap(adress,NULL);
     testload(perso,adress);
-    blit(perso,screen,0,0,RT/4+RT*x_perso,RT/4+RT*y_perso,perso->w, perso->h);
+    blit(perso,screen,0,0,RT*x_perso,RT*y_perso,perso->w, perso->h);
 }
 void BombePlace(int x,int y,int RT)
 {
@@ -27,7 +27,7 @@ void BombePlace(int x,int y,int RT)
     blit(BOMBE,screen,0,0,RT*x,RT*y,BOMBE->w, BOMBE->h);
 }
 
-int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT)
+int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT,int choix)
 {
     int i;
     if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
@@ -35,20 +35,18 @@ int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         AfffichagePosition(tableau,x_perso,y_perso,RT);
         for (i=0;i<5;i++)
         {
-            printf("i %d x %d y %d\n",i,BombeX[i],BombeY[i]);
             if (BombeX[i]== x_perso && BombeY[i] ==y_perso) BombePlace(x_perso,y_perso,RT);
         }
-        printf("\n");
         if (dx == 1) x_perso += delta_perso;
         if (dy == 1) y_perso += delta_perso;
         if (dx == -1) x_perso -= delta_perso;
         if (dy == -1) y_perso -= delta_perso;
-        PersoAffichage(x_perso,y_perso,RT);
+        PersoAffichage(x_perso,y_perso,RT,choix);
     }
     Sleep(300);
     return x_perso;
 }
-int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT)
+int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT,int choix)
 {
     int i;
     if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
@@ -62,7 +60,7 @@ int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         if (dy == 1) y_perso += delta_perso;
         if (dx == -1) x_perso -= delta_perso;
         if (dy == -1) y_perso -= delta_perso;
-        PersoAffichage(x_perso,y_perso,RT);
+        PersoAffichage(x_perso,y_perso,RT,choix);
     }
     Sleep(300);
     return y_perso;
