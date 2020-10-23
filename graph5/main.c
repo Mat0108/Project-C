@@ -11,6 +11,7 @@
 #define NOIR al_map_rgb(0,0,0)
 #define BLANC al_map_rgb(255,255,255)
 int timerval=0;
+int timerminutes = 0;
 
 const int RT = 30; //taille d'une image
 // IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
@@ -26,7 +27,13 @@ void timer()
     sprintf(adress, "image/%d/brick grey.bmp",RT);
     image=load_bitmap(adress,NULL);
     blit(image,screen,0,0,RT*19,0,image->w, image->h);
-    textprintf_ex(screen,font,RT*19,RT/2,makecol(0,0,0),-1,"%03d",timerval);
+    blit(image,screen,0,0,RT*20,0,image->w, image->h);
+    if (timerval == 60)
+    {
+        timerminutes++;
+        timerval = 0;
+    }
+    textprintf_ex(screen,font,RT*19,RT/2,makecol(0,0,0),-1,"%d:%02d",timerminutes,timerval);
     timerval++;
 }
 void testload(BITMAP *image,char adress[100])
@@ -85,6 +92,7 @@ int main()
         if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT);
         if (key[KEY_SPACE])
         {
+            printf("%d\n",nb_Bombe);
             BombeX[nb_Bombe] = x_perso;
             BombeY[nb_Bombe] = y_perso;
             time_t timestamp = time( NULL );
@@ -103,7 +111,7 @@ int main()
         {
             if (BombeTimer[i] == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] != 0)
             {
-                BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT);
+                if(rectangle[BombeY[i]][BombeX[i]] == 0) BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT);
             }
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] !=0)
             {
@@ -119,15 +127,18 @@ int main()
                     }
 
                 }
-                BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,RT);
+                BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,BombeX,BombeY,RT);
                 nb_Bombe--;
                 for (i=0;i<5;i++)
                 {
-                    if (BombeX[i+1] !=0)
+                    if (BombeX[i+1] != 0)
                     {
-                        BombeX[i] = BombeX[i+1];
-                        BombeY[i] = BombeY[i+1];
-                        BombeTimer[i] = BombeTimer[i+1];
+                        if (i+1<5)
+                        {
+                            BombeX[i] = BombeX[i+1];
+                            BombeY[i] = BombeY[i+1];
+                            BombeTimer[i] = BombeTimer[i+1];
+                        }
                     }
                     else
                     {

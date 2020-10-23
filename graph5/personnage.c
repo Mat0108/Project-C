@@ -35,8 +35,10 @@ int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         AfffichagePosition(tableau,x_perso,y_perso,RT);
         for (i=0;i<5;i++)
         {
-           if (BombeX[i]== x_perso && BombeY[i] ==y_perso) BombePlace(x_perso,y_perso,RT);
+            printf("i %d x %d y %d\n",i,BombeX[i],BombeY[i]);
+            if (BombeX[i]== x_perso && BombeY[i] ==y_perso) BombePlace(x_perso,y_perso,RT);
         }
+        printf("\n");
         if (dx == 1) x_perso += delta_perso;
         if (dy == 1) y_perso += delta_perso;
         if (dx == -1) x_perso -= delta_perso;
@@ -109,12 +111,17 @@ void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT)
     BombeEffect2(x,y,rayon,tableau,0,1,4,RT);
     BombeEffect2(x,y,rayon,tableau,0,-1,2,RT );
 }
-void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int RT)
+void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int BombeY[5],int RT)
 {
-    int i;
+    int i,j;
     for(i=0;i<2*rayon+2;i++)
     {
-        AfffichagePosition(tableau,x+i-rayon,y,RT);
         AfffichagePosition(tableau,x,y+i-rayon,RT);
+        AfffichagePosition(tableau,x+i-rayon,y,RT);
+        for (j=0;j<5;j++)
+        {
+            if (x+i-rayon == BombeX[j] && y == BombeY[j] && BombeX[j]!=0 && x != BombeX[j]) BombePlace(BombeX[j],BombeY[j],RT);
+            if (x == BombeX[j] && y+i-rayon == BombeY[j] && BombeX[j]!=0 && x != BombeX[j]) BombePlace(BombeX[j],BombeY[j],RT);
+        }
     }
 }
