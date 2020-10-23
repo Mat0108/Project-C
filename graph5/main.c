@@ -51,7 +51,7 @@ void testload(BITMAP *image,char adress[100])
 int main()
 {
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
-    int choix_perso = 4; //Pour changer le perso affiché
+    int choix_perso = 3; //Pour changer le perso affiché
     int x_perso = 1;
     int y_perso = 1;
     int delta_perso = 1;
