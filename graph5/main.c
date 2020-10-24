@@ -177,13 +177,13 @@ int main()
                     if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
                     {
                         nb_vie--;
-                        if (nb_vie == -1)
+                        AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
+                        if (nb_vie == 0)
                         {
                             allegro_message("Vous avez perdu");
                             allegro_exit();
                             exit(EXIT_FAILURE);
                         }
-                        AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
                     }
 
                 }
