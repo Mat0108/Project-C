@@ -37,7 +37,7 @@ void MethodeCreate(int *tableau[21][21],int choix,int CT) // 0 Aleatoire, 1 nive
     char adress[100];
     FILE *niveau;
 
-    if (choix > 5)
+    if (choix >=5)
     {
         for(i=0; i<CT;i++) //Case bordure
         {
@@ -94,7 +94,7 @@ void affichage(int *tableau[21][21],int CT)
         printf("\n");
     }
 }
-void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT)
+void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT,int origin)
 {
     BITMAP *image;
     int i,j;
@@ -109,26 +109,26 @@ void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT)
                 sprintf(adress, "image/%d/sol2.bmp",RT);
                 image=load_bitmap(adress,NULL);
                 testload(image,adress);
-                blit(image,screen,0,0,RT*j,RT*i,image->w, image->h);
+                blit(image,screen,0,0,RT*(j+origin),RT*i,image->w, image->h);
                 break;
             case 1 :
                 sprintf(adress, "image/%d/brick red.bmp",RT);
                 image=load_bitmap(adress,NULL);
                 testload(image,adress);
-                blit(image,screen,0,0,RT*j,RT*i,image->w, image->h);
+                blit(image,screen,0,0,RT*(j+origin),RT*i,image->w, image->h);
                 break;
             case 2 :
                 sprintf(adress, "image/%d/brick grey.bmp",RT);
                 image=load_bitmap(adress,NULL);
                 testload(image,adress);
-                blit(image,screen,0,0,RT*j,RT*i,image->w, image->h);
+                blit(image,screen,0,0,RT*(j+origin),RT*i,image->w, image->h);
                 break;
             }
         }
     }
 }
 
-void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT)
+void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int origin)
 {
     BITMAP *image;
     char adress[100];
@@ -138,21 +138,113 @@ void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT)
         sprintf(adress, "image/%d/sol2.bmp",RT);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
-        blit(image,screen,0,0,RT*x_perso,RT*y_perso,image->w, image->h);
+        blit(image,screen,0,0,RT*(x_perso+origin),RT*y_perso,image->w, image->h);
         break;
     case 1 :
         sprintf(adress, "image/%d/brick red.bmp",RT);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
-        blit(image,screen,0,0,RT*x_perso,RT*y_perso,image->w, image->h);
+        blit(image,screen,0,0,RT*(x_perso+origin),RT*y_perso,image->w, image->h);
         break;
     case 2 :
         sprintf(adress, "image/%d/brick grey.bmp",RT);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
-        blit(image,screen,0,0,RT*x_perso,RT*y_perso,image->w, image->h);
+        blit(image,screen,0,0,RT*(x_perso+origin),RT*y_perso,image->w, image->h);
         break;
     }
 }
+void AffichageMenuInv(int RT,int CT,int origin,int debut)
+{
+    int i,j;
+    BITMAP *image;
+    char adress[100];
+    for (i=0;i<=origin;i++)
+    {
+        for(j=0;j<=CT;j++)
+        {
+            sprintf(adress, "image/%d/brick grey.bmp",RT);
+            image=load_bitmap(adress,NULL);
+            testload(image,adress);
+            blit(image,screen,0,0,RT*i,RT*j,image->w, image->h);
+        }
+    }
+}
+void AffichageMenu(int RT,int CT,int origin)
+{
+    AffichageMenuInv(RT,CT,origin,0);
+    int i=1;
+    BITMAP *image;
+    char adress[100];
+    sprintf(adress, "image/%d/menu/play.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
+    sprintf(adress, "image/%d/menu/quit.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*1,RT*(1+2*(i+1)),image->w, image->h);
+
+}
+int AffichageNiveau(int RT,int CT,int origin)
+{
+
+    int i;
+    BITMAP *image;
+    char adress[100];
+    for (i=1;i<6;i++)
+    {
+        sprintf(adress, "image/%d/menu/niveau %d.bmp",RT,i);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
+    }
+    sprintf(adress, "image/%d/menu/quit.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
+    return 0;
+}
+
+
+void AffichagePerso(int RT,int CT, int origin)
+{
+    int i;
+    BITMAP *image;
+    char adress[100];
+    for (i=1;i<5;i++)
+    {
+        sprintf(adress, "image/%d/menu/perso %d.bmp",RT,i);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
+    }
+    sprintf(adress, "image/%d/menu/quit.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
+}
+void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes)
+{
+    BITMAP *image;
+    char adress[100];
+    sprintf(adress, "image/%d/menu/LIFE %d.bmp",RT,nb_vie);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,0,RT*3,image->w, image->h);
+    sprintf(adress, "image/%d/menu/ligne.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*3,RT*3,image->w, image->h);
+    sprintf(adress, "image/%d/menu/bombe %d.bmp",RT,nb_bombes);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,0,RT*5,image->w, image->h);
+    sprintf(adress, "image/%d/menu/ligne.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*3,RT*5,image->w, image->h);
+}
+
 
 
