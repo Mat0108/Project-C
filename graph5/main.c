@@ -97,7 +97,6 @@ int main()
     AffichageMenu(RT,CT,origin);
     AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe
 
-    install_int_ex(timer,BPS_TO_TIMER(1));
     show_mouse(screen);
     while (MenuBase == 1)
     {
@@ -130,6 +129,8 @@ int main()
     PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
     AffichageMenuInv(RT,CT,origin,1);
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
+
+    install_int_ex(timer,BPS_TO_TIMER(1));
 
     while (!key[KEY_ESC])
     {
@@ -175,9 +176,14 @@ int main()
                     }
                     if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
                     {
-                        allegro_message("Vous avez perdu");
-                        allegro_exit();
-                        exit(EXIT_FAILURE);
+                        nb_vie--;
+                        if (nb_vie == -1)
+                        {
+                            allegro_message("Vous avez perdu");
+                            allegro_exit();
+                            exit(EXIT_FAILURE);
+                        }
+                        AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
                     }
 
                 }
