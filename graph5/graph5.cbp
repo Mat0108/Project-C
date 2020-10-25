@@ -41,6 +41,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="personnage.h" />
+		<Unit filename="powerup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="powerup.h" />
 		<Unit filename="rectangle.c">
 			<Option compilerVar="CC" />
 		</Unit>

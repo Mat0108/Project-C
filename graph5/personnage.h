@@ -4,8 +4,8 @@ void PersoAffichage(int x_perso,int y_perso,int RT,int origin);
 void BombePlace(int x,int y,int RT,int origin);
 int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_perso, int dx,int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin);
 int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_perso, int dx,int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin);
-void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int origin);
-void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int origin);
+void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int origin);
+void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int CT,int origin);
 void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX,int BombeY,int RT,int origin);
 #endif
 

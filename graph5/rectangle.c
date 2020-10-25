@@ -232,7 +232,7 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes)
     image=load_bitmap(adress,NULL);
     testload(image,adress);
     blit(image,screen,0,0,RT*3,RT*3,image->w, image->h);
-    sprintf(adress, "image/%d/menu/LIFE %d.bmp",RT,nb_vie);
+    sprintf(adress, "image/%d/menu/PowerUp/Life/LIFE %d.bmp",RT,nb_vie);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
     blit(image,screen,0,0,0,RT*3,image->w, image->h);
@@ -240,7 +240,7 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes)
     image=load_bitmap(adress,NULL);
     testload(image,adress);
     blit(image,screen,0,0,RT*3,RT*5,image->w, image->h);
-    sprintf(adress, "image/%d/menu/bombe %d.bmp",RT,nb_bombes);
+    sprintf(adress, "image/%d/menu/PowerUP/Bombe/bombe %d.bmp",RT,nb_bombes);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
     blit(image,screen,0,0,0,RT*5,image->w, image->h);

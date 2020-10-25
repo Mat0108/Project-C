@@ -388,7 +388,7 @@
 1602781802 c:\users\matthieu\desktop\test\graph5\rectangle.h
 	<stdbool.h>
 
-1603288511 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
+1603662129 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -399,18 +399,18 @@
 	<winalleg.h>
 	<windows.h>
 
-1603288084 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
+1603640523 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
 	<string.h>
 
-1603286732 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
+1603631388 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
 	<stdio.h>
 	<stdlib.h>
 
-1603288879 source:c:\users\matthieu\documents\github\project-c\graph5\personnage.c
+1603662977 source:c:\users\matthieu\documents\github\project-c\graph5\personnage.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
@@ -678,4 +678,17 @@
 	<stdlib.h>
 	<allegro.h>
 	<string.h>
+
+1603661025 source:c:\users\matthieu\documents\github\project-c\graph5\powerup.c
+	"powerup.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1603661025 c:\users\matthieu\documents\github\project-c\graph5\powerup.h
 

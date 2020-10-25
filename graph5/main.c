@@ -75,6 +75,11 @@ int main()
     int nb_Bombe_max = 3;
     int nb_vie = 3;
 
+    int BonusUp[20][20] = {0};
+
+
+
+
     Create(rectangle,0,CT); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
     //affichage(rectangle,CT);
 
@@ -105,6 +110,7 @@ int main()
     }
     AffichageMenuInv(RT,CT,origin,1);
     AffichageNiveau(RT,10,origin);
+    Sleep(200);
     while (MenuNiveau == 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
@@ -114,10 +120,11 @@ int main()
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) MenuNiveau = 5;
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
     }
-    Create(rectangle,MenuNiveau,CT);
-    AffichageAllegro(rectangle,1,RT,CT,origin);
     AffichageMenuInv(RT,CT,origin,1);
     AffichagePerso(RT,CT,origin);
+
+    Create(rectangle,MenuNiveau,CT);
+    AffichageAllegro(rectangle,1,RT,CT,origin);
     while (MenuPerso== 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuPerso = 1;
@@ -131,6 +138,7 @@ int main()
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
 
     install_int_ex(timer,BPS_TO_TIMER(1));
+
 
     while (!key[KEY_ESC])
     {
@@ -153,20 +161,21 @@ int main()
             nb_Bombe++;
             Sleep(300);
         }
+        if (key[KEY_ENTER])PowerUpGeneration(x_perso,y_perso,origin,RT);
         time_t timestamp = time( NULL );
         struct tm * timeInfos = localtime( & timestamp );
         for (i=0;i<5;i++)
         {
             if (BombeTimer[i] == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] != 0)
             {
-                if(rectangle[BombeY[i]][BombeX[i]] == 0) BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT,origin);
+                if(rectangle[BombeY[i]][BombeX[i]] == 0) BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT,CT,origin);
             }
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0)
             {
                 for (j=0;j<=2*rayon+1;j++)
                 {
                     if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1) rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
-                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1 && BombeY[i]-rayon>0) rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
+                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1) rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
                     if (BombeY[i] == 1)
                     {
                         for (k=0;k<=rayon;k++)

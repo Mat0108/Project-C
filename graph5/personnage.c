@@ -67,16 +67,31 @@ int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_pe
 }
 
 
-void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int origin)
+void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int CT,int origin)
 {
     BITMAP  *BOMBE;
     char adress[100];
-    if (y+y2*rayon>0 && x+x2*rayon > 0)
+    if (y+y2*rayon>0 && x+x2*rayon > 0 && y+y2*rayon<CT && x+x2*rayon < CT)
     {
     sprintf(adress,"image/%d/bombe/bombe_%d_pointe_%d.bmp",RT,tableau[y+y2*rayon][x+x2*rayon],rotation);
     BOMBE = load_bitmap(adress,NULL);
     testload(BOMBE,adress);
     blit(BOMBE,screen,0,0,RT*(x+x2*rayon+origin),RT*(y+y2*rayon),BOMBE->w, BOMBE->h);
+    }
+
+    else if (rotation == 1)
+    {
+        sprintf(adress,"image/%d/bombe/bombe_2_pointe_%d.bmp",RT,rotation);
+        BOMBE = load_bitmap(adress,NULL);
+        testload(BOMBE,adress);
+        blit(BOMBE,screen,0,0,RT*(origin+CT-1),RT*(y+y2*rayon),BOMBE->w, BOMBE->h);
+    }
+    else if(rotation == 2)
+    {
+        sprintf(adress,"image/%d/bombe/bombe_2_pointe_%d.bmp",RT,rotation);
+        BOMBE = load_bitmap(adress,NULL);
+        testload(BOMBE,adress);
+        blit(BOMBE,screen,0,0,RT*(x+x2*rayon+origin),0,BOMBE->w, BOMBE->h);
     }
     else if (rotation == 3)
     {
@@ -85,8 +100,16 @@ void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int r
         testload(BOMBE,adress);
         blit(BOMBE,screen,0,0,origin*RT,RT*(y+y2*rayon),BOMBE->w, BOMBE->h);
     }
+    else if(rotation == 4)
+    {
+        sprintf(adress,"image/%d/bombe/bombe_2_pointe_%d.bmp",RT,rotation);
+        BOMBE = load_bitmap(adress,NULL);
+        testload(BOMBE,adress);
+        blit(BOMBE,screen,0,0,RT*(x+origin),RT*(CT-1),BOMBE->w, BOMBE->h);
+    }
+
 }
-void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int origin)
+void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int origin)
 {
     BITMAP *BOMBE;
     int i;
@@ -102,19 +125,19 @@ void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int origin)
             sprintf(adress,"image/%d/bombe/ligne_1.bmp",RT);
             BOMBE = load_bitmap(adress,NULL);
             testload(BOMBE,adress);
-            if (x-rayon+i > 0) blit(BOMBE,screen,0,0,RT*(x-1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
-            blit(BOMBE,screen,0,0,RT*(x+1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
+            if (x-i>0) blit(BOMBE,screen,0,0,RT*(x-1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
+            if (x+i<CT-1)blit(BOMBE,screen,0,0,RT*(x+1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
             sprintf(adress,"image/%d/bombe/ligne_2.bmp",RT);
             BOMBE = load_bitmap(adress,NULL);
             testload(BOMBE,adress);
-            blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y-1*i),BOMBE->w, BOMBE->h);
-            blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y+1*i),BOMBE->w, BOMBE->h);
+            if (y-i>0) blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y-1*i),BOMBE->w, BOMBE->h);
+            if (y+i<CT-1)blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y+1*i),BOMBE->w, BOMBE->h);
         }
     }
-    BombeEffect2(x,y,rayon,tableau,1,0,1,RT,origin);
-    BombeEffect2(x,y,rayon,tableau,-1,0,3,RT,origin);
-    BombeEffect2(x,y,rayon,tableau,0,1,4,RT,origin);
-    BombeEffect2(x,y,rayon,tableau,0,-1,2,RT,origin);
+    BombeEffect2(x,y,rayon,tableau,1,0,1,RT,CT,origin);
+    BombeEffect2(x,y,rayon,tableau,-1,0,3,RT,CT,origin);
+    BombeEffect2(x,y,rayon,tableau,0,1,4,RT,CT,origin);
+    BombeEffect2(x,y,rayon,tableau,0,-1,2,RT,CT,origin);
 }
 void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int BombeY[5],int RT,int origin)
 {
@@ -140,3 +163,4 @@ void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int
     }
 
 }
+
