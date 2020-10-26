@@ -66,16 +66,16 @@ int main()
     int BombeTimer[5] = {0};
     int nb_Bombe= 0;
 
-    int rayon = 3;
+    int rayon = 1;
     int i,j,k;
 
     int MenuBase = 1;
     int MenuNiveau = 0;
     int MenuPerso = 0;
-    int nb_Bombe_max = 3;
+    int nb_Bombe_max = 1;
     int nb_vie = 3;
 
-    int BonusUp[20][20] = {0};
+    int PowerUpTab[21][21] = {0};
 
 
 
@@ -110,7 +110,7 @@ int main()
     }
     AffichageMenuInv(RT,CT,origin,1);
     AffichageNiveau(RT,10,origin);
-    Sleep(200);
+    Sleep(500);
     while (MenuNiveau == 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
@@ -121,8 +121,8 @@ int main()
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,1);
+    Sleep(500);
     AffichagePerso(RT,CT,origin);
-
     Create(rectangle,MenuNiveau,CT);
     AffichageAllegro(rectangle,1,RT,CT,origin);
     while (MenuPerso== 0)
@@ -135,25 +135,61 @@ int main()
     }
     PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
     AffichageMenuInv(RT,CT,origin,1);
-    AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
+    AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
 
     install_int_ex(timer,BPS_TO_TIMER(1));
-
-
     while (!key[KEY_ESC])
     {
 
-        if (key[KEY_RIGHT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT,MenuPerso,origin);
-        if (key[KEY_LEFT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,MenuPerso,origin);
-        if (key[KEY_UP]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,MenuPerso,origin);
-        if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,MenuPerso,origin);
+        if (key[KEY_RIGHT])
+        {
+            if (PowerUpTab[y_perso][x_perso+1] !=0) printf("\n%d",PowerUpTab[y_perso][x_perso+1]);
+            if (PowerUpTab[y_perso][x_perso+1]> 19 && PowerUpTab[y_perso][x_perso+1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
+            if (PowerUpTab[y_perso][x_perso+1]> 22 && PowerUpTab[y_perso][x_perso+1]< 26 && rayon<5) rayon++;
+            if (PowerUpTab[y_perso][x_perso+1]> 25 && PowerUpTab[y_perso][x_perso+1]< 28 && delta_perso< 3) delta_perso++;
+            if (PowerUpTab[y_perso][x_perso+1]= 28 && nb_vie<3) nb_vie++;
+            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
+            PowerUpTab[y_perso][x_perso+1] = 0;
+            x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT,MenuPerso,origin);
+        }
+        if (key[KEY_LEFT])
+        {
+            if (PowerUpTab[y_perso][x_perso-1] !=0) printf("\n%d",PowerUpTab[y_perso][x_perso+1]);
+            if (PowerUpTab[y_perso][x_perso-1]> 19 && PowerUpTab[y_perso][x_perso-1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
+            if (PowerUpTab[y_perso][x_perso-1]> 22 && PowerUpTab[y_perso][x_perso-1]< 26 && rayon<5) rayon++;
+            if (PowerUpTab[y_perso][x_perso-1]> 25 && PowerUpTab[y_perso][x_perso-1]< 28 && delta_perso< 3) delta_perso++;
+            if (PowerUpTab[y_perso][x_perso-1]= 28 && nb_vie<3) nb_vie++;
+            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
+            PowerUpTab[y_perso][x_perso+1] = 0;
+            x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,MenuPerso,origin);
+        }
+        if (key[KEY_UP])
+        {
+            if (PowerUpTab[y_perso-1][x_perso]> 19 && PowerUpTab[y_perso-1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
+            if (PowerUpTab[y_perso-1][x_perso]> 22 && PowerUpTab[y_perso-1][x_perso]< 26 && rayon<5) rayon++;
+            if (PowerUpTab[y_perso-1][x_perso]> 25 && PowerUpTab[y_perso-1][x_perso]< 28 && delta_perso< 3) delta_perso++;
+            if (PowerUpTab[y_perso-1][x_perso]= 28 && nb_vie<3) nb_vie++;
+            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
+            PowerUpTab[y_perso][x_perso+1] = 0;
+            y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,MenuPerso,origin);
+        }
+        if (key[KEY_DOWN])
+        {
+            if (PowerUpTab[y_perso+1][x_perso]> 19 && PowerUpTab[y_perso+1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
+            if (PowerUpTab[y_perso+1][x_perso]> 22 && PowerUpTab[y_perso+1][x_perso]< 26 && rayon<5) rayon++;
+            if (PowerUpTab[y_perso+1][x_perso]> 25 && PowerUpTab[y_perso+1][x_perso]< 28 && delta_perso< 3) delta_perso++;
+            if (PowerUpTab[y_perso+1][x_perso]= 28 && nb_vie<3) nb_vie++;
+            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
+            PowerUpTab[y_perso][x_perso+1] = 0;
+            y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,MenuPerso,origin);
+        }
         if (key[KEY_SPACE])
         {
             BombeX[nb_Bombe] = x_perso;
             BombeY[nb_Bombe] = y_perso;
             time_t timestamp = time( NULL );
             struct tm * timeInfos = localtime( & timestamp );
-            BombeTimer[nb_Bombe] = timeInfos->tm_sec+10;
+            BombeTimer[nb_Bombe] = timeInfos->tm_sec+5;
             if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
             AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
             BombePlace(x_perso,y_perso,RT,origin);
@@ -172,10 +208,25 @@ int main()
             }
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0)
             {
+                srand(time(NULL));
                 for (j=0;j<=2*rayon+1;j++)
                 {
-                    if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1) rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
-                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1) rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
+                    if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)
+                    {
+                        rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
+                        int x = rand()%30;
+                        if (x < 20 && x>29 ) x=0;
+
+                        PowerUpTab[BombeY[i]][j+BombeX[i]-rayon] = x;
+                    }
+                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1)
+                    {
+                        rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
+                        int x = rand()%30;
+                        if (x < 20 && x>29 ) x=0;
+                        PowerUpTab[j+BombeY[i]-rayon][BombeX[i]] = x;
+                    }
+
                     if (BombeY[i] == 1)
                     {
                         for (k=0;k<=rayon;k++)
@@ -197,7 +248,8 @@ int main()
 
                 }
                 BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,BombeX,BombeY,RT,origin);
-                AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
+                AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
+                PowerUpAffichage(PowerUpTab,origin,RT,CT);
                 nb_Bombe--;
                 for (i=0;i<5;i++)
                 {

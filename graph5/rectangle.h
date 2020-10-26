@@ -12,7 +12,8 @@ void AffichageMenuInv(int RT,int CT,int origin,int debut);
 void AffichageMenu(int RT,int CT,int origin);
 int AffichageNiveau(int RT,int CT,int origin);
 void AffichagePerso(int RT,int CT, int origin);
-void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes);
+void AffichageLigne(float x,float y,int RT);
+void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed);
 
 
 #endif
