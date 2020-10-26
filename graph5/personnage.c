@@ -12,11 +12,12 @@ void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int origin)
 
     char adress[100];
     BITMAP *perso;
-    sprintf(adress, "image/%d/perso2/pug%d.bmp",RT,choix);
+    sprintf(adress, "image/%d/perso2/pug%d.bmp",RT, choix);
     perso = load_bitmap(adress,NULL);
     testload(perso,adress);
     blit(perso,screen,0,0,RT*(x_perso+origin),RT*y_perso,perso->w, perso->h);
 }
+
 void BombePlace(int x,int y,int RT,int origin)
 {
     char adress[100];
