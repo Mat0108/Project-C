@@ -679,3 +679,36 @@
 	<allegro.h>
 	<string.h>
 
+1603697075 source:c:\users\utilisateur\documents\github\project-c\graph5\main.c
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<allegro/font.h>
+	<allegro/text.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1603566817 source:c:\users\utilisateur\documents\github\project-c\graph5\personnage.c
+	"rectangle.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1603566817 c:\users\utilisateur\documents\github\project-c\graph5\rectangle.h
+	<stdio.h>
+	<stdlib.h>
+
+1603697075 source:c:\users\utilisateur\documents\github\project-c\graph5\rectangle.c
+	"rectangle.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+
