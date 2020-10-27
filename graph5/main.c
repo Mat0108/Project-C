@@ -121,7 +121,7 @@ int main()
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,1);
-    Sleep(1000);
+    Sleep(500);
     AffichagePerso(RT,CT,origin);
     Create(rectangle,MenuNiveau,CT);
     AffichageAllegro(rectangle,1,RT,CT,origin);
@@ -211,7 +211,7 @@ int main()
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0)
             {
                 srand(time(NULL));
-                for (j=0;j<=2*rayon+1;j++)
+                for (j=0;j<2*rayon+1;j++)
                 {
                     if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)
                     {
