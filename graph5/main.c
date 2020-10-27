@@ -121,7 +121,7 @@ int main()
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,1);
-    Sleep(500);
+    Sleep(1000);
     AffichagePerso(RT,CT,origin);
     Create(rectangle,MenuNiveau,CT);
     AffichageAllegro(rectangle,1,RT,CT,origin);
@@ -135,6 +135,7 @@ int main()
     }
     PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
     AffichageMenuInv(RT,CT,origin,1);
+    Sleep(50);
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
 
     install_int_ex(timer,BPS_TO_TIMER(1));

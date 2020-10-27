@@ -254,7 +254,7 @@ void AffichageLigne(float x,float y,int RT)
     sprintf(adress, "image/%d/menu/ligne.bmp",RT);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
-    blit(image,screen,0,0,RT*x,RT*y,image->w, image->h);
+    blit(image,screen,0,0,RT*(x+1),RT*y,image->w, image->h);
 }
 void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed)
 {
@@ -263,6 +263,7 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed)
     int debut = 1;
     int delta = 2;
     AffichageLigne(3,debut,RT);
+    AffichageLigne(2,debut,RT);
     sprintf(adress, "image/%d/menu/PowerUp/Life/LIFE %d.bmp",RT,nb_vie);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
