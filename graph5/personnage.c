@@ -51,6 +51,7 @@ int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_pe
     int i;
     if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
     {
+
         AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
         for (i=0;i<5;i++)
         {

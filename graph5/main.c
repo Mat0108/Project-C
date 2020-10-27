@@ -48,11 +48,7 @@ void testload(BITMAP *image,char adress[100])
         exit(EXIT_FAILURE);
     }
 }
-void Quitter()
-{
-    allegro_exit();
-    exit(EXIT_FAILURE);
-}
+
 int main()
 {
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
@@ -103,48 +99,18 @@ int main()
     AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe
 
     show_mouse(screen);
-    while (MenuBase == 1)
-    {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuBase = 0;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) Quitter();
-    }
-    AffichageMenuInv(RT,CT,origin,1);
-    AffichageNiveau(RT,10,origin);
-    Sleep(300);
-    while (MenuNiveau == 0)
-    {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuNiveau = 2;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuNiveau = 3;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuNiveau = 4;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) MenuNiveau = 5;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
-    }
-    AffichageMenuInv(RT,CT,origin,1);
-    Sleep(300);
-    AffichagePerso(RT,CT,origin);
-    Create(rectangle,MenuNiveau,CT);
-    AffichageAllegro(rectangle,1,RT,CT,origin);
-    while (MenuPerso== 0)
-    {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuPerso = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuPerso = 2;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuPerso = 3;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuPerso = 4;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) Quitter();
-    }
-    PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-    AffichageMenuInv(RT,CT,origin,1);
-    Sleep(50);
+    Play(RT,CT,origin);
+    MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin);
+    MenuPerso = ChoixPerso(x_perso,y_perso,RT,CT,origin);
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
 
     install_int_ex(timer,BPS_TO_TIMER(1));
-    AffichageAllegro2(rectangle,1,RT,CT,origin);
     while (!key[KEY_ESC])
     {
 
         if (key[KEY_RIGHT])
         {
+            AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso][x_perso+1]> 19 && PowerUpTab[y_perso][x_perso+1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso+1]> 22 && PowerUpTab[y_perso][x_perso+1]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso][x_perso+1]> 25 && PowerUpTab[y_perso][x_perso+1]< 28 && delta_perso< 3) delta_perso++;
@@ -155,6 +121,7 @@ int main()
         }
         if (key[KEY_LEFT])
         {
+            AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso][x_perso-1]> 19 && PowerUpTab[y_perso][x_perso-1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso-1]> 22 && PowerUpTab[y_perso][x_perso-1]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso][x_perso-1]> 25 && PowerUpTab[y_perso][x_perso-1]< 28 && delta_perso< 3) delta_perso++;
@@ -165,6 +132,7 @@ int main()
         }
         if (key[KEY_UP])
         {
+            AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso-1][x_perso]> 19 && PowerUpTab[y_perso-1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso-1][x_perso]> 22 && PowerUpTab[y_perso-1][x_perso]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso-1][x_perso]> 25 && PowerUpTab[y_perso-1][x_perso]< 28 && delta_perso< 3) delta_perso++;
@@ -175,6 +143,7 @@ int main()
         }
         if (key[KEY_DOWN])
         {
+            AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso+1][x_perso]> 19 && PowerUpTab[y_perso+1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso+1][x_perso]> 22 && PowerUpTab[y_perso+1][x_perso]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso+1][x_perso]> 25 && PowerUpTab[y_perso+1][x_perso]< 28 && delta_perso< 3) delta_perso++;
