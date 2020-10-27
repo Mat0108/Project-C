@@ -74,22 +74,12 @@ int main()
     int PowerUpTab[21][21] = {0};
 
 
+    Create(rectangle,0,CT);
 
-
-    Create(rectangle,0,CT); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
-    //affichage(rectangle,CT);
-
-
-
-    // initialisation allegro obligatoire
     allegro_init();
-
-    // pour disposer du clavier
     install_keyboard();
     install_mouse();
 
-
-    // définir un mode graphique
     set_color_depth(32);
     int Ecran_X = RT*CT+RT*origin;
     int Ecran_Y = RT*CT;
@@ -97,20 +87,21 @@ int main()
 
     AffichageMenu(RT,CT,origin);
     AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe
-
     show_mouse(screen);
+
     Play(RT,CT,origin);
     MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin);
     MenuPerso = ChoixPerso(x_perso,y_perso,RT,CT,origin);
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-
     install_int_ex(timer,BPS_TO_TIMER(1));
+
     while (!key[KEY_ESC])
     {
 
         if (key[KEY_RIGHT])
         {
-            AffichageAllegro2(rectangle,1,RT,CT,origin);
+            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+            /*AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso][x_perso+1]> 19 && PowerUpTab[y_perso][x_perso+1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso+1]> 22 && PowerUpTab[y_perso][x_perso+1]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso][x_perso+1]> 25 && PowerUpTab[y_perso][x_perso+1]< 28 && delta_perso< 3) delta_perso++;
@@ -118,9 +109,13 @@ int main()
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[y_perso][x_perso+1] = 0;
             x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT,MenuPerso,origin);
+            */
         }
         if (key[KEY_LEFT])
         {
+            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+            /*
+
             AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso][x_perso-1]> 19 && PowerUpTab[y_perso][x_perso-1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso-1]> 22 && PowerUpTab[y_perso][x_perso-1]< 26 && rayon<5) rayon++;
@@ -129,9 +124,13 @@ int main()
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[y_perso][x_perso-1] = 0;
             x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,MenuPerso,origin);
+            */
         }
         if (key[KEY_UP])
         {
+            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+
+            /*
             AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso-1][x_perso]> 19 && PowerUpTab[y_perso-1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso-1][x_perso]> 22 && PowerUpTab[y_perso-1][x_perso]< 26 && rayon<5) rayon++;
@@ -140,9 +139,13 @@ int main()
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[y_perso-1][x_perso] = 0;
             y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,MenuPerso,origin);
+            */
         }
         if (key[KEY_DOWN])
         {
+            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+
+            /*
             AffichageAllegro2(rectangle,1,RT,CT,origin);
             if (PowerUpTab[y_perso+1][x_perso]> 19 && PowerUpTab[y_perso+1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso+1][x_perso]> 22 && PowerUpTab[y_perso+1][x_perso]< 26 && rayon<5) rayon++;
@@ -151,6 +154,7 @@ int main()
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[x_perso+1][y_perso] = 0;
             y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,MenuPerso,origin);
+        */
         }
         if (key[KEY_SPACE])
         {
