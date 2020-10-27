@@ -110,7 +110,7 @@ int main()
     }
     AffichageMenuInv(RT,CT,origin,1);
     AffichageNiveau(RT,10,origin);
-    Sleep(500);
+    Sleep(300);
     while (MenuNiveau == 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
@@ -121,7 +121,7 @@ int main()
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,1);
-    Sleep(500);
+    Sleep(300);
     AffichagePerso(RT,CT,origin);
     Create(rectangle,MenuNiveau,CT);
     AffichageAllegro(rectangle,1,RT,CT,origin);
@@ -187,17 +187,20 @@ int main()
         }
         if (key[KEY_SPACE])
         {
-            BombeX[nb_Bombe] = x_perso;
-            BombeY[nb_Bombe] = y_perso;
-            time_t timestamp = time( NULL );
-            struct tm * timeInfos = localtime( & timestamp );
-            BombeTimer[nb_Bombe] = timeInfos->tm_sec+5;
-            if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
-            AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
-            BombePlace(x_perso,y_perso,RT,origin);
-            PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-            nb_Bombe++;
-            Sleep(300);
+            if (nb_Bombe<nb_Bombe_max)
+            {
+                BombeX[nb_Bombe] = x_perso;
+                BombeY[nb_Bombe] = y_perso;
+                time_t timestamp = time( NULL );
+                struct tm * timeInfos = localtime( & timestamp );
+                BombeTimer[nb_Bombe] = timeInfos->tm_sec+5;
+                if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
+                AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
+                BombePlace(x_perso,y_perso,RT,origin);
+                PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+                nb_Bombe++;
+                Sleep(300);
+            }
         }
         if (key[KEY_ENTER])PowerUpGeneration(x_perso,y_perso,origin,RT);
         time_t timestamp = time( NULL );
