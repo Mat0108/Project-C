@@ -145,7 +145,6 @@ int main()
 
         if (key[KEY_RIGHT])
         {
-            if (PowerUpTab[y_perso][x_perso+1] !=0) printf("\n%d",PowerUpTab[y_perso][x_perso+1]);
             if (PowerUpTab[y_perso][x_perso+1]> 19 && PowerUpTab[y_perso][x_perso+1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso+1]> 22 && PowerUpTab[y_perso][x_perso+1]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso][x_perso+1]> 25 && PowerUpTab[y_perso][x_perso+1]< 28 && delta_perso< 3) delta_perso++;
@@ -156,7 +155,6 @@ int main()
         }
         if (key[KEY_LEFT])
         {
-            if (PowerUpTab[y_perso][x_perso-1] !=0) printf("\n%d",PowerUpTab[y_perso][x_perso+1]);
             if (PowerUpTab[y_perso][x_perso-1]> 19 && PowerUpTab[y_perso][x_perso-1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso-1]> 22 && PowerUpTab[y_perso][x_perso-1]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso][x_perso-1]> 25 && PowerUpTab[y_perso][x_perso-1]< 28 && delta_perso< 3) delta_perso++;
