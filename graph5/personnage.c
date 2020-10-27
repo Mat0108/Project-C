@@ -144,7 +144,7 @@ void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int
     int i,j;
     BITMAP *image;
     char adress[100];
-    for(i=0;i<2*rayon+2;i++)
+    for(i=0;i<2*rayon+1;i++)
     {
         AfffichagePosition(tableau,x,y+i-rayon,RT,origin);
         if(x+i-rayon >0 ) AfffichagePosition(tableau,x+i-rayon,y,RT,origin);

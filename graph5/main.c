@@ -110,7 +110,7 @@ int main()
     }
     AffichageMenuInv(RT,CT,origin,1);
     AffichageNiveau(RT,10,origin);
-    Sleep(500);
+    Sleep(300);
     while (MenuNiveau == 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
@@ -121,7 +121,7 @@ int main()
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,1);
-    Sleep(500);
+    Sleep(300);
     AffichagePerso(RT,CT,origin);
     Create(rectangle,MenuNiveau,CT);
     AffichageAllegro(rectangle,1,RT,CT,origin);
@@ -149,7 +149,7 @@ int main()
             if (PowerUpTab[y_perso][x_perso+1]> 19 && PowerUpTab[y_perso][x_perso+1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso+1]> 22 && PowerUpTab[y_perso][x_perso+1]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso][x_perso+1]> 25 && PowerUpTab[y_perso][x_perso+1]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso][x_perso+1]= 28 && nb_vie<3) nb_vie++;
+            if (PowerUpTab[y_perso][x_perso+1]== 28 && nb_vie<3) nb_vie++;
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[y_perso][x_perso+1] = 0;
             x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT,MenuPerso,origin);
@@ -160,7 +160,7 @@ int main()
             if (PowerUpTab[y_perso][x_perso-1]> 19 && PowerUpTab[y_perso][x_perso-1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso][x_perso-1]> 22 && PowerUpTab[y_perso][x_perso-1]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso][x_perso-1]> 25 && PowerUpTab[y_perso][x_perso-1]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso][x_perso-1]= 28 && nb_vie<3) nb_vie++;
+            if (PowerUpTab[y_perso][x_perso-1]== 28 && nb_vie<3) nb_vie++;
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[y_perso][x_perso+1] = 0;
             x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,MenuPerso,origin);
@@ -170,7 +170,7 @@ int main()
             if (PowerUpTab[y_perso-1][x_perso]> 19 && PowerUpTab[y_perso-1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso-1][x_perso]> 22 && PowerUpTab[y_perso-1][x_perso]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso-1][x_perso]> 25 && PowerUpTab[y_perso-1][x_perso]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso-1][x_perso]= 28 && nb_vie<3) nb_vie++;
+            if (PowerUpTab[y_perso-1][x_perso]== 28 && nb_vie<3) nb_vie++;
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[y_perso][x_perso+1] = 0;
             y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,MenuPerso,origin);
@@ -180,7 +180,7 @@ int main()
             if (PowerUpTab[y_perso+1][x_perso]> 19 && PowerUpTab[y_perso+1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
             if (PowerUpTab[y_perso+1][x_perso]> 22 && PowerUpTab[y_perso+1][x_perso]< 26 && rayon<5) rayon++;
             if (PowerUpTab[y_perso+1][x_perso]> 25 && PowerUpTab[y_perso+1][x_perso]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso+1][x_perso]= 28 && nb_vie<3) nb_vie++;
+            if (PowerUpTab[y_perso+1][x_perso]== 28 && nb_vie<3) nb_vie++;
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
             PowerUpTab[y_perso][x_perso+1] = 0;
             y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,MenuPerso,origin);
@@ -239,7 +239,8 @@ int main()
                     if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
                     {
                         nb_vie--;
-                        AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
+                        AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
+
                         if (nb_vie == 0)
                         {
                             allegro_message("Vous avez perdu");
@@ -250,6 +251,7 @@ int main()
 
                 }
                 BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,BombeX,BombeY,RT,origin);
+                PersoAffichage(x_perso,y_perso,RT,choix_perso,origin);
                 AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
                 PowerUpAffichage(PowerUpTab,origin,RT,CT);
                 nb_Bombe--;
