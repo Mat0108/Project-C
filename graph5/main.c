@@ -187,20 +187,17 @@ int main()
         }
         if (key[KEY_SPACE])
         {
-            if (nb_Bombe<nb_Bombe_max)
-            {
-                BombeX[nb_Bombe] = x_perso;
-                BombeY[nb_Bombe] = y_perso;
-                time_t timestamp = time( NULL );
-                struct tm * timeInfos = localtime( & timestamp );
-                BombeTimer[nb_Bombe] = timeInfos->tm_sec+5;
-                if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
-                AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
-                BombePlace(x_perso,y_perso,RT,origin);
-                PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-                nb_Bombe++;
-                Sleep(300);
-            }
+            BombeX[nb_Bombe] = x_perso;
+            BombeY[nb_Bombe] = y_perso;
+            time_t timestamp = time( NULL );
+            struct tm * timeInfos = localtime( & timestamp );
+            BombeTimer[nb_Bombe] = timeInfos->tm_sec+3;
+            if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
+            AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
+            BombePlace(x_perso,y_perso,RT,origin);
+            PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+            nb_Bombe++;
+            Sleep(300);
         }
         if (key[KEY_ENTER])PowerUpGeneration(x_perso,y_perso,origin,RT);
         time_t timestamp = time( NULL );
