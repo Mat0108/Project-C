@@ -43,7 +43,7 @@ int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         if (dy == -1) y_perso -= 1;
         PersoAffichage(x_perso,y_perso,RT,choix,origin);
     }
-    Sleep(500-150*(delta_perso-1));
+    Sleep(500);
     return x_perso;
 }
 int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin)
@@ -62,7 +62,7 @@ int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         if (dy == -1) y_perso -= 1;
         PersoAffichage(x_perso,y_perso,RT,choix,origin);
         }
-    Sleep(500-150*(delta_perso-1));
+    Sleep(500);
     return y_perso;
 }
 

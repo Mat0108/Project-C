@@ -162,7 +162,7 @@ int main()
             if (PowerUpTab[y_perso][x_perso-1]> 25 && PowerUpTab[y_perso][x_perso-1]< 28 && delta_perso< 3) delta_perso++;
             if (PowerUpTab[y_perso][x_perso-1]== 28 && nb_vie<3) nb_vie++;
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-            PowerUpTab[y_perso][x_perso+1] = 0;
+            PowerUpTab[y_perso][x_perso-1] = 0;
             x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,MenuPerso,origin);
         }
         if (key[KEY_UP])
@@ -172,7 +172,7 @@ int main()
             if (PowerUpTab[y_perso-1][x_perso]> 25 && PowerUpTab[y_perso-1][x_perso]< 28 && delta_perso< 3) delta_perso++;
             if (PowerUpTab[y_perso-1][x_perso]== 28 && nb_vie<3) nb_vie++;
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-            PowerUpTab[y_perso][x_perso+1] = 0;
+            PowerUpTab[y_perso-1][x_perso] = 0;
             y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,MenuPerso,origin);
         }
         if (key[KEY_DOWN])
@@ -182,7 +182,7 @@ int main()
             if (PowerUpTab[y_perso+1][x_perso]> 25 && PowerUpTab[y_perso+1][x_perso]< 28 && delta_perso< 3) delta_perso++;
             if (PowerUpTab[y_perso+1][x_perso]== 28 && nb_vie<3) nb_vie++;
             AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-            PowerUpTab[y_perso][x_perso+1] = 0;
+            PowerUpTab[x_perso+1][y_perso] = 0;
             y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,MenuPerso,origin);
         }
         if (key[KEY_SPACE])
@@ -251,7 +251,7 @@ int main()
 
                 }
                 BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,BombeX,BombeY,RT,origin);
-                PersoAffichage(x_perso,y_perso,RT,choix_perso,origin);
+                PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
                 AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
                 PowerUpAffichage(PowerUpTab,origin,RT,CT);
                 nb_Bombe--;
