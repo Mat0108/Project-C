@@ -138,6 +138,7 @@ int main()
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
 
     install_int_ex(timer,BPS_TO_TIMER(1));
+    AffichageAllegro2(rectangle,1,RT,CT,origin);
     while (!key[KEY_ESC])
     {
 

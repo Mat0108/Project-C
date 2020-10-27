@@ -29,7 +29,7 @@ void BombePlace(int x,int y,int RT,int origin)
 
 int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin)
 {
-    int i;
+    int i,j;
     if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
     {
         AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
@@ -37,18 +37,22 @@ int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         {
             if (BombeX[i]== x_perso && BombeY[i] ==y_perso) BombePlace(x_perso,y_perso,RT,origin);
         }
-        if (dx == 1) x_perso += delta_perso;
-        if (dy == 1) y_perso += delta_perso;
-        if (dx == -1) x_perso -= delta_perso;
-        if (dy == -1) y_perso -= delta_perso;
-        PersoAffichage(x_perso,y_perso,RT,choix,origin);
+        for (j=1;j<=delta_perso;j++)
+        {
+            if (dx == 1) x_perso += 1;
+            if (dy == 1) y_perso += 1;
+            if (dx == -1) x_perso -= 1;
+            if (dy == -1) y_perso -= 1;
+            PersoAffichage(x_perso,y_perso,RT,choix,origin);
+
+        }
     }
     Sleep(300);
     return x_perso;
 }
 int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin)
 {
-    int i;
+    int i,j;
     if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
     {
         AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
@@ -56,11 +60,15 @@ int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         {
             if (BombeX[i]== x_perso && BombeY[i] ==y_perso)BombePlace(x_perso,y_perso,RT,origin);
         }
-        if (dx == 1) x_perso += delta_perso;
-        if (dy == 1) y_perso += delta_perso;
-        if (dx == -1) x_perso -= delta_perso;
-        if (dy == -1) y_perso -= delta_perso;
-        PersoAffichage(x_perso,y_perso,RT,choix,origin);
+        for (j=1;j<=delta_perso;j++)
+        {
+            if (dx == 1) x_perso += 1;
+            if (dy == 1) y_perso += 1;
+            if (dx == -1) x_perso -= 1;
+            if (dy == -1) y_perso -= 1;
+            PersoAffichage(x_perso,y_perso,RT,choix,origin);
+
+        }
     }
     Sleep(300);
     return y_perso;

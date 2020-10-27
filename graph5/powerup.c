@@ -65,7 +65,7 @@ void PowerUpAffichage(int tableau[21][21],int origin,int RT,int CT)
 int PowerUpGeneration()
 {
     srand(time(NULL));
-    int x = rand()%20;;
-    if (x >14 && x<5 ) x=0;
+    int x = rand()%50;;
+    if (x >29 && x<20 ) x=0;
     return x;
 }

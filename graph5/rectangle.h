@@ -7,6 +7,7 @@ void MethodeCreate(int *tableau[21][21],int Choix, int CT);
 void Create(int *tableau[21][21],int choixniveau, int CT);
 void affichage(int *tableau[21][21],int CT);
 void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT,int origin);
+void AffichageAllegro2(int tableau[21][21],int debut,int RT,int CT,int origin);
 void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int origin);
 void AffichageMenuInv(int RT,int CT,int origin,int debut);
 void AffichageMenu(int RT,int CT,int origin);

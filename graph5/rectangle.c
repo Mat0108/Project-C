@@ -127,6 +127,29 @@ void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT,int origin)
         }
     }
 }
+void AffichageAllegro2(int tableau[21][21],int debut,int RT,int CT,int origin)
+{
+    BITMAP *image;
+    int i,j;
+    char adress[100];
+    for (i = debut;i<CT;i++)
+    {
+        for (j=0;j<CT;j++)
+        {
+            switch(tableau[i][j])
+            {
+            case 1 :
+                sprintf(adress, "image/%d/brick red.bmp",RT);
+                image=load_bitmap(adress,NULL);
+                testload(image,adress);
+                blit(image,screen,0,0,RT*(j+origin),RT*i,image->w, image->h);
+                break;
+            default :
+                break;
+             }
+        }
+    }
+}
 
 void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int origin)
 {
