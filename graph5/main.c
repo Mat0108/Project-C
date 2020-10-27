@@ -191,7 +191,7 @@ int main()
             BombeY[nb_Bombe] = y_perso;
             time_t timestamp = time( NULL );
             struct tm * timeInfos = localtime( & timestamp );
-            BombeTimer[nb_Bombe] = timeInfos->tm_sec+3;
+            BombeTimer[nb_Bombe] = timeInfos->tm_sec+5;
             if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
             AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
             BombePlace(x_perso,y_perso,RT,origin);

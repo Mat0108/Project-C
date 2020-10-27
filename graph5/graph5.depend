@@ -421,38 +421,32 @@
 	<winalleg.h>
 	<windows.h>
 
-1603794085 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\rectangle.c
+1603187010 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
 	<string.h>
 
-1603794085 d:\users\alexa\onedrive\documents\github\project-c\graph5\rectangle.h
+1603194029 d:\users\alexa\onedrive\documents\github\project-c\graph5\rectangle.h
 	<stdio.h>
 	<stdlib.h>
 
-1603794102 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\main.c
+1603191490 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
-	<allegro/font.h>
-	<allegro/text.h>
 	<time.h>
 	<process.h>
 	<winalleg.h>
 	<windows.h>
 
-1603794102 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\personnage.c
+1603101584 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\personnage.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
 	<string.h>
-	<time.h>
-	<process.h>
-	<winalleg.h>
-	<windows.h>
 
 1224208280 c:\program files\codeblocks\mingw\include\winalleg.h
 	<afxwin.h>
@@ -710,17 +704,4 @@
 	<windows.h>
 
 1603725032 c:\users\matth\documents\github\project-c\graph5\powerup.h
-
-1603794085 source:d:\users\alexa\onedrive\documents\github\project-c\graph5\powerup.c
-	"powerup.h"
-	<stdio.h>
-	<stdlib.h>
-	<allegro.h>
-	<string.h>
-	<time.h>
-	<process.h>
-	<winalleg.h>
-	<windows.h>
-
-1603794085 d:\users\alexa\onedrive\documents\github\project-c\graph5\powerup.h
 
