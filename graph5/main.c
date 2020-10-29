@@ -52,27 +52,10 @@ void testload(BITMAP *image,char adress[100])
 int main()
 {
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
-    int choix_perso = 1; //Pour changer le perso affiché
-    int x_perso = 1;
-    int y_perso = 1;
-    int delta_perso = 1;
-
-    int BombeX[5] = {0};
-    int BombeY[5] = {0};
-    int BombeTimer[5] = {0};
-    int nb_Bombe= 0;
-
-    int rayon = 1;
+    int x_perso = 1,y_perso = 1,delta_perso = 1;
+    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,rayon = 1;
+    int MenuBase = 1, MenuNiveau = 0,MenuPerso = 0,nb_Bombe_max = 1, nb_vie = 3, *PowerUpTab[21][21] = {0};
     int i,j,k;
-
-    int MenuBase = 1;
-    int MenuNiveau = 0;
-    int MenuPerso = 0;
-    int nb_Bombe_max = 1;
-    int nb_vie = 3;
-
-    int PowerUpTab[21][21] = {0};
-
 
     Create(rectangle,0,CT);
 
@@ -98,158 +81,18 @@ int main()
     while (!key[KEY_ESC])
     {
 
-        if (key[KEY_RIGHT])
-        {
-            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
-            /*AffichageAllegro2(rectangle,1,RT,CT,origin);
-            if (PowerUpTab[y_perso][x_perso+1]> 19 && PowerUpTab[y_perso][x_perso+1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
-            if (PowerUpTab[y_perso][x_perso+1]> 22 && PowerUpTab[y_perso][x_perso+1]< 26 && rayon<5) rayon++;
-            if (PowerUpTab[y_perso][x_perso+1]> 25 && PowerUpTab[y_perso][x_perso+1]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso][x_perso+1]== 28 && nb_vie<3) nb_vie++;
-            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-            PowerUpTab[y_perso][x_perso+1] = 0;
-            x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT,MenuPerso,origin);
-            */
+        if (key[KEY_RIGHT])  PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+        if (key[KEY_LEFT])    PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+        if (key[KEY_UP])       PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+        if (key[KEY_DOWN]) PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
+
+        if (key[KEY_SPACE]) BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
+
+
+        //PowerUpGeneration(x_perso,y_perso,origin,RT);
+        BombeEffect3(BombeTimer,BombeX,BombeY,rayon,rectangle,RT,CT,origin);
+        BombeEffect4(&BombeX,&BombeY,&BombeTimer,rectangle,&PowerUpTab,x_perso,y_perso,&nb_vie,nb_Bombe_max,&nb_Bombe,rayon,delta_perso,RT,CT,origin,MenuPerso);
         }
-        if (key[KEY_LEFT])
-        {
-            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
-            /*
-
-            AffichageAllegro2(rectangle,1,RT,CT,origin);
-            if (PowerUpTab[y_perso][x_perso-1]> 19 && PowerUpTab[y_perso][x_perso-1]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
-            if (PowerUpTab[y_perso][x_perso-1]> 22 && PowerUpTab[y_perso][x_perso-1]< 26 && rayon<5) rayon++;
-            if (PowerUpTab[y_perso][x_perso-1]> 25 && PowerUpTab[y_perso][x_perso-1]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso][x_perso-1]== 28 && nb_vie<3) nb_vie++;
-            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-            PowerUpTab[y_perso][x_perso-1] = 0;
-            x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,MenuPerso,origin);
-            */
-        }
-        if (key[KEY_UP])
-        {
-            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
-
-            /*
-            AffichageAllegro2(rectangle,1,RT,CT,origin);
-            if (PowerUpTab[y_perso-1][x_perso]> 19 && PowerUpTab[y_perso-1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
-            if (PowerUpTab[y_perso-1][x_perso]> 22 && PowerUpTab[y_perso-1][x_perso]< 26 && rayon<5) rayon++;
-            if (PowerUpTab[y_perso-1][x_perso]> 25 && PowerUpTab[y_perso-1][x_perso]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso-1][x_perso]== 28 && nb_vie<3) nb_vie++;
-            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-            PowerUpTab[y_perso-1][x_perso] = 0;
-            y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,MenuPerso,origin);
-            */
-        }
-        if (key[KEY_DOWN])
-        {
-            PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
-
-            /*
-            AffichageAllegro2(rectangle,1,RT,CT,origin);
-            if (PowerUpTab[y_perso+1][x_perso]> 19 && PowerUpTab[y_perso+1][x_perso]< 23 && nb_Bombe_max<5) nb_Bombe_max++;
-            if (PowerUpTab[y_perso+1][x_perso]> 22 && PowerUpTab[y_perso+1][x_perso]< 26 && rayon<5) rayon++;
-            if (PowerUpTab[y_perso+1][x_perso]> 25 && PowerUpTab[y_perso+1][x_perso]< 28 && delta_perso< 3) delta_perso++;
-            if (PowerUpTab[y_perso+1][x_perso]== 28 && nb_vie<3) nb_vie++;
-            AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-            PowerUpTab[x_perso+1][y_perso] = 0;
-            y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,MenuPerso,origin);
-        */
-        }
-        if (key[KEY_SPACE])
-        {
-            if (nb_Bombe < nb_Bombe_max)
-            {
-                BombeX[nb_Bombe] = x_perso;
-                BombeY[nb_Bombe] = y_perso;
-                time_t timestamp = time( NULL );
-                struct tm * timeInfos = localtime( & timestamp );
-                BombeTimer[nb_Bombe] = timeInfos->tm_sec+5;
-                if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
-                AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
-                BombePlace(x_perso,y_perso,RT,origin);
-                PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-                nb_Bombe++;
-                Sleep(300);
-            }
-        }
-        if (key[KEY_ENTER])PowerUpGeneration(x_perso,y_perso,origin,RT);
-        time_t timestamp = time( NULL );
-        struct tm * timeInfos = localtime( & timestamp );
-        for (i=0;i<5;i++)
-        {
-            if (BombeTimer[i] == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] != 0)
-            {
-                if(rectangle[BombeY[i]][BombeX[i]] == 0) BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT,CT,origin);
-            }
-            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0)
-            {
-                srand(time(NULL));
-                for (j=0;j<2*rayon+1;j++)
-                {
-                    if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)
-                    {
-                        rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
-                        int x = rand()%30;
-                        if (x < 20 && x>29 ) x=0;
-
-                        PowerUpTab[BombeY[i]][j+BombeX[i]-rayon] = x;
-                    }
-                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1)
-                    {
-                        rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
-                        int x = rand()%30;
-                        if (x < 20 && x>29 ) x=0;
-                        PowerUpTab[j+BombeY[i]-rayon][BombeX[i]] = x;
-                    }
-
-                    if (BombeY[i] == 1)
-                    {
-                        for (k=0;k<=rayon;k++)
-                        {
-                            if(rectangle[BombeY[i]+k][BombeX[i]] == 1)rectangle[BombeY[i]+k][BombeX[i]]  = 0;
-                        }
-                    }
-                    if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
-                    {
-                        nb_vie--;
-                        AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-
-                        if (nb_vie == 0)
-                        {
-                            allegro_message("Vous avez perdu");
-                            allegro_exit();
-                            exit(EXIT_FAILURE);
-                        }
-                    }
-
-                }
-                BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,BombeX,BombeY,RT,origin);
-                PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-                AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
-                PowerUpAffichage(PowerUpTab,origin,RT,CT);
-                nb_Bombe--;
-                for (i=0;i<5;i++)
-                {
-                    if (BombeX[i+1] != 0)
-                    {
-                        if (i+1<5)
-                        {
-                            BombeX[i] = BombeX[i+1];
-                            BombeY[i] = BombeY[i+1];
-                            BombeTimer[i] = BombeTimer[i+1];
-                        }
-                    }
-                    else
-                    {
-                        BombeX[i] = 0;
-                        BombeY[i] = 0;
-                        BombeTimer[i] = 0;
-                    }
-                }
-            }
-        }
-    }
     // attend une touche pour quitter (similaire getch() de conio.h)
     readkey();
 

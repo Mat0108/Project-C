@@ -70,9 +70,9 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
     {
         int i;
         AffichageAllegro2(tableau,1,RT,CT,origin);
-        if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) *nb_Bombe_max++;
-        if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) *rayon++;
-        if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) *delta_perso++;
+        if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) (*nb_Bombe_max)++;
+        if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) (*rayon)++;
+        if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) (*delta_perso)++;
         if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) *nb_vie++;
         AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso);
         PowerUp[*y_perso+dy][*x_perso+dx] = 0;
@@ -92,7 +92,23 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
         Sleep(500);
     }
 
-
+void BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso)
+{
+     if (*nb_Bombe < nb_Bombe_max)
+    {
+        BombeX[*nb_Bombe] = x_perso;
+        BombeY[*nb_Bombe] = y_perso;
+        time_t timestamp = time( NULL );
+        struct tm * timeInfos = localtime( & timestamp );
+        BombeTimer[*nb_Bombe] = timeInfos->tm_sec+5;
+        if (BombeTimer[*nb_Bombe]>= 60) BombeTimer[*nb_Bombe] = BombeTimer[*nb_Bombe] - 60;
+        AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
+        BombePlace(x_perso,y_perso,RT,origin);
+        PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+        (*nb_Bombe)++;
+        Sleep(300);
+    }
+}
 void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int CT,int origin)
 {
     BITMAP  *BOMBE;
@@ -165,6 +181,107 @@ void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int or
     BombeEffect2(x,y,rayon,tableau,0,1,4,RT,CT,origin);
     BombeEffect2(x,y,rayon,tableau,0,-1,2,RT,CT,origin);
 }
+void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int tableau[21][21],int RT,int CT,int origin)
+{
+    for (int i=0;i<5;i++)
+    {
+        time_t timestamp = time( NULL );
+        struct tm * timeInfos = localtime( & timestamp );
+        if (BombeTimer[i] == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] != 0)
+            {
+                BombeEffect(BombeX[i],BombeY[i],rayon,tableau,RT,CT,origin);
+            }
+        if (BombeTimer[i] + 1 == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] != 0)
+            {
+                BombeEffectInv(BombeX[i],BombeY[i],rayon,tableau,BombeX,BombeY,RT,origin);
+            }
+
+    }
+}
+void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso)
+{
+        time_t timestamp = time( NULL );
+        struct tm * timeInfos = localtime( & timestamp );
+        int i,j,k,l;
+        int xBombe;
+        int yBombe;
+        for (i=0;i<5;i++)
+        {
+            if (BombeTimer[i] + 1== timeInfos->tm_sec && BombeTimer[i] != 0)
+            {
+                srand(time(NULL));
+                for (j=0;j<2*rayon+1;j++)
+                {
+                    xBombe = BombeX[i];
+                    yBombe = BombeY[i];
+                    if (tableau[(yBombe)][j+xBombe-rayon] == 1)
+                    {
+
+                        tableau[yBombe][j+xBombe-rayon] = 0;
+                        int x = rand()%30;
+                        if (x < 20 && x>29 ) x=0;
+
+                        PowerUpTab[yBombe][j+xBombe-rayon] = x;
+
+                    }
+                    if (tableau[j+yBombe-rayon][xBombe] == 1)
+                    {
+                        tableau[j+yBombe-rayon][xBombe] = 0;
+                        int x = rand()%30;
+                        if (x < 20 && x>29 ) x=0;
+                        PowerUpTab[j+yBombe-rayon][xBombe] = x;
+
+                    }
+
+                    if (yBombe== 1)
+                    {
+                        for (k=0;k<=rayon;k++)
+                        {
+                            if(tableau[yBombe+k][xBombe] == 1)tableau[yBombe+k][xBombe]  = 0;
+                        }
+                    }
+                    if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
+                    {
+                        nb_vie--;
+                        AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso);
+
+                        if (nb_vie == 0)
+                        {
+                            allegro_message("Vous avez perdu");
+                            allegro_exit();
+                            exit(EXIT_FAILURE);
+                        }
+                    }
+
+                }
+                BombeEffectInv(xBombe,yBombe,rayon,tableau,BombeX,BombeY,RT,origin);
+                PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+                AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso);
+                PowerUpAffichage(PowerUpTab,origin,RT,CT);
+
+                (*nb_Bombe)--;
+                for ( l=0;l<5;l++)
+                {
+                    if (BombeX[l+1] != 0)
+                    {
+                        if (i+1<5)
+                        {
+                            BombeX[l] = BombeX[l+1];
+                            BombeY[l] = BombeY[l+1];
+                            BombeTimer[l] = BombeTimer[l+1];
+                        }
+                    }
+                    else
+                    {
+                        BombeX[l] = 0;
+                        BombeY[l] = 0;
+                        BombeTimer[l] = 0;
+                    }
+                }
+            }
+        }
+    }
+
 void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int BombeY[5],int RT,int origin)
 {
     int i,j;

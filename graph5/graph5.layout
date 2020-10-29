@@ -4,37 +4,47 @@
 	<ActiveTarget name="Debug" />
 	<File name="rectangle.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7612" topLine="175" />
-		</Cursor>
-	</File>
-	<File name="powerup.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="18" topLine="0" />
+			<Cursor1 position="7612" topLine="234" />
 		</Cursor>
 	</File>
 	<File name="rectangle.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="12" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="465" topLine="0" />
+			<Cursor1 position="83" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="menu.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="13" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="218" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="personnage.c" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8780" topLine="192" />
 		</Cursor>
 	</File>
 	<File name="personnage.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="417" topLine="0" />
+			<Cursor1 position="1442" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
+	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="12" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7165" topLine="0" />
+			<Cursor1 position="3768" topLine="96" />
 		</Cursor>
 	</File>
-	<File name="personnage.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
+	<File name="menu.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="12" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1788" topLine="37" />
+			<Cursor1 position="2448" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="powerup.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="powerup.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1898" topLine="0" />
+			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
