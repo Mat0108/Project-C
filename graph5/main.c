@@ -85,19 +85,14 @@ int main()
         if (key[KEY_LEFT])    PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
         if (key[KEY_UP])       PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
         if (key[KEY_DOWN]) PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,RT,CT,MenuPerso,origin);
-
         if (key[KEY_SPACE]) BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
 
-
-        //PowerUpGeneration(x_perso,y_perso,origin,RT);
+        PowerUpGeneration(x_perso,y_perso,origin,RT);
         BombeEffect3(BombeTimer,BombeX,BombeY,rayon,rectangle,RT,CT,origin);
         BombeEffect4(&BombeX,&BombeY,&BombeTimer,rectangle,&PowerUpTab,x_perso,y_perso,&nb_vie,nb_Bombe_max,&nb_Bombe,rayon,delta_perso,RT,CT,origin,MenuPerso);
         }
-    // attend une touche pour quitter (similaire getch() de conio.h)
     readkey();
-
     return 0;
-
 }
 //attention ne pas oublier !
 END_OF_MAIN();
