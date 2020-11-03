@@ -24,17 +24,17 @@ void timer()
     char adress[100];
     sprintf(adress, "image/%d/chrono.bmp",RT);
     image=load_bitmap(adress,NULL);
-    blit(image,screen,0,0,RT*(18+origin),0,image->w, image->h);
+    blit(image,screen,0,0,RT*(9+origin),0,image->w, image->h);
     sprintf(adress, "image/%d/brick grey.bmp",RT);
     image=load_bitmap(adress,NULL);
-    blit(image,screen,0,0,RT*(19+origin),0,image->w, image->h);
-    blit(image,screen,0,0,RT*(20+origin),0,image->w, image->h);
+    blit(image,screen,0,0,RT*(10+origin),0,image->w, image->h);
+    blit(image,screen,0,0,RT*(11+origin),0,image->w, image->h);
     if (timerval == 60)
     {
         timerminutes++;
         timerval = 0;
     }
-    textprintf_ex(screen,font,RT*(19+origin),RT/2,makecol(0,0,0),-1,"%d:%02d",timerminutes,timerval);
+    textprintf_ex(screen,font,RT*(10+origin),RT/2,makecol(0,0,0),-1,"%d:%02d",timerminutes,timerval);
     timerval++;
 }
 void testload(BITMAP *image,char adress[100])
@@ -52,21 +52,32 @@ void testload(BITMAP *image,char adress[100])
 int main()
 {
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
-    int x_perso = 1,y_perso = 1,delta_perso = 1;
-    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,rayon = 1;
-    int MenuBase = 1, MenuNiveau = 0,MenuPerso = 0,nb_Bombe_max = 1, nb_vie = 3, *PowerUpTab[21][21] = {0};
+
+    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3;
+    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 1;  //variable pour le perso 1
+
+    int x_perso2 = 24,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3;
+    int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2= 0,nb_Bombe_max2 = 1,rayon2 = 1;  //variable pour le perso 2
+
+    int MenuBase = 1, MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0, *PowerUpTab[21][21] = {0};
     int i,j,k;
 
-    Create(rectangle,0,CT);
+    Create(rectangle,-1,CT);
 
     allegro_init();
     install_keyboard();
     install_mouse();
 
     set_color_depth(32);
-    int Ecran_X = RT*CT+RT*origin;
+    int Ecran_X = RT*CT+2*RT*origin+10;
     int Ecran_Y = RT*CT;
-    set_gfx_mode(GFX_AUTODETECT_WINDOWED,Ecran_X,Ecran_Y,0,0);
+
+    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,Ecran_X,Ecran_Y,0,0) != 0)
+    {
+        allegro_message("probleme mode graphique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
     AffichageMenu(RT,CT,origin);
     AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe
@@ -74,8 +85,12 @@ int main()
 
     Play(RT,CT,origin);
     MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin);
-    MenuPerso = ChoixPerso(x_perso,y_perso,RT,CT,origin);
-    AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso);
+    MenuPlayer = ChoixPlayer(RT,CT,origin);
+    ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer);
+
+
+    AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,1,0);
+    AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,2,origin+CT);
     install_int_ex(timer,BPS_TO_TIMER(1));
 
     while (!key[KEY_ESC])
@@ -90,6 +105,7 @@ int main()
         PowerUpGeneration(x_perso,y_perso,origin,RT);
         BombeEffect3(BombeTimer,BombeX,BombeY,rayon,rectangle,RT,CT,origin);
         BombeEffect4(&BombeX,&BombeY,&BombeTimer,rectangle,&PowerUpTab,x_perso,y_perso,&nb_vie,nb_Bombe_max,&nb_Bombe,rayon,delta_perso,RT,CT,origin,MenuPerso);
+
         }
     readkey();
     return 0;

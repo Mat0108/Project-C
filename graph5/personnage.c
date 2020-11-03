@@ -74,7 +74,7 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
         if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) (*rayon)++;
         if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) (*delta_perso)++;
         if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) *nb_vie++;
-        AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso);
+        AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,choix,0);
         PowerUp[*y_perso+dy][*x_perso+dx] = 0;
         if (tableau[*y_perso+dy* *delta_perso][*x_perso+dx* *delta_perso] == 0)
         {
@@ -100,7 +100,7 @@ void BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_B
         BombeY[*nb_Bombe] = y_perso;
         time_t timestamp = time( NULL );
         struct tm * timeInfos = localtime( & timestamp );
-        BombeTimer[*nb_Bombe] = timeInfos->tm_sec+5;
+        BombeTimer[*nb_Bombe] = timeInfos->tm_sec+3;
         if (BombeTimer[*nb_Bombe]>= 60) BombeTimer[*nb_Bombe] = BombeTimer[*nb_Bombe] - 60;
         AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
         BombePlace(x_perso,y_perso,RT,origin);
@@ -243,7 +243,7 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                     if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
                     {
                         nb_vie--;
-                        AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso);
+                        AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,0);
 
                         if (nb_vie == 0)
                         {
@@ -256,7 +256,7 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                 }
                 BombeEffectInv(xBombe,yBombe,rayon,tableau,BombeX,BombeY,RT,origin);
                 PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-                AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso);
+                AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,0);
                 PowerUpAffichage(PowerUpTab,origin,RT,CT);
 
                 (*nb_Bombe)--;

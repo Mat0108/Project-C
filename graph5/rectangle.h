@@ -12,9 +12,8 @@ void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int o
 void AffichageMenuInv(int RT,int CT,int origin,int debut);
 void AffichageMenu(int RT,int CT,int origin);
 int AffichageNiveau(int RT,int CT,int origin);
-void AffichagePerso(int RT,int CT, int origin);
-void AffichageLigne(float x,float y,int RT);
-void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed);
+void AffichagePlayer(int RT,int CT,int origin);
+void AffichagePerso(int RT,int CT, int yposition,int player);
 
 
 #endif

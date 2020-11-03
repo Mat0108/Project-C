@@ -182,7 +182,7 @@ void AffichageMenuInv(int RT,int CT,int origin,int debut)
     int i,j;
     BITMAP *image;
     char adress[100];
-    for (i=0;i<=origin;i++)
+    for (i=debut;i<=debut+origin;i++)
     {
         for(j=0;j<=CT;j++)
         {
@@ -196,6 +196,7 @@ void AffichageMenuInv(int RT,int CT,int origin,int debut)
 void AffichageMenu(int RT,int CT,int origin)
 {
     AffichageMenuInv(RT,CT,origin,0);
+    AffichageMenuInv(RT,CT,origin,CT+origin);
     int i=1;
     BITMAP *image;
     char adress[100];
@@ -228,16 +229,14 @@ int AffichageNiveau(int RT,int CT,int origin)
     blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
     return 0;
 }
-
-
-void AffichagePerso(int RT,int CT, int origin)
+void AffichagePlayer(int RT,int CT,int origin)
 {
     int i;
     BITMAP *image;
     char adress[100];
-    for (i=1;i<5;i++)
+    for (i=1;i<4;i++)
     {
-        sprintf(adress, "image/%d/menu/perso %d.bmp",RT,i);
+        sprintf(adress, "image/%d/menu/nb_player %d.bmp",RT,i-1);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
         blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
@@ -247,44 +246,30 @@ void AffichagePerso(int RT,int CT, int origin)
     testload(image,adress);
     blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
 }
-void AffichageLigne(float x,float y,int RT)
+
+void AffichagePerso(int RT,int CT, int yposition,int player)
 {
+    int i=1;
     BITMAP *image;
     char adress[100];
-    sprintf(adress, "image/%d/menu/ligne.bmp",RT);
+    sprintf(adress, "image/%d/menu/player %d.bmp",RT,player);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
-    blit(image,screen,0,0,RT*(x+1),RT*y,image->w, image->h);
-}
-void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed)
-{
-    BITMAP *image;
-    char adress[100];
-    int debut = 1;
-    int delta = 2;
-    AffichageLigne(3,debut,RT);
-    AffichageLigne(2,debut,RT);
-    sprintf(adress, "image/%d/menu/PowerUp/Life/LIFE %d.bmp",RT,nb_vie);
+    blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
+    for (i=2;i<6;i++)
+    {
+        sprintf(adress, "image/%d/menu/perso %d.bmp",RT,i-1);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
+    }
+    sprintf(adress, "image/%d/menu/quit.bmp",RT);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
-    blit(image,screen,0,0,0,RT*debut,image->w, image->h);
-    AffichageLigne(3,debut+delta,RT);
-    sprintf(adress, "image/%d/menu/PowerUP/Bombe/bombe %d.bmp",RT,nb_bombes);
-    image=load_bitmap(adress,NULL);
-    testload(image,adress);
-    blit(image,screen,0,0,0,RT*(debut+delta),image->w, image->h);
-    AffichageLigne(3,debut+2*delta,RT);
-    sprintf(adress, "image/%d/menu/PowerUP/Rayon/Rayon %d.bmp",RT,rayon);
-    image=load_bitmap(adress,NULL);
-    testload(image,adress);
-    blit(image,screen,0,0,0,RT*(debut+2*delta),image->w, image->h);
-    AffichageLigne(3,debut+3*delta,RT);
-    sprintf(adress, "image/%d/menu/PowerUP/Speed/Speed %d.bmp",RT,speed);
-    image=load_bitmap(adress,NULL);
-    testload(image,adress);
-    blit(image,screen,0,0,0,RT*(debut+3*delta),image->w, image->h);
+    blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
 
 }
+
 
 
 

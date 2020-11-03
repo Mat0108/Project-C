@@ -22,7 +22,7 @@ void Play(int RT,int CT,int origin)
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuBase = 1;
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) Quitter();
     }
-    AffichageMenuInv(RT,CT,origin,1);
+    AffichageMenuInv(RT,CT,origin,0);
     AffichageNiveau(RT,10,origin);
     Sleep(300);
 }
@@ -38,26 +38,117 @@ int ChoixNiveau(int tableau[21][21],int RT,int CT,int origin)
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) MenuNiveau = 5;
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
     }
-    AffichageMenuInv(RT,CT,origin,1);
+    AffichageMenuInv(RT,CT,origin,0);
     Sleep(300);
-    AffichagePerso(RT,CT,origin);
+
+    AffichagePlayer(RT,CT,origin);
     Create(tableau,MenuNiveau,CT);
     AffichageAllegro(tableau,1,RT,CT,origin);
     return MenuNiveau;
 }
-int ChoixPerso(int x_perso,int y_perso,int RT,int CT,int origin)
+int ChoixPlayer(int RT,int CT,int origin)
 {
-    int MenuPerso = 0;
-    while (MenuPerso== 0)
+    int MenuPlayer = 0;
+    while (MenuPlayer == 0)
     {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuPerso = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuPerso = 2;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuPerso = 3;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuPerso = 4;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) Quitter();
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuPlayer = 1;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuPlayer = 2;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) Quitter();
     }
-    AffichageMenuInv(RT,CT,origin,1);
-    PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-    Sleep(50);
-    return MenuPerso;
+    AffichageMenuInv(RT,CT,origin,0);
+    AffichagePerso(RT,CT,1,1);
+    if (MenuPlayer == 2) AffichagePerso(RT,CT,1+origin+21,2);
+    Sleep(300);
+    return MenuPlayer;
+}
+void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer)
+{
+    int varaffichage = 1;
+    while (*MenuPerso == 0 || *MenuPerso2 == 0 || *MenuPerso == *MenuPerso2)
+    {
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) *MenuPerso = 1;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) *MenuPerso = 2;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) *MenuPerso = 3;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) *MenuPerso = 4;
+
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x>= RT*(CT+origin )) *MenuPerso2 = 1;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x>= RT*(CT+origin )) *MenuPerso2 = 2;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x>= RT*(CT+origin ) ) *MenuPerso2 = 3;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x>= RT*(CT+origin ) ) *MenuPerso2 = 4;
+
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 ) Quitter();
+
+        if (*MenuPerso == *MenuPerso2&& *MenuPerso !=0 && varaffichage == 1)
+        {
+            allegro_message("Merci de selectionner deux perso differents  !!!");
+            varaffichage = 0;
+        }
+        if (*MenuPerso != 0) PersoAffichage(x_perso,y_perso,RT,*MenuPerso,origin);
+        if (*MenuPerso2 != 0 && MenuPlayer == 2) PersoAffichage(24,19,RT,*MenuPerso2,0);
+
+    }
+    AffichageMenuInv(RT,CT,origin,CT+origin);
+    AffichageMenuInv(RT,CT,origin,0);
+    Sleep(500);
+}
+
+
+
+void AffichageLigne(float x,float y,int RT)
+{
+    BITMAP *image;
+    char adress[100];
+    sprintf(adress, "image/%d/menu/ligne.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*(x+1),RT*y,image->w, image->h);
+    sprintf(adress, "image/%d/menu/ligne2.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*(x-4),RT*y,image->w, image->h);
+}
+void AffichageItemLoad(int RT,int debut,float x,int choix,char adress2[100])
+{
+    BITMAP *image;
+    char adress[100];
+
+    sprintf(adress, "image/%d/menu/%s%d.bmp",RT,adress2,choix);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*x,RT*debut,image->w, image->h);
+}
+void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int perso,int xorigin)
+{
+    BITMAP *image;
+    char adress[100];
+    int debut = 3;
+    int delta = 2;
+    AffichageLigne(3+xorigin,debut,RT);
+    if (xorigin == 0)
+    {
+        AffichageItemLoad(RT,debut,xorigin,nb_vie,"PowerUp/Life/LIFE ");
+        AffichageItemLoad(RT,1,1,perso,"player ");
+        AffichageLigne(2,debut,RT);
+
+    }
+    else
+    {
+        AffichageItemLoad(RT,debut,xorigin+2,nb_vie,"PowerUp/Life/LIFE ");
+        AffichageItemLoad(RT,1,xorigin,perso,"player ");
+        sprintf(adress, "image/%d/menu/ligne.bmp",RT);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*(xorigin),RT*debut,image->w, image->h);
+    }
+
+
+
+    AffichageLigne(3+xorigin,debut+delta,RT);
+    AffichageItemLoad(RT,debut+delta,xorigin,nb_bombes,"PowerUp/Bombe/Bombe ");
+
+    AffichageLigne(3+xorigin,debut+2*delta,RT);
+    AffichageItemLoad(RT,debut+2*delta,xorigin,rayon,"PowerUp/Rayon/Rayon ");
+
+    AffichageLigne(3+xorigin,debut+3*delta,RT);
+    AffichageItemLoad(RT,debut+3*delta,xorigin,speed,"PowerUp/Speed/Speed ");
 }
