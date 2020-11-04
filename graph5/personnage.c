@@ -66,7 +66,7 @@ int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_pe
     Sleep(500);
     return y_perso;
 }
-int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int RT,int CT, int choix,int origin)
+int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int choix,int origin)
     {
         int i;
         AffichageAllegro2(tableau,1,RT,CT,origin);
@@ -74,7 +74,7 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
         if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) (*rayon)++;
         if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) (*delta_perso)++;
         if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) *nb_vie++;
-        AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,choix,0);
+        AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,persochoix,choix,item);
         PowerUp[*y_perso+dy][*x_perso+dx] = 0;
         if (tableau[*y_perso+dy* *delta_perso][*x_perso+dx* *delta_perso] == 0)
         {
@@ -87,7 +87,7 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
             if (dy == 1) (*y_perso)++;
             if (dx == -1) (*x_perso)--;
             if (dy == -1) (*y_perso)--;
-            PersoAffichage(*x_perso,*y_perso,RT,choix,origin);
+            PersoAffichage(*x_perso,*y_perso,RT,persochoix,origin);
         }
         Sleep(500);
     }
@@ -198,7 +198,7 @@ void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int 
 
     }
 }
-void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso)
+void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso,int player)
 {
         time_t timestamp = time( NULL );
         struct tm * timeInfos = localtime( & timestamp );
@@ -243,7 +243,7 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                     if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
                     {
                         nb_vie--;
-                        AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,0);
+                        AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,0);
 
                         if (nb_vie == 0)
                         {
@@ -256,7 +256,7 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                 }
                 BombeEffectInv(xBombe,yBombe,rayon,tableau,BombeX,BombeY,RT,origin);
                 PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-                AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,0);
+                AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,0);
                 PowerUpAffichage(PowerUpTab,origin,RT,CT);
 
                 (*nb_Bombe)--;

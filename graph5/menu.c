@@ -63,8 +63,9 @@ int ChoixPlayer(int RT,int CT,int origin)
 }
 void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer)
 {
-    int varaffichage = 1;
-    while (*MenuPerso == 0 || *MenuPerso2 == 0 || *MenuPerso == *MenuPerso2)
+    int varaffichage = 1, condition = 1;
+
+    while (condition == 1)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) *MenuPerso = 1;
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) *MenuPerso = 2;
@@ -85,7 +86,7 @@ void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso
         }
         if (*MenuPerso != 0) PersoAffichage(x_perso,y_perso,RT,*MenuPerso,origin);
         if (*MenuPerso2 != 0 && MenuPlayer == 2) PersoAffichage(24,19,RT,*MenuPerso2,0);
-
+        if ((*MenuPerso != 0 && (*MenuPerso2 != 0 || MenuPlayer != 2))&& *MenuPerso != *MenuPerso2 )condition = 0;
     }
     AffichageMenuInv(RT,CT,origin,CT+origin);
     AffichageMenuInv(RT,CT,origin,0);
@@ -117,7 +118,7 @@ void AffichageItemLoad(int RT,int debut,float x,int choix,char adress2[100])
     testload(image,adress);
     blit(image,screen,0,0,RT*x,RT*debut,image->w, image->h);
 }
-void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int perso,int xorigin)
+void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int choixperso,int perso,int xorigin)
 {
     BITMAP *image;
     char adress[100];
@@ -151,4 +152,14 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
 
     AffichageLigne(3+xorigin,debut+3*delta,RT);
     AffichageItemLoad(RT,debut+3*delta,xorigin,speed,"PowerUp/Speed/Speed ");
+    if (xorigin == 0){
+        AffichageItemLoad(RT,debut+7.5*delta,xorigin,perso,"Touche ");
+        AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"Perso");
+    }
+    else
+    {
+        AffichageItemLoad(RT,debut+7.5*delta,xorigin+1.3,perso,"Touche ");
+        AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"Perso");
+    }
+
 }

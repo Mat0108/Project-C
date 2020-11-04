@@ -7,5 +7,5 @@ int ChoixPlayer(int RT,int CT,int origin);
 void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer);
 void AffichageLigne(float x,float y,int RT);
 void AffichageItemLoad(int RT,int debut,float x,int choix,char adress2[100]);
-void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int perso,int xorigin);
+void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int choixperso,int perso,int xorigin);
 #endif
