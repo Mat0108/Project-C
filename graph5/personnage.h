@@ -9,7 +9,7 @@ void BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_b
 void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int origin);
 void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int CT,int origin);
 void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int tableau[21][21],int RT,int CT,int origin);
-void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int *tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso,int player);
+void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso,int player,int xorigin);
 void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX,int BombeY,int RT,int origin);
 #endif
 
