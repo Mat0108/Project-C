@@ -5,7 +5,7 @@ void BombePlace(int x,int y,int RT,int origin);
 int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_perso, int dx,int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin);
 int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_perso, int dx,int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin);
 int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix, int choix,int origin);
-void BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_bombe,int nb_Bombe_max,int x_perso,int y_perso,int RT,int origin,int MenuPerso);
+int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_bombe,int nb_Bombe_max,int x_perso,int y_perso,int RT,int origin,int MenuPerso);
 void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int origin);
 void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int CT,int origin);
 void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int tableau[21][21],int RT,int CT,int origin);

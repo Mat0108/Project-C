@@ -63,36 +63,35 @@ int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_pe
         if (dy == -1) y_perso -= 1;
         PersoAffichage(x_perso,y_perso,RT,choix,origin);
         }
-    Sleep(500);
     return y_perso;
 }
 int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int choix,int origin)
+{
+    int i;
+    AffichageAllegro2(tableau,1,RT,CT,origin);
+    if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) (*nb_Bombe_max)++;
+    if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) (*rayon)++;
+    //if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) (*delta_perso)++;
+    if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) *nb_vie++;
+    AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,persochoix,choix,item);
+    PowerUp[*y_perso+dy][*x_perso+dx] = 0;
+    if (tableau[*y_perso+dy* *delta_perso][*x_perso+dx* *delta_perso] == 0)
     {
-        int i;
-        AffichageAllegro2(tableau,1,RT,CT,origin);
-        if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) (*nb_Bombe_max)++;
-        if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) (*rayon)++;
-        //if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) (*delta_perso)++;
-        if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) *nb_vie++;
-        AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,persochoix,choix,item);
-        PowerUp[*y_perso+dy][*x_perso+dx] = 0;
-        if (tableau[*y_perso+dy* *delta_perso][*x_perso+dx* *delta_perso] == 0)
+        AfffichagePosition(tableau,*x_perso,*y_perso,RT,origin);
+        for (i=0;i<5;i++)
         {
-            AfffichagePosition(tableau,*x_perso,*y_perso,RT,origin);
-            for (i=0;i<5;i++)
-            {
-                if (BombeX[i]== *x_perso && BombeY[i] ==*y_perso)BombePlace(*x_perso,*y_perso,RT,origin);
-            }
-            if (dx == 1) (*x_perso)++;
-            if (dy == 1) (*y_perso)++;
-            if (dx == -1) (*x_perso)--;
-            if (dy == -1) (*y_perso)--;
-            PersoAffichage(*x_perso,*y_perso,RT,persochoix,origin);
+            if (BombeX[i]== *x_perso && BombeY[i] ==*y_perso)BombePlace(*x_perso,*y_perso,RT,origin);
         }
-        Sleep(500);
+        if (dx == 1) (*x_perso)++;
+        if (dy == 1) (*y_perso)++;
+        if (dx == -1) (*x_perso)--;
+        if (dy == -1) (*y_perso)--;
+        PersoAffichage(*x_perso,*y_perso,RT,persochoix,origin);
     }
+    return 1;
+}
 
-void BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso)
+int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso)
 {
      if (*nb_Bombe < nb_Bombe_max)
     {
@@ -106,8 +105,8 @@ void BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_B
         BombePlace(x_perso,y_perso,RT,origin);
         PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
         (*nb_Bombe)++;
-        Sleep(100);
     }
+    return 1;
 }
 void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int CT,int origin)
 {
@@ -254,10 +253,10 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
             AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,xorigin);
             PowerUpAffichage(PowerUpTab,origin,RT,CT);
 
-            if(*nb_Bombe != 0)printf("%d",*nb_Bombe);
+
             if(*nb_Bombe!= 0)(*nb_Bombe)--;
         }
-        if (BombeTimer[i] + 1 == timeInfos->tm_sec && BombeTimer[i] != 0)
+        if (BombeTimer[i] == timeInfos->tm_sec && BombeTimer[i] != 0)
         {
             BombeEffectInv(BombeX[i],BombeY[i],rayon,tableau,BombeX,BombeY,RT,origin);
             for ( l=0;l<4;l++)
