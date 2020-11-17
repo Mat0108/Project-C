@@ -69,3 +69,4 @@ int PowerUpGeneration()
     if (x >29 && x<20 ) x=0;
     return x;
 }
+

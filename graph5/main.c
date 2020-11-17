@@ -60,7 +60,10 @@ int main()
     int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
 
     int MenuBase = 1, MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0, *PowerUpTab[21][21] = {0};
+
+    int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100,val = 0;
     int i,j,k,appui_touche = 0;
+
 
     Create(rectangle,-1,CT);
     allegro_init();
@@ -105,6 +108,34 @@ int main()
         BombeEffect4(&BombeX2,&BombeY2,&BombeTimer2,rectangle,&PowerUpTab,x_perso2,y_perso2,&nb_vie2,nb_Bombe_max2,&nb_Bombe2,rayon2,delta_perso2,RT,CT,origin,MenuPerso2,2,Item2);
         AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
         if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);
+
+        if (key[KEY_ENTER_PAD])
+        {
+            InvisibiliteOn = 1;
+            time_t timestamp = time( NULL );
+            struct tm * timeInfos = localtime( & timestamp );
+            InvisibiliteTimerval = timeInfos->tm_sec+10;
+            if (InvisibiliteTimerval>59 ) InvisibiliteTimerval = InvisibiliteTimerval -60;
+            Invisibilite(&InvisibiliteOn,InvisibiliteTimer,Item,RT);
+        }
+        if (InvisibiliteTimerval != 100 )
+        {
+            time_t timestamp = time( NULL );
+            struct tm * timeInfos = localtime( & timestamp );
+
+            if (InvisibiliteTimerval>=timeInfos->tm_sec)val = InvisibiliteTimerval-timeInfos->tm_sec;
+            else val = 60-timeInfos->tm_sec+InvisibiliteTimer;
+
+            if (val >= 0 && val <= 11) InvisibiliteAffichage(Item,10-val,RT);
+            if (val == 0)
+            {
+                InvisibiliteAffichage(Item,10,RT);
+                Sleep(400);
+                InvisibiliteAffichage(Item,11,RT);
+                InvisibiliteTimerval = 100;
+
+            }
+        }
         if (appui_touche == 1)
         {
             appui_touche = 0;

@@ -161,5 +161,46 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
         AffichageItemLoad(RT,debut+7.5*delta,xorigin+1.3,perso,"Touche ");
         AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"Perso");
     }
+}
+void InvisibiliteAffichage(int xorigin,int val,int RT)
+{
+    BITMAP *image;
+    char adress[100];
+    int debut = 3;
+    int delta = 2;
+    sprintf(adress, "image/%d/menu/ligne2.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*(4.9+xorigin),RT*(debut+4*delta),image->w, image->h);
+    sprintf(adress, "image/%d/menu/PowerUp/Invisibilite/Invisibilite %d.bmp",RT,val);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,0,RT*(debut+4*delta),image->w, image->h);
+}
+
+void Invisibilite(int *invisibiliteOn,int InvisibiliteTimer,int xorigin,int RT)
+{
+
+    switch(*invisibiliteOn)
+    {
+    case 0:
+        break;
+    case 1:;
+        *invisibiliteOn = 2;
+
+        InvisibiliteAffichage(xorigin,InvisibiliteTimer,RT);
+        break;
+    case 2:
+        if (InvisibiliteTimer >= 12)
+        {
+            InvisibiliteAffichage(xorigin,11,RT);
+            (*invisibiliteOn ) = 0;
+        }
+        else
+        {
+            InvisibiliteAffichage(xorigin,InvisibiliteTimer,RT);
+        }
+        break;
+    }
 
 }
