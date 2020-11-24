@@ -197,7 +197,7 @@ void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int 
 
     }
 }
-void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso,int player,int xorigin)
+void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso,int player,int xorigin,int *InvisibiliteTimerval)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
@@ -236,17 +236,23 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                         if(tableau[yBombe+k][xBombe] == 1)tableau[yBombe+k][xBombe]  = 0;
                     }
                 }
+                /*if ((*InvisibiliteTimerval) == 100)
+                {
+                    printf("test0");*/
+                printf("x %s",j+BombeY[i]-rayon == y_perso);
                 if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso)){
-                    nb_vie--;
+                    printf("test1");
+                    (*nb_vie)--;
                     AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,0);
-
-                    if (nb_vie == 0)
+                    if (nb_vie == 0 )
                     {
                         allegro_message("Vous avez perdu");
                         allegro_exit();
                         exit(EXIT_FAILURE);
                     }
                 }
+                //}
+
             }
             PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
             //AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,0);

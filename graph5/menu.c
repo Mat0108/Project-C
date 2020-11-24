@@ -202,5 +202,36 @@ void Invisibilite(int *invisibiliteOn,int InvisibiliteTimer,int xorigin,int RT)
         }
         break;
     }
+}
 
+void Invisibilite_Activable(int *InvisibiliteOn,int *InvisibiliteTimerval,int InvisibiliteTimer,int val, int RT)
+{
+    (*InvisibiliteOn) = 1;
+    time_t timestamp = time( NULL );
+    struct tm * timeInfos = localtime( & timestamp );
+    (*InvisibiliteTimerval) = timeInfos->tm_sec+10;
+    if (*InvisibiliteTimerval>59 ) (*InvisibiliteTimerval) = (*InvisibiliteTimerval) -60;
+    Invisibilite(InvisibiliteOn,InvisibiliteTimer,val,RT);
+}
+
+void Invisibilite_Update(int *InvisibiliteTimerval,int InvisibiliteTimer,int val2, int RT)
+{
+    int val;
+    if (*InvisibiliteTimerval != 100 )
+    {
+        time_t timestamp = time( NULL );
+        struct tm * timeInfos = localtime( & timestamp );
+
+        if (*InvisibiliteTimerval>=timeInfos->tm_sec) val = *InvisibiliteTimerval-timeInfos->tm_sec;
+        else val = 60-timeInfos->tm_sec+InvisibiliteTimer;
+
+        if (val >= 0 && val <= 11) InvisibiliteAffichage(val2,10-val,RT);
+        if (val == 0)
+        {
+            InvisibiliteAffichage(val2,10,RT);
+            Sleep(400);
+            InvisibiliteAffichage(val2,11,RT);
+            (*InvisibiliteTimerval) = 100;
+        }
+    }
 }
