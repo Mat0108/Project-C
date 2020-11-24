@@ -7,13 +7,13 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
-
+//bouton quitter
 void Quitter()
 {
     allegro_exit();
     exit(EXIT_FAILURE);
 }
-
+//bouton play
 void Play(int RT,int CT,int origin)
 {
     int MenuBase = 0;;
@@ -26,6 +26,7 @@ void Play(int RT,int CT,int origin)
     AffichageNiveau(RT,10,origin);
     Sleep(300);
 }
+//bouton choix niveau
 int ChoixNiveau(int tableau[21][21],int RT,int CT,int origin)
 {
     int MenuNiveau = 0;
@@ -46,6 +47,7 @@ int ChoixNiveau(int tableau[21][21],int RT,int CT,int origin)
     AffichageAllegro(tableau,1,RT,CT,origin);
     return MenuNiveau;
 }
+//bouton choix player
 int ChoixPlayer(int RT,int CT,int origin)
 {
     int MenuPlayer = 0;
@@ -61,6 +63,7 @@ int ChoixPlayer(int RT,int CT,int origin)
     Sleep(300);
     return MenuPlayer;
 }
+//bouton choix perso
 void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer)
 {
     int varaffichage = 1, condition = 1;
@@ -118,6 +121,7 @@ void AffichageItemLoad(int RT,int debut,float x,int choix,char adress2[100])
     testload(image,adress);
     blit(image,screen,0,0,RT*x,RT*debut,image->w, image->h);
 }
+//affichages des powerups des persos
 void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int choixperso,int perso,int xorigin)
 {
     BITMAP *image;
@@ -162,6 +166,8 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
         AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"Perso");
     }
 }
+
+//affichage de la barre d'invisiblilite
 void InvisibiliteAffichage(int xorigin,int val,int RT)
 {
     BITMAP *image;
@@ -177,7 +183,7 @@ void InvisibiliteAffichage(int xorigin,int val,int RT)
     testload(image,adress);
     blit(image,screen,0,0,0,RT*(debut+4*delta),image->w, image->h);
 }
-
+//execution de l'invisibilite
 void Invisibilite(int *invisibiliteOn,int InvisibiliteTimer,int xorigin,int RT)
 {
 
@@ -203,7 +209,7 @@ void Invisibilite(int *invisibiliteOn,int InvisibiliteTimer,int xorigin,int RT)
         break;
     }
 }
-
+//activation d'invisibilite
 void Invisibilite_Activable(int *InvisibiliteOn,int *InvisibiliteTimerval,int InvisibiliteTimer,int val, int RT)
 {
     (*InvisibiliteOn) = 1;
@@ -213,7 +219,7 @@ void Invisibilite_Activable(int *InvisibiliteOn,int *InvisibiliteTimerval,int In
     if (*InvisibiliteTimerval>59 ) (*InvisibiliteTimerval) = (*InvisibiliteTimerval) -60;
     Invisibilite(InvisibiliteOn,InvisibiliteTimer,val,RT);
 }
-
+//update l'invisiblilite
 void Invisibilite_Update(int *InvisibiliteTimerval,int InvisibiliteTimer,int val2, int RT)
 {
     int val;

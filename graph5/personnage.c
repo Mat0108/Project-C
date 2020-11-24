@@ -7,6 +7,7 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
+//affichege du perso
 void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int origin)
 {
 
@@ -17,6 +18,7 @@ void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int origin)
     testload(perso,adress);
     blit(perso,screen,0,0,RT*(x_perso+origin),RT*y_perso,perso->w, perso->h);
 }
+//affichage de la bombe
 void BombePlace(int x,int y,int RT,int origin)
 {
     char adress[100];
@@ -26,45 +28,7 @@ void BombePlace(int x,int y,int RT,int origin)
     testload(BOMBE,adress);
     blit(BOMBE,screen,0,0,RT*(x+origin),RT*y,BOMBE->w, BOMBE->h);
 }
-
-int PersoDeplacementX(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin)
-{
-    int i;
-    if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
-    {
-        AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
-        for (i=0;i<5;i++)
-        {
-            if (BombeX[i]== x_perso && BombeY[i] ==y_perso) BombePlace(x_perso,y_perso,RT,origin);
-        }
-        if (dx == 1) x_perso += 1;
-        if (dy == 1) y_perso += 1;
-        if (dx == -1) x_perso -= 1;
-        if (dy == -1) y_perso -= 1;
-        PersoAffichage(x_perso,y_perso,RT,choix,origin);
-    }
-    Sleep(500);
-    return x_perso;
-}
-int PersoDeplacementY(int tableau[21][21],int x_perso, int y_perso, int delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int RT,int choix,int origin)
-{
-    int i;
-    if (tableau[y_perso+dy*delta_perso][x_perso+dx*delta_perso] == 0)
-    {
-
-        AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
-        for (i=0;i<5;i++)
-        {
-            if (BombeX[i]== x_perso && BombeY[i] ==y_perso)BombePlace(x_perso,y_perso,RT,origin);
-        }
-        if (dx == 1) x_perso += 1;
-        if (dy == 1) y_perso += 1;
-        if (dx == -1) x_perso -= 1;
-        if (dy == -1) y_perso -= 1;
-        PersoAffichage(x_perso,y_perso,RT,choix,origin);
-        }
-    return y_perso;
-}
+//deplacement du perso
 int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int choix,int origin)
 {
     int i;
@@ -90,7 +54,7 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
     }
     return 1;
 }
-
+//Creation de la bombe
 int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso)
 {
      if (*nb_Bombe < nb_Bombe_max)
@@ -108,6 +72,7 @@ int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bo
     }
     return 1;
 }
+//effet de la bombe : affichage de la pointe de l'explotion
 void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int rotation,int RT,int CT,int origin)
 {
     BITMAP  *BOMBE;
@@ -150,6 +115,7 @@ void BombeEffect2(int x,int y,int rayon,int *tableau[21][21],int x2,int y2,int r
     }
 
 }
+//effet de la bombe : affichage du rayon de la bombe (les traits)
 void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int origin)
 {
     BITMAP *BOMBE;
@@ -180,6 +146,7 @@ void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int or
     BombeEffect2(x,y,rayon,tableau,0,1,4,RT,CT,origin);
     BombeEffect2(x,y,rayon,tableau,0,-1,2,RT,CT,origin);
 }
+//affichage des effect de la bombe
 void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int tableau[21][21],int RT,int CT,int origin)
 {
     for (int i=0;i<5;i++)
@@ -197,6 +164,7 @@ void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int 
 
     }
 }
+//modification des tableaux par les bombes
 void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[21][21],int *PowerUpTab[21][21],int x_perso,int y_perso,int *nb_vie,int nb_Bombe_max,int *nb_Bombe,int rayon,int delta_perso,int RT,int CT,int origin,int MenuPerso,int player,int xorigin,int *InvisibiliteTimerval)
 {
     time_t timestamp = time( NULL );
@@ -287,7 +255,7 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
     }
 }
 
-
+//desaffichage des bombes
 void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int BombeY[5],int RT,int origin)
 {
     int i,j;

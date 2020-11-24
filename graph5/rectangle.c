@@ -216,7 +216,7 @@ void AffichageMenu(int RT,int CT,int origin)
     blit(image,screen,0,0,RT*1,RT*(1+2*(i+1)),image->w, image->h);
 
 }
-//affichage du menu de choix de perso
+//affichage du menu de choix de niveau
 int AffichageNiveau(int RT,int CT,int origin)
 {
 
@@ -236,6 +236,7 @@ int AffichageNiveau(int RT,int CT,int origin)
     blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
     return 0;
 }
+//affichage du menu de choix du nombre de player
 void AffichagePlayer(int RT,int CT,int origin)
 {
     int i;
@@ -253,7 +254,7 @@ void AffichagePlayer(int RT,int CT,int origin)
     testload(image,adress);
     blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
 }
-
+//affichage du choix du perso
 void AffichagePerso(int RT,int CT, int yposition,int player)
 {
     int i=1;

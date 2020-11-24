@@ -7,6 +7,7 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
+//permet de generer les powerup
 void PowerUpGeneration2(char item[10],int x,int y, int RT)
 {
     char adress[100];
@@ -16,7 +17,7 @@ void PowerUpGeneration2(char item[10],int x,int y, int RT)
     testload(image,adress);
     blit(image,screen,0,0,RT*x,RT*y,image->w, image->h);
 }
-
+//affichage des powerup
 void PowerUpAffichage(int tableau[21][21],int origin,int RT,int CT)
 {
     int i,j;
@@ -61,12 +62,5 @@ void PowerUpAffichage(int tableau[21][21],int origin,int RT,int CT)
             }
         }
     }
-}
-int PowerUpGeneration()
-{
-    srand(time(NULL));
-    int x = rand()%50;;
-    if (x >29 && x<20 ) x=0;
-    return x;
 }
 
