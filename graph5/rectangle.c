@@ -4,6 +4,7 @@
 #include <allegro.h>
 #include <string.h>
 
+//permet de charger un niveau depuis un .txt
 void Load(int *tableau[21][21],FILE *niveau,int CT) //fonction pour un charger un niveau précreer
 {
     int i,j;
@@ -31,6 +32,7 @@ void Load(int *tableau[21][21],FILE *niveau,int CT) //fonction pour un charger u
         }
     }
 }
+//Permet de creer le niveau
 void MethodeCreate(int *tableau[21][21],int choix,int CT) // 0 Aleatoire, 1 niveau 1, 2 niveau 2...
 {
     int i,j;
@@ -81,7 +83,7 @@ void Create(int *tableau[21][21],int choixniveau,int CT)
     srand(time(NULL)); //initiatilisation random
     MethodeCreate(tableau,choixniveau,CT);
 }
-
+//affichage du niveau dans la console pour tester
 void affichage(int *tableau[21][21],int CT)
 {
     int i,j;
@@ -94,6 +96,7 @@ void affichage(int *tableau[21][21],int CT)
         printf("\n");
     }
 }
+//affichage du niveau dans Allegro
 void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT,int origin)
 {
     BITMAP *image;
@@ -127,6 +130,7 @@ void AffichageAllegro(int tableau[21][21],int debut,int RT,int CT,int origin)
         }
     }
 }
+//permet de corriger un bug d'affichage
 void AffichageAllegro2(int tableau[21][21],int debut,int RT,int CT,int origin)
 {
     BITMAP *image;
@@ -150,7 +154,7 @@ void AffichageAllegro2(int tableau[21][21],int debut,int RT,int CT,int origin)
         }
     }
 }
-
+//Desaffichage du perso
 void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int origin)
 {
     BITMAP *image;
@@ -177,6 +181,7 @@ void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int o
         break;
     }
 }
+//Desaffichage du menu
 void AffichageMenuInv(int RT,int CT,int origin,int debut)
 {
     int i,j;
@@ -193,6 +198,7 @@ void AffichageMenuInv(int RT,int CT,int origin,int debut)
         }
     }
 }
+//affichage du premier menu
 void AffichageMenu(int RT,int CT,int origin)
 {
     AffichageMenuInv(RT,CT,origin,0);
@@ -210,6 +216,7 @@ void AffichageMenu(int RT,int CT,int origin)
     blit(image,screen,0,0,RT*1,RT*(1+2*(i+1)),image->w, image->h);
 
 }
+//affichage du menu de choix de perso
 int AffichageNiveau(int RT,int CT,int origin)
 {
 

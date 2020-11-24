@@ -8,16 +8,22 @@
 #include <winalleg.h>
 #include <windows.h>
 
-#define NOIR al_map_rgb(0,0,0)
-#define BLANC al_map_rgb(255,255,255)
+/*---------------------------------------------------------------------------------------------------------------------
+------------------------------------------------Programme Bomberman----------------------------------------------------
+-------------------------Matthieu Barnabé-------Alexandre La Fonta-------Nhat Khoa-------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+----Liste des bugs : https://docs.google.com/spreadsheets/d/16qRqcISNdt1qFeHDXFJQrD2jtbKLKgxOR5rZJznYJh4/edit#gid=0----
+---------------------------------------------------------------------------------------------------------------------*/
+
 int timerval=0;
 int timerminutes = 0;
 
 const int RT = 30; //taille d'une image
 // IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
 const int CT = 21; // taille d'une case graphique
-
 int origin = 5;
+
+//fonction pour afficher un timer au cours de la partie
 void timer()
 {
     BITMAP *image;
@@ -37,6 +43,8 @@ void timer()
     textprintf_ex(screen,font,RT*(10+origin),RT/2,makecol(0,0,0),-1,"%d:%02d",timerminutes,timerval);
     timerval++;
 }
+
+//fonction pour verifier l'existance d'une bitmap
 void testload(BITMAP *image,char adress[100])
 {
     char nom[100];
@@ -59,17 +67,17 @@ int main()
     int x_perso2 = 19,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3,Item2 = CT+origin;
     int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
 
-    int MenuBase = 1, MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0, *PowerUpTab[21][21] = {0};
-
-    int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100,val = 0;
+    int MenuBase = 1, MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0, *PowerUpTab[21][21] = {0}; //variable pour les bombes
+    int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100,val = 0; //variable pour le powerup invisibilité pour le perso 1
     int i,j,k,appui_touche = 0;
 
 
-    Create(rectangle,-1,CT);
+    Create(rectangle,-1,CT); //Initialisation du labyrinthe
     allegro_init();
     install_keyboard();
     install_mouse();
     set_color_depth(32);
+    //creation de la fenetre d'affichagge Allegro
     int Ecran_X = RT*CT+2*RT*origin+10;
     int Ecran_Y = RT*CT;
     if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,Ecran_X,Ecran_Y,0,0) != 0)
@@ -78,21 +86,21 @@ int main()
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    AffichageMenu(RT,CT,origin);
-    AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe
-    show_mouse(screen);
-    Play(RT,CT,origin);
-    MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin);
-    MenuPlayer = ChoixPlayer(RT,CT,origin);
-    ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer);
-    AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
-    if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);
-    install_int_ex(timer,BPS_TO_TIMER(1));
+    AffichageMenu(RT,CT,origin); //affichage du choix du menu
+    AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe en niveau -1
+    show_mouse(screen); //affichage du pointeur de la souris
+    Play(RT,CT,origin); //affichage du choix du niveau
+    MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
+    MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
+    ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer);//choix des persos
+    AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item); //affichage des powerup du perso 1
+    if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);//affichage des powerup du perso 2
+    install_int_ex(timer,BPS_TO_TIMER(1)); //initialisation du timer
 
 
-    while (!key[KEY_ESC])
+    while (!key[KEY_ESC])//boucle d'animation
     {
-
+        //if pour le deplacment et le posement de la bombe du perso 1
         if (key[KEY_D])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_A])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
@@ -100,6 +108,7 @@ int main()
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
         BombeEffect4(&BombeX,&BombeY,&BombeTimer,rectangle,&PowerUpTab,x_perso,y_perso,&nb_vie,nb_Bombe_max,&nb_Bombe,rayon,delta_perso,RT,CT,origin,MenuPerso,1,Item,&InvisibiliteTimerval);
 
+        //if pour le deplacment et le posement de la bombe du perso 2
         if (key[KEY_RIGHT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
         if (key[KEY_LEFT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,-1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
         if (key[KEY_UP] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,0,-1,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
@@ -109,11 +118,12 @@ int main()
         AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
         if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);
 
+        //Powerup Invisibilité (purement visuelle)
         if (key[KEY_ENTER_PAD]) Invisibilite_Activable(&InvisibiliteOn,&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
         Invisibilite_Update(&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
 
-        if (appui_touche == 1)
-        {
+        //permet l'appui de plusieurs touches en même temps
+        if (appui_touche == 1){
             appui_touche = 0;
             Sleep(300);
         }
