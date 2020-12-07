@@ -280,4 +280,13 @@ void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int
     }
 
 }
-
+void V2Bombes(int BombeX[i],int BombeY[i],int *tableau[21][21],int rayon)
+{
+    time_t timestamp = time( NULL );
+    struct tm * timeInfos = localtime( & timestamp );
+    int i;
+    for (i=0;i<5;i++)
+    {
+        if (BombeTimer[i]== timeInfos->tm_sec && BombeTimer[i] != 0) BombeEffect(BombeX[i],BombeY[i],rayon,tableau,RT,CT,origin);
+    }
+}
