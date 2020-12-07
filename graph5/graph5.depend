@@ -712,3 +712,62 @@
 	<allegro.h>
 	<string.h>
 
+1607350701 source:c:\users\utilisateur\documents\github\project-c\graph5\rectangle.c
+	"rectangle.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+
+1604475152 c:\users\utilisateur\documents\github\project-c\graph5\rectangle.h
+	<stdio.h>
+	<stdlib.h>
+
+1606748289 source:c:\users\utilisateur\documents\github\project-c\graph5\main.c
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<allegro/font.h>
+	<allegro/text.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1606218303 source:c:\users\utilisateur\documents\github\project-c\graph5\menu.c
+	"menu.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1606216562 c:\users\utilisateur\documents\github\project-c\graph5\menu.h
+
+1606218303 source:c:\users\utilisateur\documents\github\project-c\graph5\personnage.c
+	"rectangle.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1606218303 source:c:\users\utilisateur\documents\github\project-c\graph5\powerup.c
+	"powerup.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+
+1606218303 c:\users\utilisateur\documents\github\project-c\graph5\powerup.h
+
