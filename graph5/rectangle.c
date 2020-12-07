@@ -223,6 +223,10 @@ int AffichageNiveau(int RT,int CT,int origin)
     int i;
     BITMAP *image;
     char adress[100];
+    sprintf(adress,"image/%d/menu/choix niveau.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*1,RT*(1),image->w, image->h);
     for (i=1;i<6;i++)
     {
         sprintf(adress, "image/%d/menu/niveau %d.bmp",RT,i);
