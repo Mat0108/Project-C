@@ -8,35 +8,43 @@
 #include <winalleg.h>
 #include <windows.h>
 
-#define NOIR al_map_rgb(0,0,0)
-#define BLANC al_map_rgb(255,255,255)
+/*---------------------------------------------------------------------------------------------------------------------
+------------------------------------------------Programme Bomberman----------------------------------------------------
+-------------------------Matthieu Barnabé-------Alexandre La Fonta-------Nhat Khoa Tran--------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+----Liste des bugs : https://docs.google.com/spreadsheets/d/16qRqcISNdt1qFeHDXFJQrD2jtbKLKgxOR5rZJznYJh4/edit#gid=0----
+---------------------------------------------------------------------------------------------------------------------*/
+
 int timerval=0;
 int timerminutes = 0;
 
 const int RT = 30; //taille d'une image
 // IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
 const int CT = 21; // taille d'une case graphique
-
 int origin = 5;
+
+//fonction pour afficher un timer au cours de la partie
 void timer()
 {
     BITMAP *image;
     char adress[100];
     sprintf(adress, "image/%d/chrono.bmp",RT);
     image=load_bitmap(adress,NULL);
-    blit(image,screen,0,0,RT*(18+origin),0,image->w, image->h);
+    blit(image,screen,0,0,RT*(9+origin),0,image->w, image->h);
     sprintf(adress, "image/%d/brick grey.bmp",RT);
     image=load_bitmap(adress,NULL);
-    blit(image,screen,0,0,RT*(19+origin),0,image->w, image->h);
-    blit(image,screen,0,0,RT*(20+origin),0,image->w, image->h);
+    blit(image,screen,0,0,RT*(10+origin),0,image->w, image->h);
+    blit(image,screen,0,0,RT*(11+origin),0,image->w, image->h);
     if (timerval == 60)
     {
         timerminutes++;
         timerval = 0;
     }
-    textprintf_ex(screen,font,RT*(19+origin),RT/2,makecol(0,0,0),-1,"%d:%02d",timerminutes,timerval);
+    textprintf_ex(screen,font,RT*(10+origin),RT/2,makecol(0,0,0),-1,"%d:%02d",timerminutes,timerval);
     timerval++;
 }
+
+//fonction pour verifier l'existance d'une bitmap
 void testload(BITMAP *image,char adress[100])
 {
     char nom[100];
@@ -48,174 +56,80 @@ void testload(BITMAP *image,char adress[100])
         exit(EXIT_FAILURE);
     }
 }
-void Quitter()
-{
-    allegro_exit();
-    exit(EXIT_FAILURE);
-}
+
 int main()
 {
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
-    int choix_perso = 1; //Pour changer le perso affiché
-    int x_perso = 1;
-    int y_perso = 1;
-    int delta_perso = 1;
 
-    int BombeX[5] = {0};
-    int BombeY[5] = {0};
-    int BombeTimer[5] = {0};
-    int nb_Bombe= 0;
+    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3,Item = 0;
+    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 1;  //variable pour le perso 1
 
-    int rayon = 3;
-    int i,j,k;
+    int x_perso2 = 19,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3,Item2 = CT+origin;
+    int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
 
-    int MenuBase = 1;
-    int MenuNiveau = 0;
-    int MenuPerso = 0;
-    int nb_Bombe_max = 3;
-    int nb_vie = 3;
-
-    Create(rectangle,0,CT); //0 niveau vide 1 niveau basique, 2 niveau 2... >4 niveau aléatoire
-    //affichage(rectangle,CT);
+    int MenuBase = 1, MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0, *PowerUpTab[21][21] = {0}; //variable pour les bombes
+    int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100,val = 0; //variable pour le powerup invisibilité pour le perso 1
+    int i,j,k,appui_touche = 0;
 
 
-
-    // initialisation allegro obligatoire
+    Create(rectangle,-1,CT); //Initialisation du labyrinthe
     allegro_init();
-
-    // pour disposer du clavier
     install_keyboard();
     install_mouse();
-
-
-    // définir un mode graphique
     set_color_depth(32);
-    int Ecran_X = RT*CT+RT*origin;
+    //creation de la fenetre d'affichagge Allegro
+    int Ecran_X = RT*CT+2*RT*origin+10;
     int Ecran_Y = RT*CT;
-    set_gfx_mode(GFX_AUTODETECT_WINDOWED,Ecran_X,Ecran_Y,0,0);
-
-    AffichageMenu(RT,CT,origin);
-    AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe
-
-    show_mouse(screen);
-    while (MenuBase == 1)
+    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,Ecran_X,Ecran_Y,0,0) != 0)
     {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuBase = 0;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) Quitter();
+        allegro_message("probleme mode graphique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
     }
-    AffichageMenuInv(RT,CT,origin,1);
-    AffichageNiveau(RT,10,origin);
-    while (MenuNiveau == 0)
-    {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuNiveau = 2;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuNiveau = 3;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuNiveau = 4;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) MenuNiveau = 5;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
-    }
-    Create(rectangle,MenuNiveau,CT);
-    AffichageAllegro(rectangle,1,RT,CT,origin);
-    AffichageMenuInv(RT,CT,origin,1);
-    AffichagePerso(RT,CT,origin);
-    while (MenuPerso== 0)
-    {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuPerso = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuPerso = 2;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuPerso = 3;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuPerso = 4;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) Quitter();
-    }
-    PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-    AffichageMenuInv(RT,CT,origin,1);
-    AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
+    AffichageMenu(RT,CT,origin); //affichage du choix du menu
+    AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe en niveau -1
+    show_mouse(screen); //affichage du pointeur de la souris
+    Play(RT,CT,origin); //affichage du choix du niveau
+    MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
+    MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
+    ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer);//choix des persos
+    AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item); //affichage des powerup du perso 1
+    if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);//affichage des powerup du perso 2
+    install_int_ex(timer,BPS_TO_TIMER(1)); //initialisation du timer
 
-    install_int_ex(timer,BPS_TO_TIMER(1));
 
-    while (!key[KEY_ESC])
+    while (!key[KEY_ESC])//boucle d'animation
     {
+        //if pour le deplacment et le posement de la bombe du perso 1
+        if (key[KEY_D])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
+        if (key[KEY_A])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
+        if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
+        if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
+        if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
+        BombeEffect4(&BombeX,&BombeY,&BombeTimer,rectangle,&PowerUpTab,x_perso,y_perso,&nb_vie,nb_Bombe_max,&nb_Bombe,rayon,delta_perso,RT,CT,origin,MenuPerso,1,Item,&InvisibiliteTimerval);
 
-        if (key[KEY_RIGHT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, 1,0,BombeX,BombeY,RT,MenuPerso,origin);
-        if (key[KEY_LEFT]) x_perso = PersoDeplacementX(rectangle,x_perso, y_perso, delta_perso, -1,0,BombeX,BombeY,RT,MenuPerso,origin);
-        if (key[KEY_UP]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,-1,BombeX,BombeY,RT,MenuPerso,origin);
-        if (key[KEY_DOWN]) y_perso = PersoDeplacementY(rectangle,x_perso, y_perso, delta_perso, 0,1,BombeX,BombeY,RT,MenuPerso,origin);
-        if (key[KEY_SPACE])
-        {
-            BombeX[nb_Bombe] = x_perso;
-            BombeY[nb_Bombe] = y_perso;
-            time_t timestamp = time( NULL );
-            struct tm * timeInfos = localtime( & timestamp );
-            BombeTimer[nb_Bombe] = timeInfos->tm_sec+10;
-            if (BombeTimer[nb_Bombe]>= 60) BombeTimer[nb_Bombe] = BombeTimer[nb_Bombe] - 60;
-            AfffichagePosition(rectangle,x_perso,y_perso,RT,origin);
-            BombePlace(x_perso,y_perso,RT,origin);
-            PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
-            nb_Bombe++;
+        //if pour le deplacment et le posement de la bombe du perso 2
+        if (key[KEY_RIGHT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
+        if (key[KEY_LEFT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,-1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
+        if (key[KEY_UP] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,0,-1,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
+        if (key[KEY_DOWN] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,0,1,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
+        if (key[KEY_ENTER] && MenuPlayer == 2) appui_touche = BombePlacement(&BombeX2,&BombeY2,&BombeTimer2,&nb_Bombe2,nb_Bombe_max2,rectangle,x_perso2,y_perso2,RT,origin,MenuPerso2);
+        BombeEffect4(&BombeX2,&BombeY2,&BombeTimer2,rectangle,&PowerUpTab,x_perso2,y_perso2,&nb_vie2,nb_Bombe_max2,&nb_Bombe2,rayon2,delta_perso2,RT,CT,origin,MenuPerso2,2,Item2,&InvisibiliteTimerval);
+        AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
+        if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);
+
+        //Powerup Invisibilité (purement visuelle)
+        if (key[KEY_ENTER_PAD]) Invisibilite_Activable(&InvisibiliteOn,&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
+        Invisibilite_Update(&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
+
+        //permet l'appui de plusieurs touches en même temps
+        if (appui_touche == 1){
+            appui_touche = 0;
             Sleep(300);
         }
-        time_t timestamp = time( NULL );
-        struct tm * timeInfos = localtime( & timestamp );
-        for (i=0;i<5;i++)
-        {
-            if (BombeTimer[i] == timeInfos->tm_sec && BombeTimer[i] != 0 && BombeX[i] != 0)
-            {
-                if(rectangle[BombeY[i]][BombeX[i]] == 0) BombeEffect(BombeX[i],BombeY[i],rayon,rectangle,RT,origin);
-            }
-            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0)
-            {
-                for (j=0;j<=2*rayon+1;j++)
-                {
-                    if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1) rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
-                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1 && BombeY[i]-rayon>0) rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
-                    if (BombeY[i] == 1)
-                    {
-                        for (k=0;k<=rayon;k++)
-                        {
-                            if(rectangle[BombeY[i]+k][BombeX[i]] == 1)rectangle[BombeY[i]+k][BombeX[i]]  = 0;
-                        }
-                    }
-                    if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso))
-                    {
-                        nb_vie--;
-                        AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
-                        if (nb_vie == 0)
-                        {
-                            allegro_message("Vous avez perdu");
-                            allegro_exit();
-                            exit(EXIT_FAILURE);
-                        }
-                    }
-
-                }
-                BombeEffectInv(BombeX[i],BombeY[i],rayon,rectangle,BombeX,BombeY,RT,origin);
-                AffichageItem(RT,CT,nb_vie,nb_Bombe_max);
-                nb_Bombe--;
-                for (i=0;i<5;i++)
-                {
-                    if (BombeX[i+1] != 0)
-                    {
-                        if (i+1<5)
-                        {
-                            BombeX[i] = BombeX[i+1];
-                            BombeY[i] = BombeY[i+1];
-                            BombeTimer[i] = BombeTimer[i+1];
-                        }
-                    }
-                    else
-                    {
-                        BombeX[i] = 0;
-                        BombeY[i] = 0;
-                        BombeTimer[i] = 0;
-                    }
-                }
-            }
-        }
     }
-    // attend une touche pour quitter (similaire getch() de conio.h)
     readkey();
-
     return 0;
-
 }
 //attention ne pas oublier !
 END_OF_MAIN();
