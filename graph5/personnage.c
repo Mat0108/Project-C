@@ -124,30 +124,33 @@ void BombeEffect(int x,int y,int rayon,int *tableau[21][21],int RT,int CT,int or
     BITMAP *BOMBE;
     int i;
     char adress[100];
-    sprintf(adress,"image/%d/bombe/bombe_croix_sol.bmp",RT);
-    BOMBE = load_bitmap(adress,NULL);
-    testload(BOMBE,adress);
-    blit(BOMBE,screen,0,0,RT*(x+origin),RT*y,BOMBE->w, BOMBE->h);
-    if(rayon>1)
+    if (x != 0 && y != 0)
     {
-        for(i=1;i<rayon;i++)
+        sprintf(adress,"image/%d/bombe/bombe_croix_sol.bmp",RT);
+        BOMBE = load_bitmap(adress,NULL);
+        testload(BOMBE,adress);
+        blit(BOMBE,screen,0,0,RT*(x+origin),RT*y,BOMBE->w, BOMBE->h);
+        if(rayon>1)
         {
-            sprintf(adress,"image/%d/bombe/ligne_1.bmp",RT);
-            BOMBE = load_bitmap(adress,NULL);
-            testload(BOMBE,adress);
-            if (x-i>0) blit(BOMBE,screen,0,0,RT*(x-1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
-            if (x+i<CT-1)blit(BOMBE,screen,0,0,RT*(x+1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
-            sprintf(adress,"image/%d/bombe/ligne_2.bmp",RT);
-            BOMBE = load_bitmap(adress,NULL);
-            testload(BOMBE,adress);
-            if (y-i>0) blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y-1*i),BOMBE->w, BOMBE->h);
-            if (y+i<CT-1)blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y+1*i),BOMBE->w, BOMBE->h);
+            for(i=1;i<rayon;i++)
+            {
+                sprintf(adress,"image/%d/bombe/ligne_1.bmp",RT);
+                BOMBE = load_bitmap(adress,NULL);
+                testload(BOMBE,adress);
+                if (x-i>0) blit(BOMBE,screen,0,0,RT*(x-1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
+                if (x+i<CT-1)blit(BOMBE,screen,0,0,RT*(x+1*i+origin),RT*y+RT/4,BOMBE->w, BOMBE->h);
+                sprintf(adress,"image/%d/bombe/ligne_2.bmp",RT);
+                BOMBE = load_bitmap(adress,NULL);
+                testload(BOMBE,adress);
+                if (y-i>0) blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y-1*i),BOMBE->w, BOMBE->h);
+                if (y+i<CT-1)blit(BOMBE,screen,0,0,RT*(x+origin)+RT/4,RT*(y+1*i),BOMBE->w, BOMBE->h);
+            }
         }
+        BombeEffect2(x,y,rayon,tableau,1,0,1,RT,CT,origin);
+        BombeEffect2(x,y,rayon,tableau,-1,0,3,RT,CT,origin);
+        BombeEffect2(x,y,rayon,tableau,0,1,4,RT,CT,origin);
+        BombeEffect2(x,y,rayon,tableau,0,-1,2,RT,CT,origin);
     }
-    BombeEffect2(x,y,rayon,tableau,1,0,1,RT,CT,origin);
-    BombeEffect2(x,y,rayon,tableau,-1,0,3,RT,CT,origin);
-    BombeEffect2(x,y,rayon,tableau,0,1,4,RT,CT,origin);
-    BombeEffect2(x,y,rayon,tableau,0,-1,2,RT,CT,origin);
 }
 //affichage des effect de la bombe
 void BombeEffect3(int BombeTimer[5],int BombeX[5], int BombeY[5],int rayon, int tableau[21][21],int RT,int CT,int origin)
