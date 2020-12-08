@@ -155,7 +155,7 @@ void AffichageAllegro2(int tableau[21][21],int debut,int RT,int CT,int origin)
     }
 }
 //Desaffichage du perso
-void AfffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int origin)
+void AffichagePosition(int tableau[21][21],int x_perso,int y_perso,int RT,int origin)
 {
     BITMAP *image;
     char adress[100];

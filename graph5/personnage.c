@@ -44,7 +44,7 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
     PowerUp[*y_perso+dy][*x_perso+dx] = 0;
     if (tableau[*y_perso+dy* *delta_perso][*x_perso+dx* *delta_perso] == 0)
     {
-        AfffichagePosition(tableau,*x_perso,*y_perso,RT,origin);
+        AffichagePosition(tableau,*x_perso,*y_perso,RT,origin);
         for (i=0;i<5;i++)
         {
             if (BombeX[i]== *x_perso && BombeY[i] ==*y_perso)BombePlace(*x_perso,*y_perso,RT,origin);
@@ -68,7 +68,7 @@ int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bo
         struct tm * timeInfos = localtime( & timestamp );
         BombeTimer[*nb_Bombe] = timeInfos->tm_sec+3;
         if (BombeTimer[*nb_Bombe]>= 60) BombeTimer[*nb_Bombe] = BombeTimer[*nb_Bombe] - 60;
-        AfffichagePosition(tableau,x_perso,y_perso,RT,origin);
+        AffichagePosition(tableau,x_perso,y_perso,RT,origin);
         BombePlace(x_perso,y_perso,RT,origin);
         PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
         (*nb_Bombe)++;
@@ -252,8 +252,8 @@ void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int
     char adress[100];
     for(i=0;i<2*rayon+1;i++)
     {
-        AfffichagePosition(tableau,x,y+i-rayon,RT,origin);
-        if(x+i-rayon >0 ) AfffichagePosition(tableau,x+i-rayon,y,RT,origin);
+        AffichagePosition(tableau,x,y+i-rayon,RT,origin);
+        if(x+i-rayon >0 ) AffichagePosition(tableau,x+i-rayon,y,RT,origin);
         else
         {
             sprintf(adress, "image/%d/brick grey.bmp",RT);
@@ -284,7 +284,7 @@ void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],i
         }
     }
 }
-void V2Bombes_desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon)
+void V2Bombes_desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
@@ -294,7 +294,7 @@ void V2Bombes_desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
     {
         if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeTimer)[i] != 0)
         {
-
+            *nb_bombe = *nb_bombe == 1;
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
             for ( l=0;l<4;l++)
             {
@@ -316,5 +316,15 @@ void V2Bombes_desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
             (*BombeTimer)[4] = 0;
 
         }
+    }
+}
+
+void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5])
+{
+    int i =0;
+    if (BombeX[i]!=0)printf("\n");
+    for (i=0;i<5;i++)
+    {
+        if (BombeX[i]!=0)printf("\n%d eme bombe x=%d y=%d timer=%d",i,BombeX[i],BombeY[i],BombeTimer[i]);
     }
 }
