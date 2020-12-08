@@ -280,25 +280,21 @@ void V2Bombes(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*table
     {
         if ((*BombeTimer[i])== timeInfos->tm_sec && (*BombeTimer[i]) != 0) //affichage du rayon de la bombe
         {
-            printf("condition 1\n");
             BombeEffect((*BombeX)[i],(*BombeY)[i],rayon,tableau,RT,CT,origin);
         }
         if ((*BombeTimer)[i] + 1 == timeInfos->tm_sec && (*BombeTimer)[i] != 0) //transformation des cases rouge (type 1) en case grise (type 0)
         {
-            printf("condition 2\n");
             for (j=0;j<=(2*rayon)+2;j++)
             {
-                printf("condition 2.1\n");
-                printf("%d\n",(*tableau)[(*BombeX)[i]+j][(*BombeY)[i]]);
-
-                printf("condition 2.2\n");
+                printf("x = %d\n",(*tableau)[(*BombeX)[i]+j-rayon][(*BombeY)[i]]);
+                printf("y = %d\n",(*tableau)[(*BombeX)[i]][(*BombeY)[i]+j-rayon]);
                 if ((*tableau)[(*BombeX)[i]+j-rayon][(*BombeY)[i]] == 1) ((*tableau)[(*BombeX)[i]+j-rayon][(*BombeY)[i]]) = 0;
                 if ((*tableau)[(*BombeX)[i]][(*BombeY)[i]+j-rayon] == 1) ((*tableau)[(*BombeX)[i]][(*BombeY)[i]+j-rayon]) = 0;
             }
         }
         if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeTimer)[i] != 0)
         {
-            printf("condition 3\n");
+
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
 
         }
