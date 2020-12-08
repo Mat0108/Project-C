@@ -10,10 +10,12 @@
 //affichege du perso
 void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int origin)
 {
-
+    int typeperso = 2;
     char adress[100];
     BITMAP *perso;
-    sprintf(adress, "image/%d/perso2/pug%d.bmp",RT, choix);
+    if (typeperso == 1) sprintf(adress, "image/%d/perso/Perso%d.bmp",RT, choix);
+    if (typeperso == 2) sprintf(adress, "image/%d/perso2/pug%d.bmp",RT, choix);
+
     perso = load_bitmap(adress,NULL);
     testload(perso,adress);
     blit(perso,screen,0,0,RT*(x_perso+origin),RT*y_perso,perso->w, perso->h);
@@ -281,13 +283,22 @@ void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int
     }
 
 }
-void V2Bombes(int BombeX[i],int BombeY[i],int *tableau[21][21],int rayon)
+void V2Bombes(int BombeX[5],int BombeY[5],int BombeTimer[5],int *tableau[21][21],int rayon)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
     int i;
+    int RT = 30,CT = 21,origin = 5;
     for (i=0;i<5;i++)
     {
-        if (BombeTimer[i]== timeInfos->tm_sec && BombeTimer[i] != 0) BombeEffect(BombeX[i],BombeY[i],rayon,tableau,RT,CT,origin);
+        if (BombeTimer[i]== timeInfos->tm_sec && BombeTimer[i] != 0)
+        {
+            printf("condition 1\n");
+            BombeEffect(BombeX[i],BombeY[i],rayon,tableau,RT,CT,origin);
+        }
+        if (BombeTimer[i] + 1 == timeInfos->tm_sec && BombeTimer[i] != 0)
+        {
+            printf("condition 2\n");
+        }
     }
 }
