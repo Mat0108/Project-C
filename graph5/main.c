@@ -62,7 +62,7 @@ int main()
     int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
 
     int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3,Item = 0;
-    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 1;  //variable pour le perso 1
+    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 2;  //variable pour le perso 1
 
     int x_perso2 = 19,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3,Item2 = CT+origin;
     int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
@@ -106,7 +106,7 @@ int main()
         if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
-        V2Bombes(BombeX,BombeY,BombeTimer,rectangle,rayon);
+        V2Bombes(BombeX,BombeY,BombeTimer,&rectangle,rayon);
         //BombeEffect4(&BombeX,&BombeY,&BombeTimer,rectangle,&PowerUpTab,x_perso,y_perso,&nb_vie,nb_Bombe_max,&nb_Bombe,rayon,delta_perso,RT,CT,origin,MenuPerso,1,Item,&InvisibiliteTimerval);
 
         //if pour le deplacment et le posement de la bombe du perso 2
@@ -117,13 +117,13 @@ int main()
         if (key[KEY_ENTER] && MenuPlayer == 2) appui_touche = BombePlacement(&BombeX2,&BombeY2,&BombeTimer2,&nb_Bombe2,nb_Bombe_max2,rectangle,x_perso2,y_perso2,RT,origin,MenuPerso2);
 
         //BombeEffect4(&BombeX2,&BombeY2,&BombeTimer2,rectangle,&PowerUpTab,x_perso2,y_perso2,&nb_vie2,nb_Bombe_max2,&nb_Bombe2,rayon2,delta_perso2,RT,CT,origin,MenuPerso2,2,Item2,&InvisibiliteTimerval);
-        AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
+        /*AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
         if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);
 
         //Powerup Invisibilité (purement visuelle)
         if (key[KEY_ENTER_PAD]) Invisibilite_Activable(&InvisibiliteOn,&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
         Invisibilite_Update(&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
-
+        */
         //permet l'appui de plusieurs touches en même temps
         if (appui_touche == 1){
             appui_touche = 0;
