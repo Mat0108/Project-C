@@ -59,7 +59,7 @@ void testload(BITMAP *image,char adress[100])
 
 int main()
 {
-    int rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
+    int *rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
 
     int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3,Item = 0;
     int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 2;  //variable pour le perso 1
@@ -106,7 +106,19 @@ int main()
         if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
-        V2Bombes(BombeX,BombeY,BombeTimer,&rectangle,rayon);
+
+        V2Bombes_Affichage(BombeX,BombeY,BombeTimer,(int *)rectangle,rayon);
+        for(int bombe_i=0;bombe_i<5;bombe_i++)
+        {
+            if(BombeTimer[bombe_i]!=0)
+            {
+                for(int bombe_j = 0;bombe_j<=2*rayon+2;bombe_j++)
+                {
+                    if (rectangle[BombeX[bombe_i]][BombeY[bombe_i]-rayon+bombe_j] == 1) rectangle[BombeX[bombe_i]][BombeY[bombe_i]-rayon+bombe_j] =0;
+                }
+            }
+        }
+        V2Bombes_desaffichage(&BombeX,&BombeY,&BombeTimer,(int *)rectangle,rayon);
         //BombeEffect4(&BombeX,&BombeY,&BombeTimer,rectangle,&PowerUpTab,x_perso,y_perso,&nb_vie,nb_Bombe_max,&nb_Bombe,rayon,delta_perso,RT,CT,origin,MenuPerso,1,Item,&InvisibiliteTimerval);
 
         //if pour le deplacment et le posement de la bombe du perso 2

@@ -269,11 +269,11 @@ void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int
     }
 
 }
-void V2Bombes(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon)
+void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
-    int i,j,k;
+    int i,j,k,l;
     int RT = 30,CT = 21,origin = 5;
     int xpos, ypos;
     for (i=0;i<5;i++)
@@ -282,20 +282,38 @@ void V2Bombes(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*table
         {
             BombeEffect((*BombeX)[i],(*BombeY)[i],rayon,tableau,RT,CT,origin);
         }
-        if ((*BombeTimer)[i] + 1 == timeInfos->tm_sec && (*BombeTimer)[i] != 0) //transformation des cases rouge (type 1) en case grise (type 0)
-        {
-            for (j=0;j<=(2*rayon)+2;j++)
-            {
-                printf("x = %d\n",(*tableau)[(*BombeX)[i]+j-rayon][(*BombeY)[i]]);
-                printf("y = %d\n",(*tableau)[(*BombeX)[i]][(*BombeY)[i]+j-rayon]);
-                if ((*tableau)[(*BombeX)[i]+j-rayon][(*BombeY)[i]] == 1) ((*tableau)[(*BombeX)[i]+j-rayon][(*BombeY)[i]]) = 0;
-                if ((*tableau)[(*BombeX)[i]][(*BombeY)[i]+j-rayon] == 1) ((*tableau)[(*BombeX)[i]][(*BombeY)[i]+j-rayon]) = 0;
-            }
-        }
+    }
+}
+void V2Bombes_desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon)
+{
+    time_t timestamp = time( NULL );
+    struct tm * timeInfos = localtime( & timestamp );
+    int RT = 30,origin =5;
+    int i,l;
+    for (i=0;i<5;i++)
+    {
         if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeTimer)[i] != 0)
         {
 
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
+            for ( l=0;l<4;l++)
+            {
+                if ((*BombeX)[l+1] != 0)
+                {
+                    (*BombeX)[l] = (*BombeX)[l+1];
+                    (*BombeY)[l] = (*BombeY)[l+1];
+                    (*BombeTimer)[l] =(*BombeTimer)[l+1];
+                }
+                else
+                {
+                    (*BombeX)[l] = 0;
+                    (*BombeY)[l] = 0;
+                    (*BombeTimer)[l] = 0;
+                }
+            }
+            (*BombeX)[4] = 0;
+            (*BombeY)[4] = 0;
+            (*BombeTimer)[4] = 0;
 
         }
     }
