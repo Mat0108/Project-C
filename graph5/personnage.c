@@ -7,14 +7,16 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
+
 //affichege du perso
 void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int origin)
 {
-    int typeperso = 2;
+
     char adress[100];
     BITMAP *perso;
-    if (typeperso == 1) sprintf(adress, "image/%d/perso/Perso%d.bmp",RT, choix);
-    if (typeperso == 2) sprintf(adress, "image/%d/perso2/pug%d.bmp",RT, choix);
+    int typeperso = default_perso();
+    if (typeperso == 1) sprintf(adress, "image/%d/stitch/stitch_%d.bmp",RT, choix);
+    if (typeperso == 2) sprintf(adress, "image/%d/pug/pug_%d.bmp",RT, choix);
 
     perso = load_bitmap(adress,NULL);
     testload(perso,adress);
@@ -269,6 +271,7 @@ void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX[5],int
     }
 
 }
+
 void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon)
 {
     time_t timestamp = time( NULL );
@@ -339,8 +342,6 @@ void V2Bombes_Life(int BombeX,int BombeY,int rayon,int x_perso,int y_perso,int *
         if (BombeX == x_perso && (BombeY-rayon+i) == y_perso){(*life)--;modif = 1;}
         if (modif == 1)
         {
-            AffichageLigne(3+xorigin,debut,RT);
-            printf("test 1");
             if (xorigin == 0)
             {
                 AffichageItemLoad(RT,debut,xorigin,*life,"PowerUp/Life/LIFE ");

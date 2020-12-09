@@ -226,10 +226,10 @@ int AffichageNiveau(int RT,int CT,int origin)
     sprintf(adress,"image/%d/menu/choix niveau.bmp",RT);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
-    blit(image,screen,0,0,RT*1,RT*(1),image->w, image->h);
-    for (i=1;i<6;i++)
+    blit(image,screen,0,0,RT*1,RT*3,image->w, image->h);
+    for (i=2;i<7;i++)
     {
-        sprintf(adress, "image/%d/menu/niveau %d.bmp",RT,i);
+        sprintf(adress, "image/%d/menu/niveau %d.bmp",RT,i-1);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
         blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
@@ -264,13 +264,16 @@ void AffichagePerso(int RT,int CT, int yposition,int player)
     int i=1;
     BITMAP *image;
     char adress[100];
-    sprintf(adress, "image/%d/menu/player %d.bmp",RT,player);
+    int typeperso = default_perso();
+    /* sprintf(adress, "image/%d/menu/stitch/stitch_0.bmp",RT);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
     blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
-    for (i=2;i<6;i++)
+    */
+    for (i=1;i<6;i++)
     {
-        sprintf(adress, "image/%d/menu/perso %d.bmp",RT,i-1);
+        if (typeperso == 1) sprintf(adress, "image/%d/menu/stitch/stitch_%d.bmp",RT,i-1);
+        if (typeperso == 2) sprintf(adress, "image/%d/menu/pug/pug_%d.bmp",RT,i-1);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
         blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);

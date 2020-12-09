@@ -7,6 +7,10 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
+
+
+
+
 //bouton quitter
 void Quitter()
 {
@@ -32,12 +36,12 @@ int ChoixNiveau(int tableau[21][21],int RT,int CT,int origin)
     int MenuNiveau = 0;
     while (MenuNiveau == 0)
     {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuNiveau = 2;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuNiveau = 3;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuNiveau = 4;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) MenuNiveau = 5;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) Quitter();
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuNiveau = 2;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuNiveau = 3;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*11 && mouse_y<=RT*12.5 && mouse_x<= RT*5 ) MenuNiveau = 4;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 && mouse_x<= RT*5 ) MenuNiveau = 5;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*15 && mouse_y<=RT*16.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,0);
     Sleep(300);
@@ -156,14 +160,17 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
 
     AffichageLigne(3+xorigin,debut+3*delta,RT);
     AffichageItemLoad(RT,debut+3*delta,xorigin,speed,"PowerUp/Speed/Speed ");
+    int typeperso = default_perso();
     if (xorigin == 0){
         AffichageItemLoad(RT,debut+7.5*delta,xorigin,perso,"Touche ");
-        AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"Perso");
+        if (typeperso == 1) AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"stitch/stitch_gris_");
+        if (typeperso == 2) AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"pug/pug_gris_");
     }
     else
     {
         AffichageItemLoad(RT,debut+7.5*delta,xorigin+1.3,perso,"Touche ");
-        AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"Perso");
+        if (typeperso == 1) AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"stitch/stitch_gris_");
+        if (typeperso == 2) AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"pug/pug_gris_");
     }
 }
 

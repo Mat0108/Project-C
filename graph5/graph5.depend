@@ -388,7 +388,7 @@
 1602781802 c:\users\matthieu\desktop\test\graph5\rectangle.h
 	<stdbool.h>
 
-1607522945 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
+1607526004 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -399,18 +399,18 @@
 	<winalleg.h>
 	<windows.h>
 
-1607455943 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
+1607525574 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
 	<string.h>
 
-1607455941 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
+1607523442 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
 	<stdio.h>
 	<stdlib.h>
 
-1607522947 source:c:\users\matthieu\documents\github\project-c\graph5\personnage.c
+1607526674 source:c:\users\matthieu\documents\github\project-c\graph5\personnage.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
@@ -679,11 +679,11 @@
 	<allegro.h>
 	<string.h>
 
-<<<<<<< Updated upstream
-1606748289 source:c:\users\utilisateur\documents\github\project-c\graph5\main.c
-=======
+1607353826 ated upstream
+
 1607353826 source:c:\users\utilisateur\documents\github\project-c\graph5\main.c
->>>>>>> Stashed changes
+
+1607353826 shed changes
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -693,40 +693,44 @@
 	<process.h>
 	<winalleg.h>
 	<windows.h>
-<<<<<<< Updated upstream
-=======
-
-1607353833 source:c:\users\utilisateur\documents\github\project-c\graph5\personnage.c
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<allegro/font.h>
+	<allegro/text.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
 	"rectangle.h"
->>>>>>> Stashed changes
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
-	<allegro/font.h>
-	<allegro/text.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+	"powerup.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
 	<time.h>
 	<process.h>
 	<winalleg.h>
 	<windows.h>
 
-<<<<<<< Updated upstream
 1606218303 source:c:\users\utilisateur\documents\github\project-c\graph5\personnage.c
 	"rectangle.h"
-	<stdio.h>
-	<stdlib.h>
-	<allegro.h>
-	<string.h>
-	<time.h>
-	<process.h>
-	<winalleg.h>
-	<windows.h>
-=======
-1607353826 c:\users\utilisateur\documents\github\project-c\graph5\rectangle.h
-	<stdio.h>
-	<stdlib.h>
-
-1607353833 source:c:\users\utilisateur\documents\github\project-c\graph5\rectangle.c
->>>>>>> Stashed changes
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
@@ -736,14 +740,17 @@
 	<process.h>
 	<winalleg.h>
 	<windows.h>
+
+1606218303 >
 
 1604475152 c:\users\utilisateur\documents\github\project-c\graph5\rectangle.h
 	<stdio.h>
 	<stdlib.h>
 	<stdio.h>
 	<stdlib.h>
+	<stdio.h>
+	<stdlib.h>
 
-<<<<<<< Updated upstream
 1607350701 source:c:\users\utilisateur\documents\github\project-c\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
@@ -756,25 +763,8 @@
 	<allegro.h>
 	<string.h>
 
-1606218303 source:c:\users\utilisateur\documents\github\project-c\graph5\menu.c
-	"menu.h"
-	<stdio.h>
-	<stdlib.h>
-	<allegro.h>
-	<string.h>
-	<time.h>
-	<process.h>
-	<winalleg.h>
-	<windows.h>
-
-1606216562 c:\users\utilisateur\documents\github\project-c\graph5\menu.h
-
-1606218303 source:c:\users\utilisateur\documents\github\project-c\graph5\powerup.c
-	"powerup.h"
-=======
 1607353826 source:c:\users\utilisateur\documents\github\project-c\graph5\menu.c
 	"menu.h"
->>>>>>> Stashed changes
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -783,30 +773,19 @@
 	<process.h>
 	<winalleg.h>
 	<windows.h>
-
-<<<<<<< Updated upstream
-1606218303 c:\users\utilisateur\documents\github\project-c\graph5\powerup.h
-
-1607353351 source:c:\users\matthieu\documents\github\project-c\graph5\menu.c
 	"menu.h"
-	<stdio.h>
-	<stdlib.h>
-	<allegro.h>
-	<string.h>
-	<time.h>
-	<process.h>
-	<winalleg.h>
-	<windows.h>
 
-1607353351 c:\users\matthieu\documents\github\project-c\graph5\menu.h
-
-1607353351 source:c:\users\matthieu\documents\github\project-c\graph5\powerup.c
-=======
 1607353826 c:\users\utilisateur\documents\github\project-c\graph5\menu.h
 
 1607353826 source:c:\users\utilisateur\documents\github\project-c\graph5\powerup.c
->>>>>>> Stashed changes
 	"powerup.h"
+
+1606218303 "
+
+1607353826 c:\users\utilisateur\documents\github\project-c\graph5\powerup.h
+
+1607526062 source:c:\users\matthieu\documents\github\project-c\graph5\menu.c
+	"menu.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -816,9 +795,9 @@
 	<winalleg.h>
 	<windows.h>
 
-<<<<<<< Updated upstream
+1607526004 c:\users\matthieu\documents\github\project-c\graph5\menu.h
+
+1607353351 source:c:\users\matthieu\documents\github\project-c\graph5\powerup.c
+
 1607353351 c:\users\matthieu\documents\github\project-c\graph5\powerup.h
-=======
-1607353826 c:\users\utilisateur\documents\github\project-c\graph5\powerup.h
->>>>>>> Stashed changes
 
