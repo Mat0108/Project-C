@@ -288,7 +288,7 @@ void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],i
     }
 
 }
-void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int PowerUptab)
+void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int PowerUptab,int InvisibiliteTimerval)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
@@ -300,7 +300,7 @@ void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
         {
             *nb_bombe = *nb_bombe == 1;
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
-            V2Bombes_Life(*BombeX[i],*BombeY[i],rayon,x_perso,y_perso,life,xorigin);
+            if (InvisibiliteTimerval == 100)V2Bombes_Life(*BombeX[i],*BombeY[i],rayon,x_perso,y_perso,life,xorigin);
             PersoAffichage(x_perso,y_perso,RT,choixperso,origin);
             PowerUpAffichage(PowerUptab,origin,RT,21);
             for ( l=0;l<4;l++)
