@@ -298,7 +298,7 @@ void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
     {
         if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeTimer)[i] != 0)
         {
-            *nb_bombe = *nb_bombe == 1;
+            *nb_bombe = *nb_bombe - 1;
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
             V2Bombes_Life(*BombeX[i],*BombeY[i],rayon,x_perso,y_perso,life,xorigin);
             PersoAffichage(x_perso,y_perso,RT,choixperso,origin);
