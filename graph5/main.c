@@ -66,8 +66,8 @@ int main()
 {
     int *rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
 
-    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 2,Item = 0;
-    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 3,rayon = 2;  //variable pour le perso 1
+    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3,Item = 0;
+    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 1;  //variable pour le perso 1
 
     int x_perso2 = 19,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3,Item2 = CT+origin;
     int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
@@ -113,10 +113,10 @@ int main()
         if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
-
         V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
         for (i=0;i<5;i++){
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
+
                 V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle);
                 for (j=0;j<2*rayon+1;j++){
                     if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
