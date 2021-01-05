@@ -130,20 +130,20 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
 {
     BITMAP *image;
     char adress[100];
-    int debut = 3;
+    int debut = 5;
     int delta = 2;
     AffichageLigne(3+xorigin,debut,RT);
     if (xorigin == 0)
     {
         AffichageItemLoad(RT,debut,xorigin,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,1,1,perso,"player ");
+        AffichageItemLoad(RT,debut-2,1,perso,"player ");
         AffichageLigne(2,debut,RT);
 
     }
     else
     {
         AffichageItemLoad(RT,debut,xorigin+2,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,1,xorigin,perso,"player ");
+        AffichageItemLoad(RT,debut-2,xorigin,perso,"player ");
         sprintf(adress, "image/%d/menu/ligne.bmp",RT);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
