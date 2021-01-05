@@ -26,7 +26,7 @@ const int CT = 21; // taille d'une case graphique
 int origin = 5;
 
 
-int default_perso() {return 1;}//1 pour le stitch, 2 pour le pug
+int default_perso() {return 2;}//1 pour le stitch, 2 pour le pug
 
 //fonction pour afficher un timer au cours de la partie
 void timer()
@@ -116,7 +116,6 @@ int main()
         V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
         for (i=0;i<5;i++){
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
-
                 V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle);
                 for (j=0;j<2*rayon+1;j++){
                     if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
