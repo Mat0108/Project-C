@@ -162,15 +162,15 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
     AffichageItemLoad(RT,debut+3*delta,xorigin,speed,"PowerUp/Speed/Speed ");
     int typeperso = default_perso();
     if (xorigin == 0){
-        AffichageItemLoad(RT,debut+7.5*delta,xorigin,perso,"Touche ");
-        if (typeperso == 1) AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"stitch/stitch_gris_");
-        if (typeperso == 2) AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"pug/pug_gris_");
+        AffichageItemLoad(RT,debut+6.5*delta,xorigin,perso,"Touche ");
+        if (typeperso == 1) AffichageItemLoad(RT,debut+6.5*delta,xorigin,choixperso,"stitch/stitch_gris_");
+        if (typeperso == 2) AffichageItemLoad(RT,debut+6.5*delta,xorigin,choixperso,"pug/pug_gris_");
     }
     else
     {
-        AffichageItemLoad(RT,debut+7.5*delta,xorigin+1.3,perso,"Touche ");
-        if (typeperso == 1) AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"stitch/stitch_gris_");
-        if (typeperso == 2) AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"pug/pug_gris_");
+        AffichageItemLoad(RT,debut+6.5*delta,xorigin+1.3,perso,"Touche ");
+        if (typeperso == 1) AffichageItemLoad(RT,debut+6.5*delta,xorigin+2.1,choixperso,"stitch/stitch_gris_");
+        if (typeperso == 2) AffichageItemLoad(RT,debut+6.5*delta,xorigin+2.1,choixperso,"pug/pug_gris_");
     }
 }
 
