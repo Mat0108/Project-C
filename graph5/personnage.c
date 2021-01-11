@@ -344,11 +344,11 @@ void V2Bombes_Life(int BombeX,int BombeY,int rayon,int x_perso,int y_perso,int *
         {
             if (xorigin == 0)
             {
-                AffichageItemLoad(RT,debut,xorigin,*life,"PowerUp/Life/LIFE ");
+                AffichageItemLoad(RT,debut+2,xorigin,*life,"PowerUp/Life/LIFE ");
             }
             else
             {
-                AffichageItemLoad(RT,debut,xorigin+2,*life,"PowerUp/Life/LIFE ");
+                AffichageItemLoad(RT,debut+2,xorigin+2,*life,"PowerUp/Life/LIFE ");
                 /*sprintf(adress, "image/%d/menu/ligne.bmp",RT);
                 image=load_bitmap(adress,NULL);
                 testload(image,adress);
