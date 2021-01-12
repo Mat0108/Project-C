@@ -74,8 +74,8 @@ int ChoixPlayer(int RT,int CT,int origin)
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,0);
-    AffichagePerso(RT,CT,1,1);
-    if (MenuPlayer == 2) AffichagePerso(RT,CT,1+origin+21,2);
+    AffichageTypePerso(RT,CT,1,MenuPlayer);
+    if (MenuPlayer == 2) AffichageTypePerso(RT,CT,1+origin+21,MenuPlayer);
     Sleep(300);
     return MenuPlayer;
 }
@@ -95,10 +95,14 @@ void ChoixTypePerso(int *ChoixPerso1,int *ChoixPerso2,int nbplayer,int RT,int CT
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 ) Quitter();
         if (*ChoixPerso1 != 0 &&( *ChoixPerso2 !=0 || nbplayer != 2)) condition = 0;
     }
+    AffichageMenuInv(RT,CT,origin,0);
+    AffichagePerso(RT,CT,1,1,1,*ChoixPerso1);
+    if(*ChoixPerso2 != 0)AffichagePerso(RT,CT,1+origin+21,2,*ChoixPerso2);
+    Sleep(300);
 }
 
 //bouton choix perso
-void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer)
+void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer,int typeperso1,int typeperso2)
 {
     int varaffichage = 1, condition = 1;
 
@@ -116,14 +120,14 @@ void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso
 
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 ) Quitter();
 
-        if (*MenuPerso == *MenuPerso2&& *MenuPerso !=0 && varaffichage == 1)
+        if (*MenuPerso == *MenuPerso2&& *MenuPerso !=0 && varaffichage == 1 && typeperso1 == typeperso2)
         {
             allegro_message("Merci de selectionner deux perso differents  !!!");
             varaffichage = 0;
         }
-        if (*MenuPerso != 0) PersoAffichage(x_perso,y_perso,RT,*MenuPerso,origin);
-        if (*MenuPerso2 != 0 && MenuPlayer == 2) PersoAffichage(24,19,RT,*MenuPerso2,0);
-        if ((*MenuPerso != 0 && (*MenuPerso2 != 0 || MenuPlayer != 2))&& *MenuPerso != *MenuPerso2 )condition = 0;
+        if (*MenuPerso != 0) PersoAffichage(x_perso,y_perso,RT,*MenuPerso,typeperso1,origin);
+        if (*MenuPerso2 != 0 && MenuPlayer == 2) PersoAffichage(24,19,RT,*MenuPerso2,typeperso2,0);
+        if ((*MenuPerso != 0 && (*MenuPerso2 != 0 || MenuPlayer != 2))&& (*MenuPerso != *MenuPerso2 || typeperso1 != typeperso2))condition = 0;
     }
     AffichageMenuInv(RT,CT,origin,CT+origin);
     AffichageMenuInv(RT,CT,origin,0);

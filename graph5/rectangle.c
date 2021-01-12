@@ -259,12 +259,12 @@ void AffichagePlayer(int RT,int CT,int origin)
     blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
 }
 //affichage du choix du perso
-void AffichagePerso(int RT,int CT, int yposition,int player)
+void AffichagePerso(int RT,int CT, int yposition,int player,int typeperso)
 {
     int i=1;
     BITMAP *image;
     char adress[100];
-    int typeperso = default_perso();
+    //int typeperso = default_perso();
     /* sprintf(adress, "image/%d/menu/stitch/stitch_0.bmp",RT);
     image=load_bitmap(adress,NULL);
     testload(image,adress);

@@ -9,12 +9,11 @@
 #include <windows.h>
 
 //affichege du perso
-void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int origin)
+void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int typeperso,int origin)
 {
 
     char adress[100];
     BITMAP *perso;
-    int typeperso = default_perso();
     if (typeperso == 1) sprintf(adress, "image/%d/stitch/stitch_%d.bmp",RT, choix);
     if (typeperso == 2) sprintf(adress, "image/%d/pug/pug_%d.bmp",RT, choix);
 
@@ -34,7 +33,7 @@ void BombePlace(int x,int y,int RT,int origin)
     blit(BOMBE,screen,0,0,RT*(x+origin),RT*y,BOMBE->w, BOMBE->h);
 }
 //deplacement du perso
-int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int choix,int origin)
+int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int persotype,int choix,int origin)
 {
     int i;
     AffichageAllegro2(tableau,1,RT,CT,origin);
@@ -55,12 +54,12 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
         if (dy == 1) (*y_perso)++;
         if (dx == -1) (*x_perso)--;
         if (dy == -1) (*y_perso)--;
-        PersoAffichage(*x_perso,*y_perso,RT,persochoix,origin);
+        PersoAffichage(*x_perso,*y_perso,RT,persochoix,persotype,origin);
     }
     return 1;
 }
 //Creation de la bombe
-int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso)
+int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso,int TypePerso)
 {
      if (*nb_Bombe < nb_Bombe_max)
     {
@@ -72,7 +71,7 @@ int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bo
         if (BombeTimer[*nb_Bombe]>= 60) BombeTimer[*nb_Bombe] = BombeTimer[*nb_Bombe] - 60;
         AffichagePosition(tableau,x_perso,y_perso,RT,origin);
         BombePlace(x_perso,y_perso,RT,origin);
-        PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+        PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso,origin);
         (*nb_Bombe)++;
     }
     return 1;
@@ -230,7 +229,7 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                 //}
 
             }
-            PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+            PersoAffichage(x_perso,y_perso,RT,MenuPerso,1,origin);
             //AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,0);
             AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,xorigin);
             PowerUpAffichage(PowerUpTab,origin,RT,CT);
@@ -288,7 +287,7 @@ void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],i
     }
 
 }
-void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int PowerUptab,int InvisibiliteTimerval)
+void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int typeperso,int PowerUptab,int InvisibiliteTimerval)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
@@ -301,7 +300,7 @@ void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
             *nb_bombe = *nb_bombe - 1;
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
             if (InvisibiliteTimerval == 100)V2Bombes_Life(*BombeX[i],*BombeY[i],rayon,x_perso,y_perso,life,xorigin);
-            PersoAffichage(x_perso,y_perso,RT,choixperso,origin);
+            PersoAffichage(x_perso,y_perso,RT,choixperso,1,origin);
             PowerUpAffichage(PowerUptab,origin,RT,21);
             for ( l=0;l<4;l++)
             {
