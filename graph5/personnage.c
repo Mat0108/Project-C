@@ -298,7 +298,7 @@ void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
     {
         if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeTimer)[i] != 0)
         {
-            *nb_bombe = *nb_bombe == 1;
+            *nb_bombe = *nb_bombe - 1;
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
             if (InvisibiliteTimerval == 100)V2Bombes_Life(*BombeX[i],*BombeY[i],rayon,x_perso,y_perso,life,xorigin);
             PersoAffichage(x_perso,y_perso,RT,choixperso,origin);
@@ -344,11 +344,11 @@ void V2Bombes_Life(int BombeX,int BombeY,int rayon,int x_perso,int y_perso,int *
         {
             if (xorigin == 0)
             {
-                AffichageItemLoad(RT,debut,xorigin,*life,"PowerUp/Life/LIFE ");
+                AffichageItemLoad(RT,debut+2,xorigin,*life,"PowerUp/Life/LIFE ");
             }
             else
             {
-                AffichageItemLoad(RT,debut,xorigin+2,*life,"PowerUp/Life/LIFE ");
+                AffichageItemLoad(RT,debut+2,xorigin+2,*life,"PowerUp/Life/LIFE ");
                 /*sprintf(adress, "image/%d/menu/ligne.bmp",RT);
                 image=load_bitmap(adress,NULL);
                 testload(image,adress);

@@ -100,6 +100,7 @@ int main()
     AffichageTypePerso(RT,CT,1,MenuPlayer);
     ChoixTypePerso(&MenuPerso,&MenuPerso2,MenuPlayer,RT,CT,origin);
     ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer);//choix des persos
+    AffichageNiveauJeu(MenuNiveau);//Affichage du niveau en jeu
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item); //affichage des powerup du perso 1
     if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);//affichage des powerup du perso 2
     install_int_ex(timer,BPS_TO_TIMER(1)); //initialisation du timer

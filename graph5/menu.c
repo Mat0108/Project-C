@@ -30,6 +30,18 @@ void Play(int RT,int CT,int origin)
     AffichageNiveau(RT,10,origin);
     Sleep(300);
 }
+
+//Affichage du niveau en jeu
+void AffichageNiveauJeu(int MenuNiveau)
+{
+    BITMAP *image;
+    char adress[100];
+
+    sprintf(adress, "image/%d/menu/niveau %d.bmp",30,MenuNiveau);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,30,10,image->w, image->h);
+}
 //bouton choix niveau
 int ChoixNiveau(int tableau[21][21],int RT,int CT,int origin)
 {
