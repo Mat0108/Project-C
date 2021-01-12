@@ -31,6 +31,7 @@ void Play(int RT,int CT,int origin)
     Sleep(300);
 }
 
+//Affichage du niveau en jeu
 void AffichageNiveauJeu(int MenuNiveau)
 {
     BITMAP *image;
