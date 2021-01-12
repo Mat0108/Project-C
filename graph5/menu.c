@@ -31,7 +31,7 @@ void Play(int RT,int CT,int origin)
     Sleep(300);
 }
 
-void afficheNiveau(int MenuNiveau)
+void AffichageNiveauJeu(int MenuNiveau)
 {
     BITMAP *image;
     char adress[100];

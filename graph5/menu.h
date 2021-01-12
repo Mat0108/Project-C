@@ -2,7 +2,7 @@
 #define _menu_h
 void Quitter();//Bouton Quit, permet de quitter le programme
 void Play(int RT,int CT,int origin);//Bouton Play, pour jouer � Bomberman
-void afficheNiveau(int MenuNiveau);
+void AffichageNiveauJeu(int MenuNiveau);
 int ChoixNiveau(int tableau[21][21],int RT,int CT,int origin);//Bouton pour le choix du niveau
 int ChoixPlayer(int RT,int CT,int origin);//Bouton pour le choix du mode de jeu
 void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer);//Bouton pour choisir le personnage
