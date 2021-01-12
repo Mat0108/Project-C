@@ -286,5 +286,32 @@ void AffichagePerso(int RT,int CT, int yposition,int player)
 }
 
 
+void AffichageTypePerso(int RT,int CT,int yposition,int nbplayer)
+{
+    int i = 1;
+    BITMAP *image;
+    char adress[100];
+    sprintf(adress, "image/%d/menu/nb_perso_0.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
+    i++;
 
+    sprintf(adress, "image/%d/menu/stitch/stitch_01.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
+    i++;
+
+    sprintf(adress, "image/%d/menu/pug/pug_01.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
+    i++;
+
+    sprintf(adress, "image/%d/menu/quit.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
+}
 

@@ -14,6 +14,7 @@ void AffichageMenu(int RT,int CT,int origin);
 int AffichageNiveau(int RT,int CT,int origin);
 void AffichagePlayer(int RT,int CT,int origin);
 void AffichagePerso(int RT,int CT, int yposition,int player);
+void AffichageTypePerso(int RT,int CT,int yposition,int nbplayer);
 
 
 #endif

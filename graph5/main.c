@@ -26,7 +26,7 @@ const int CT = 21; // taille d'une case graphique
 int origin = 5;
 
 
-int default_perso() {return 1;}//1 pour le stitch, 2 pour le pug
+int default_perso() {return 2;}//1 pour le stitch, 2 pour le pug
 
 //fonction pour afficher un timer au cours de la partie
 void timer()
@@ -66,8 +66,8 @@ int main()
 {
     int *rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
 
-    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 2,Item = 0;
-    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 3,rayon = 2;  //variable pour le perso 1
+    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3,Item = 0;
+    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 1;  //variable pour le perso 1
 
     int x_perso2 = 19,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3,Item2 = CT+origin;
     int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
@@ -97,6 +97,8 @@ int main()
     Play(RT,CT,origin); //affichage du choix du niveau
     MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
     MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
+    AffichageTypePerso(RT,CT,1,MenuPlayer);
+    ChoixTypePerso(&MenuPerso,&MenuPerso2,MenuPlayer,RT,CT,origin);
     ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer);//choix des persos
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item); //affichage des powerup du perso 1
     if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);//affichage des powerup du perso 2
@@ -113,7 +115,6 @@ int main()
         if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
-
         V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
         for (i=0;i<5;i++){
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
@@ -124,8 +125,8 @@ int main()
                     if (BombeY[i] == 1) {
                         for (k=0;k<=rayon;k++){
                             if(rectangle[BombeY[i]+k][BombeX[i]] == 1){rectangle[BombeY[i]+k][BombeX[i]]  = 0;AffichagePosition(rectangle,BombeY[i]+k,BombeX[i],RT,5);}}}}}}
-        V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso,y_perso,&nb_vie,Item,MenuPerso,PowerUpTab,InvisibiliteTimerval);
-        if (InvisibiliteTimerval != 100)printf("%d",InvisibiliteTimerval);
+        V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso,y_perso,&nb_vie,Item,MenuPerso,PowerUpTab);
+
         //if pour le deplacment et le posement de la bombe du perso 2
         if (key[KEY_RIGHT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
         if (key[KEY_LEFT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,-1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,2,origin);
@@ -143,16 +144,15 @@ int main()
                         if (BombeY2[i] == 1) {
                             for (k=0;k<=rayon;k++){
                                 if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1)rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;}}}}}
-            V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,PowerUpTab,InvisibiliteTimerval);}
-        /*
-        AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
+            V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso2,y_perso2,&nb_vie2,Item2);}
+
+        /*AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
         if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);
-        */
+
         //Powerup Invisibilité (purement visuelle)
         if (key[KEY_ENTER_PAD]) Invisibilite_Activable(&InvisibiliteOn,&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
         Invisibilite_Update(&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
-
-
+        */
         //permet l'appui de plusieurs touches en même temps
         if (appui_touche == 1){
             appui_touche = 0;

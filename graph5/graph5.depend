@@ -388,7 +388,7 @@
 1602781802 c:\users\matthieu\desktop\test\graph5\rectangle.h
 	<stdbool.h>
 
-1607542933 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
+1610448161 source:c:\users\matthieu\documents\github\project-c\graph5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -399,18 +399,18 @@
 	<winalleg.h>
 	<windows.h>
 
-1607526820 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
+1610447895 source:c:\users\matthieu\documents\github\project-c\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
 	<string.h>
 
-1607523442 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
+1610447895 c:\users\matthieu\documents\github\project-c\graph5\rectangle.h
 	<stdio.h>
 	<stdlib.h>
 
-1607542980 source:c:\users\matthieu\documents\github\project-c\graph5\personnage.c
+1610447894 source:c:\users\matthieu\documents\github\project-c\graph5\personnage.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
@@ -683,7 +683,7 @@
 
 1607353826 source:c:\users\utilisateur\documents\github\project-c\graph5\main.c
 
-1607353826 shed changes
+1610447745 shed changes
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -720,6 +720,15 @@
 	<winalleg.h>
 	<windows.h>
 	"powerup.h"
+	<stdio.h>
+	<stdlib.h>
+	<allegro.h>
+	<string.h>
+	<time.h>
+	<process.h>
+	<winalleg.h>
+	<windows.h>
+	"menu.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -784,7 +793,7 @@
 
 1607353826 c:\users\utilisateur\documents\github\project-c\graph5\powerup.h
 
-1607526820 source:c:\users\matthieu\documents\github\project-c\graph5\menu.c
+1610447976 source:c:\users\matthieu\documents\github\project-c\graph5\menu.c
 	"menu.h"
 	<stdio.h>
 	<stdlib.h>
@@ -795,7 +804,7 @@
 	<winalleg.h>
 	<windows.h>
 
-1607526004 c:\users\matthieu\documents\github\project-c\graph5\menu.h
+1610447970 c:\users\matthieu\documents\github\project-c\graph5\menu.h
 
 1607353351 source:c:\users\matthieu\documents\github\project-c\graph5\powerup.c
 

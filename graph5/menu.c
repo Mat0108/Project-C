@@ -67,6 +67,24 @@ int ChoixPlayer(int RT,int CT,int origin)
     Sleep(300);
     return MenuPlayer;
 }
+//bouton choix type perso (stitch ou pug)
+
+void ChoixTypePerso(int *ChoixPerso1,int *ChoixPerso2,int nbplayer,int RT,int CT,int origin)
+{
+    int condition = 1;
+    while (condition == 1)
+    {
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) *ChoixPerso1 = 1;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) *ChoixPerso1 = 2;
+
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x>= RT*(CT+origin )) *ChoixPerso2 = 1;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x>= RT*(CT+origin )) *ChoixPerso2 = 2;
+
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 ) Quitter();
+        if (*ChoixPerso1 != 0 &&( *ChoixPerso2 !=0 || nbplayer != 2)) condition = 0;
+    }
+}
+
 //bouton choix perso
 void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer)
 {
@@ -130,20 +148,20 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
 {
     BITMAP *image;
     char adress[100];
-    int debut = 3;
+    int debut = 5;
     int delta = 2;
     AffichageLigne(3+xorigin,debut,RT);
     if (xorigin == 0)
     {
         AffichageItemLoad(RT,debut,xorigin,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,1,1,perso,"player ");
+        AffichageItemLoad(RT,debut-2,1,perso,"player ");
         AffichageLigne(2,debut,RT);
 
     }
     else
     {
         AffichageItemLoad(RT,debut,xorigin+2,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,1,xorigin,perso,"player ");
+        AffichageItemLoad(RT,debut-2,xorigin,perso,"player ");
         sprintf(adress, "image/%d/menu/ligne.bmp",RT);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
@@ -162,15 +180,15 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
     AffichageItemLoad(RT,debut+3*delta,xorigin,speed,"PowerUp/Speed/Speed ");
     int typeperso = default_perso();
     if (xorigin == 0){
-        AffichageItemLoad(RT,debut+7.5*delta,xorigin,perso,"Touche ");
-        if (typeperso == 1) AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"stitch/stitch_gris_");
-        if (typeperso == 2) AffichageItemLoad(RT,debut+7.5*delta,xorigin,choixperso,"pug/pug_gris_");
+        AffichageItemLoad(RT,debut+6.5*delta,xorigin,perso,"Touche ");
+        if (typeperso == 1) AffichageItemLoad(RT,debut+6.5*delta,xorigin,choixperso,"stitch/stitch_gris_");
+        if (typeperso == 2) AffichageItemLoad(RT,debut+6.5*delta,xorigin,choixperso,"pug/pug_gris_");
     }
     else
     {
-        AffichageItemLoad(RT,debut+7.5*delta,xorigin+1.3,perso,"Touche ");
-        if (typeperso == 1) AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"stitch/stitch_gris_");
-        if (typeperso == 2) AffichageItemLoad(RT,debut+7.5*delta,xorigin+2.1,choixperso,"pug/pug_gris_");
+        AffichageItemLoad(RT,debut+6.5*delta,xorigin+1.3,perso,"Touche ");
+        if (typeperso == 1) AffichageItemLoad(RT,debut+6.5*delta,xorigin+2.1,choixperso,"stitch/stitch_gris_");
+        if (typeperso == 2) AffichageItemLoad(RT,debut+6.5*delta,xorigin+2.1,choixperso,"pug/pug_gris_");
     }
 }
 
