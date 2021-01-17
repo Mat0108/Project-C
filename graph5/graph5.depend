@@ -729,8 +729,7 @@
 	<winalleg.h>
 	<windows.h>
 
-1606218303 source:c:\users\utilisateur\documents\github\project-c\graph5\personnage.c
-	"rectangle.h"
+1610522663 source:c:\users\utilisateur\documents\github\project-c\graph5\personnage.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
@@ -743,27 +742,18 @@
 
 1606218303 >
 
-1604475152 c:\users\utilisateur\documents\github\project-c\graph5\rectangle.h
-	<stdio.h>
-	<stdlib.h>
-	<stdio.h>
-	<stdlib.h>
+1610522663 c:\users\utilisateur\documents\github\project-c\graph5\rectangle.h
 	<stdio.h>
 	<stdlib.h>
 
-1607350701 source:c:\users\utilisateur\documents\github\project-c\graph5\rectangle.c
-	"rectangle.h"
-	<stdio.h>
-	<stdlib.h>
-	<allegro.h>
-	<string.h>
+1610522663 source:c:\users\utilisateur\documents\github\project-c\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
 	<string.h>
 
-1607353826 source:c:\users\utilisateur\documents\github\project-c\graph5\menu.c
+1610522663 source:c:\users\utilisateur\documents\github\project-c\graph5\menu.c
 	"menu.h"
 	<stdio.h>
 	<stdlib.h>
@@ -773,9 +763,8 @@
 	<process.h>
 	<winalleg.h>
 	<windows.h>
-	"menu.h"
 
-1607353826 c:\users\utilisateur\documents\github\project-c\graph5\menu.h
+1610522663 c:\users\utilisateur\documents\github\project-c\graph5\menu.h
 
 1607353826 source:c:\users\utilisateur\documents\github\project-c\graph5\powerup.c
 	"powerup.h"

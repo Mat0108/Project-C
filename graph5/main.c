@@ -1,3 +1,5 @@
+#define RAND_MAX 1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <allegro.h>
@@ -17,6 +19,10 @@
 
 int timerval=0;
 int timerminutes = 0;
+int i;
+int x;
+int y;
+int z;
 
 
 
@@ -26,7 +32,7 @@ const int CT = 21; // taille d'une case graphique
 int origin = 5;
 
 
-int default_perso() {return 1;}//1 pour le stitch, 2 pour le pug
+int default_perso() {return 2;}//1 pour le stitch, 2 pour le pug
 
 //fonction pour afficher un timer au cours de la partie
 void timer()
@@ -66,8 +72,8 @@ int main()
 {
     int *rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
 
-    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 2,Item = 0;
-    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 3,rayon = 2;  //variable pour le perso 1
+    int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3,Item = 0;
+    int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 1;  //variable pour le perso 1
 
     int x_perso2 = 19,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3,Item2 = CT+origin;
     int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
@@ -113,7 +119,6 @@ int main()
         if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
-
         V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
         for (i=0;i<5;i++){
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
@@ -144,6 +149,34 @@ int main()
                             for (k=0;k<=rayon;k++){
                                 if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1)rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;}}}}}
             V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso2,y_perso2,&nb_vie2,Item2);}
+
+
+        //Pour le déplacement et le posement de la bombe de l'intelligence artificielle
+
+        // Génère un entier pseudo-aléatoire compris entre min et max
+        do{
+            int x = rand() % (RAND_MAX + 1);
+            int y = rand() % (RAND_MAX + 1);
+        }while(nb_vie != 0)
+
+        do{
+
+            appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,x,y,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,1,origin);
+        }
+
+        appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso);
+        V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
+        for (i=0;i<5;i++){
+            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
+                V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle);
+                for (j=0;j<2*rayon+1;j++){
+                    if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
+                    if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1)rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
+                    if (BombeY[i] == 1) {
+                        for (k=0;k<=rayon;k++){
+                            if(rectangle[BombeY[i]+k][BombeX[i]] == 1){rectangle[BombeY[i]+k][BombeX[i]]  = 0;AffichagePosition(rectangle,BombeY[i]+k,BombeX[i],RT,5);}}}}}}
+        V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso,y_perso,&nb_vie,Item,MenuPerso,PowerUpTab);
+
 
         /*AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,Item);
         if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,Item2);
