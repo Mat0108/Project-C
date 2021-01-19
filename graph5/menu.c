@@ -160,7 +160,7 @@ void AffichageItemLoad(int RT,int debut,float x,int choix,char adress2[100])
     blit(image,screen,0,0,RT*x,RT*debut,image->w, image->h);
 }
 //affichages des powerups des persos
-void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int choixperso,int perso,int xorigin)
+void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int choixperso,int perso,int typeperso,int xorigin)
 {
     BITMAP *image;
     char adress[100];
@@ -194,7 +194,7 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
 
     AffichageLigne(3+xorigin,debut+3*delta,RT);
     AffichageItemLoad(RT,debut+3*delta,xorigin,speed,"PowerUp/Speed/Speed ");
-    int typeperso = default_perso();
+
     if (xorigin == 0){
         AffichageItemLoad(RT,debut+6.5*delta,xorigin,perso,"Touche ");
         if (typeperso == 1) AffichageItemLoad(RT,debut+6.5*delta,xorigin,choixperso,"stitch/stitch_gris_");
