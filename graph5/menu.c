@@ -37,7 +37,7 @@ void AffichageNiveauJeu(int MenuNiveau)
     BITMAP *image;
     char adress[100];
 
-    sprintf(adress, "image/%d/menu/niveau %d.bmp",30,MenuNiveau);
+    sprintf(adress, "image/%d/menu/v2 niveau %d.bmp",30,MenuNiveau);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
     blit(image,screen,0,0,30,10,image->w, image->h);
@@ -170,14 +170,14 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
     if (xorigin == 0)
     {
         AffichageItemLoad(RT,debut,xorigin,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,debut-2,1,perso,"player ");
+        AffichageItemLoad(RT,debut-2,1,perso,"v2 player ");
         AffichageLigne(2,debut,RT);
 
     }
     else
     {
         AffichageItemLoad(RT,debut,xorigin+2,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,debut-2,xorigin,perso,"player ");
+        AffichageItemLoad(RT,debut-2,xorigin,perso,"v2 player ");
         sprintf(adress, "image/%d/menu/ligne.bmp",RT);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
