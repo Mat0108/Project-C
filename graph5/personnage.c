@@ -287,7 +287,7 @@ void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],i
     }
 
 }
-void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int typeperso,int PowerUptab,int InvisibiliteTimerval)
+int  V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int typeperso,int PowerUptab,int InvisibiliteTimerval)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
@@ -295,12 +295,10 @@ void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
     int i,l;
     for (i=0;i<5;i++)
     {
-        if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeTimer)[i] != 0)
+        if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeX)[i] != 0)
         {
             *nb_bombe = *nb_bombe - 1;
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
-            if (InvisibiliteTimerval == 100)V2Bombes_Life(*BombeX[i],*BombeY[i],rayon,x_perso,y_perso,life,xorigin);
-            PersoAffichage(x_perso,y_perso,RT,choixperso,1,origin);
             PowerUpAffichage(PowerUptab,origin,RT,21);
             for ( l=0;l<4;l++)
             {
@@ -320,47 +318,58 @@ void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
             (*BombeX)[4] = 0;
             (*BombeY)[4] = 0;
             (*BombeTimer)[4] = 0;
-
+            return 1;
         }
+        return 0;
     }
 }
 
-void V2Bombes_Life(int BombeX,int BombeY,int rayon,int x_perso,int y_perso,int *life,int xorigin)
+int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_perso,int y_perso,int life,int xorigin)
 {
-    int i;
+    int i,j;
     int modif = 0;
     BITMAP *image;
     char adress[100];
     int debut = 3;
     int RT = 30;
-    for (i=0;i<2*rayon+1;i++)
+    time_t timestamp = time( NULL );
+    struct tm * timeInfos = localtime( & timestamp );
+    for (j = 0;j<5;j++)
     {
-        //printf("\nbx = %d by = %d px = %d py = %d",BombeX-rayon+i,BombeY,x_perso,y_perso);
-        //printf("\nbx = %d by = %d px = %d py = %d",BombeX,BombeY-rayon+i,x_perso,y_perso);
-        if ((BombeX-rayon+i) == x_perso && BombeY == y_perso) {(*life)--;modif = 1;}
-        if (BombeX == x_perso && (BombeY-rayon+i) == y_perso){(*life)--;modif = 1;}
-        if (modif == 1)
+        if (BombeTimer[j]+2== timeInfos->tm_sec && BombeX[j] != 0)
         {
-            if (xorigin == 0)
+
+            for (i=0;i<2*rayon+1;i++)
             {
-                AffichageItemLoad(RT,debut+2,xorigin,*life,"PowerUp/Life/LIFE ");
-            }
-            else
-            {
-                AffichageItemLoad(RT,debut+2,xorigin+2,*life,"PowerUp/Life/LIFE ");
-                /*sprintf(adress, "image/%d/menu/ligne.bmp",RT);
-                image=load_bitmap(adress,NULL);
-                testload(image,adress);
-                blit(image,screen,0,0,RT*(xorigin),RT*debut,image->w, image->h);*/
-            }
-            if (*life == 0)
-            {
-                allegro_message("Vous avez perdu");
-                allegro_exit();
-                exit(EXIT_FAILURE);
+                //printf("\nbx = %d by = %d px = %d py = %d",BombeX-rayon+i,BombeY,x_perso,y_perso);
+                //printf("\nbx = %d by = %d px = %d py = %d",BombeX,BombeY-rayon+i,x_perso,y_perso);
+                if ((BombeX[j]-rayon+i) == x_perso && BombeY[j] == y_perso) {life--;modif = 1;}
+                if (BombeX[j] == x_perso && (BombeY[j]-rayon+i) == y_perso){life--;modif = 1;}
+                if (modif == 1)
+                {
+                    if (xorigin == 0)
+                    {
+                        AffichageItemLoad(RT,debut+2,xorigin,life,"PowerUp/Life/LIFE ");
+                    }
+                    else
+                    {
+                        AffichageItemLoad(RT,debut+2,xorigin+2,life,"PowerUp/Life/LIFE ");
+                        /*sprintf(adress, "image/%d/menu/ligne.bmp",RT);
+                        image=load_bitmap(adress,NULL);
+                        testload(image,adress);
+                        blit(image,screen,0,0,RT*(xorigin),RT*debut,image->w, image->h);*/
+                    }
+                    if (life == 0)
+                    {
+                        allegro_message("Vous avez perdu");
+                        allegro_exit();
+                        exit(EXIT_FAILURE);
+                    }
+                }
             }
         }
     }
+    return life;
 }
 void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21])
 {
@@ -392,3 +401,4 @@ void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5])
         if (BombeX[i]!=0)printf("\n%d eme bombe x=%d y=%d timer=%d",i,BombeX[i],BombeY[i],BombeTimer[i]);
     }
 }
+

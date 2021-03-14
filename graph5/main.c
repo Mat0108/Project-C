@@ -8,12 +8,12 @@
 #include <winalleg.h>
 #include <windows.h>
 
-/*---------------------------------------------------------------------------------------------------------------------
+/*---------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------Programme Bomberman----------------------------------------------------
--------------------------Matthieu Barnabé-------Alexandre La Fonta-------Nhat Khoa Tran--------------------------------
------------------------------------------------------------------------------------------------------------------------
+-------------------------Matthieu Barnabé-------Alexandre La Fonta-------Nhat Khoa Tran------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 ----Liste des bugs : https://docs.google.com/spreadsheets/d/16qRqcISNdt1qFeHDXFJQrD2jtbKLKgxOR5rZJznYJh4/edit#gid=0----
----------------------------------------------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------------------------------------------------------------*/
 
 int timerval=0;
 int timerminutes = 0;
@@ -70,10 +70,10 @@ int main()
     int BombeX[5] = {0},BombeY[5] = {0}, BombeTimer[5] = {0}, nb_Bombe= 0,nb_Bombe_max = 1,rayon = 1;  //variable pour le perso 1
 
     int x_perso2 = 19,y_perso2 = 19,delta_perso2 = 1,nb_vie2 = 3,Item2 = CT+origin;
-    int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 2,rayon2 = 1;  //variable pour le perso 2
+    int BombeX2[5] = {0},BombeY2[5] = {0}, BombeTimer2[5] = {0}, nb_Bombe2 = 0,nb_Bombe_max2 = 1,rayon2 = 1;  //variable pour le perso 2
 
-    int MenuBase = 1, MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0,TypePerso1= 0,TypePerso2 = 0, *PowerUpTab[21][21] = {0}; //variable pour les bombes
-    int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100,val = 0; //variable pour le powerup invisibilité pour le perso 1
+    int MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0,TypePerso1= 0,TypePerso2 = 0, *PowerUpTab[21][21] = {0}; //variable pour les bombes
+    int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100; //variable pour le powerup invisibilité pour le perso 1
     int i,j,k,appui_touche = 0;
 
 
@@ -127,7 +127,12 @@ int main()
                     if (BombeY[i] == 1) {
                         for (k=0;k<=rayon;k++){
                             if(rectangle[BombeY[i]+k][BombeX[i]] == 1){rectangle[BombeY[i]+k][BombeX[i]]  = 0;AffichagePosition(rectangle,BombeY[i]+k,BombeX[i],RT,5);}}}}}}
+        nb_vie = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso,y_perso,nb_vie,Item);
+        nb_vie2 = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso2,y_perso2,nb_vie2,Item2);
+        PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
+        PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso1,origin);
         V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso,y_perso,&nb_vie,Item,MenuPerso,TypePerso1,PowerUpTab,InvisibiliteTimerval);
+
 
         //if pour le deplacment et le posement de la bombe du perso 2
         if (key[KEY_RIGHT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin);
@@ -146,7 +151,14 @@ int main()
                         if (BombeY2[i] == 1) {
                             for (k=0;k<=rayon;k++){
                                 if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1)rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;}}}}}
-            V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,TypePerso2,PowerUpTab,InvisibiliteTimerval);}
+            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item);
+            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2);
+            PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
+            V2Bombes_Desaffichage(&BombeX2,&BombeY2,&BombeTimer2,rectangle,rayon,&nb_Bombe2,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,TypePerso2,PowerUpTab,InvisibiliteTimerval);
+
+
+        }
+
 
 
         //Powerup Invisibilité (purement visuelle)

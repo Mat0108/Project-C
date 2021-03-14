@@ -16,4 +16,5 @@ void InvisibiliteAffichage(int xorigin,int val,int RT);//Affichage de la barre d
 void Invisibilite(int *invisibiliteOn,int InvisibiliteTimer,int xorigin,int RT);//Execution de l'invicibilit�
 void Invisibilite_Activable(int *InvisibiliteOn,int *InvisibiliteTimerval,int InvisibiliteTimer,int val, int RT);//Activation de l'invincibilit�
 void Invisibilite_Update(int *InvisibiliteTimerval,int InvisibiliteTimer,int val2, int RT);//Affichage qui se r�duit avec le temps (quand le powerup est actif), r�duction de la barre d'invincibilit�
+
 #endif

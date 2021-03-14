@@ -282,3 +282,9 @@ void Invisibilite_Update(int *InvisibiliteTimerval,int InvisibiliteTimer,int val
         }
     }
 }
+
+
+void SaveFichier()
+{
+
+}

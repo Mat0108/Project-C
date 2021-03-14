@@ -11,9 +11,10 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
 void BombeEffectInv(int x,int y,int rayon,int *tableau[21][21],int BombeX,int BombeY,int RT,int origin);
 
 void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon);
-void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int typeperso,int PowerUptab,int InvisibiliteTimerval);
-void V2Bombes_Life(int BombeX,int BombeY,int rayon,int x_perso,int y_perso,int &life,int xorigin);
+int V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int typeperso,int PowerUptab,int InvisibiliteTimerval);
+int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_perso,int y_perso,int life,int xorigin)
 void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21]);
 void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5]);
+
 #endif
 
