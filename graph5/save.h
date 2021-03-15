@@ -1,5 +1,10 @@
 #ifndef _save_h
 #define _save_h
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <string.h>
 typedef struct Player Player;
 struct Player
 {
