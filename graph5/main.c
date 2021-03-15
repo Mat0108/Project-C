@@ -24,7 +24,7 @@ const int RT = 30; //taille d'une image
 // IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
 const int CT = 21; // taille d'une case graphique
 int origin = 5;
-
+int *score = 0;
 
 int default_perso() {return 2;}//1 pour le stitch, 2 pour le pug
 
@@ -121,7 +121,7 @@ int main()
 
         for (i=0;i<5;i++){
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
-                V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle);
+                V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle,&score);
                 for (j=0;j<2*rayon+1;j++){
                     if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
                     if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1)rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
@@ -137,7 +137,6 @@ int main()
         }
         PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso1,origin);
         V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso,y_perso,&nb_vie,Item,MenuPerso,TypePerso1,PowerUpTab,InvisibiliteTimerval);
-
 
         //if pour le deplacment et le posement de la bombe du perso 2
         if (key[KEY_RIGHT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin);
@@ -177,6 +176,7 @@ int main()
         }
     }
     readkey();
+
     return 0;
 }
 //attention ne pas oublier !

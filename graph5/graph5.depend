@@ -799,7 +799,7 @@
 
 1607353351 c:\users\matthieu\documents\github\project-c\graph5\powerup.h
 
-1610447610 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\main.c
+1615805268 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -810,7 +810,7 @@
 	<winalleg.h>
 	<windows.h>
 
-1610447671 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\menu.c
+1615803223 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\menu.c
 	"menu.h"
 	<stdio.h>
 	<stdlib.h>
@@ -821,9 +821,9 @@
 	<winalleg.h>
 	<windows.h>
 
-1610447098 d:\users\alexa\onedrive\documents\github\project-c2\graph5\menu.h
+1615803223 d:\users\alexa\onedrive\documents\github\project-c2\graph5\menu.h
 
-1610446639 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\personnage.c
+1615805248 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\personnage.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
@@ -834,11 +834,11 @@
 	<winalleg.h>
 	<windows.h>
 
-1610381007 d:\users\alexa\onedrive\documents\github\project-c2\graph5\rectangle.h
+1615803223 d:\users\alexa\onedrive\documents\github\project-c2\graph5\rectangle.h
 	<stdio.h>
 	<stdlib.h>
 
-1610381007 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\powerup.c
+1610896298 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\powerup.c
 	"powerup.h"
 	<stdio.h>
 	<stdlib.h>
@@ -849,9 +849,9 @@
 	<winalleg.h>
 	<windows.h>
 
-1610381007 d:\users\alexa\onedrive\documents\github\project-c2\graph5\powerup.h
+1610896298 d:\users\alexa\onedrive\documents\github\project-c2\graph5\powerup.h
 
-1610381007 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\rectangle.c
+1615803223 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>

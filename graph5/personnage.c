@@ -371,7 +371,7 @@ int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_
     }
     return life;
 }
-void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21])
+void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score)
 {
     int i;
     int origin = 5,RT = 30,CT = 21;
@@ -380,17 +380,20 @@ void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],in
     {
         if (tableau[BombeY][i+BombeX-rayon] == 1)
         {
+            *score+=2;
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[BombeY][i+BombeX-rayon] = x;
         }
         if (tableau[i+BombeY-rayon][BombeX] == 1)
         {
+            *score+=2;
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[i+BombeY-rayon][BombeX] = x;
         }
     }
+    printf("\n%d",*score);
 }
 void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5])
 {
