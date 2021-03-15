@@ -293,6 +293,7 @@ int  V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
     struct tm * timeInfos = localtime( & timestamp );
     int RT = 30,origin =5;
     int i,l;
+
     for (i=0;i<5;i++)
     {
         if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeX)[i] != 0)

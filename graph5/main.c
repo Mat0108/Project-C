@@ -173,7 +173,7 @@ int main()
         //permet l'appui de plusieurs touches en même temps
         if (appui_touche == 1){
             appui_touche = 0;
-            Sleep(300);
+            Sleep(250);
         }
     }
     readkey();
