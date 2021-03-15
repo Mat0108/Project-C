@@ -118,6 +118,7 @@ int main()
         if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin);
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso,TypePerso1);
         V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
+
         for (i=0;i<5;i++){
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
                 V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle);
@@ -127,9 +128,13 @@ int main()
                     if (BombeY[i] == 1) {
                         for (k=0;k<=rayon;k++){
                             if(rectangle[BombeY[i]+k][BombeX[i]] == 1){rectangle[BombeY[i]+k][BombeX[i]]  = 0;AffichagePosition(rectangle,BombeY[i]+k,BombeX[i],RT,5);}}}}}}
+
         nb_vie = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso,y_perso,nb_vie,Item);
-        nb_vie2 = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso2,y_perso2,nb_vie2,Item2);
-        PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
+        if (MenuPlayer == 2)
+        {
+            nb_vie2 = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso2,y_perso2,nb_vie2,Item2);
+            PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
+        }
         PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso1,origin);
         V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso,y_perso,&nb_vie,Item,MenuPerso,TypePerso1,PowerUpTab,InvisibiliteTimerval);
 
