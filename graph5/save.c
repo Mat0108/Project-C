@@ -5,6 +5,7 @@
 #include <time.h>
 #include <string.h>
 #include <allegro.h>
+#include <dirent.h>
 //savegarde une partie
 void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2)
 {
@@ -234,4 +235,28 @@ void AffichageSave()
     BITMAP *image;
     image=load_bitmap("image/30/menu/save.bmp",NULL);
     blit(image,screen,0,0,30*26,10,image->w, image->h);
+}
+void MenuLoad()
+{
+    struct dirent *dir;
+    DIR *d = opendir("./savegame/");
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            if (dir->d_name != "..")
+            {
+                printf("%s\n", dir->d_name);
+            }
+
+        }
+        closedir(d);
+        Sleep(300);
+    }
+    else
+    {
+        printf("NULL");
+        closedir(d);
+    }
+    return 0;
 }
