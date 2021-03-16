@@ -25,6 +25,8 @@ const int RT = 30; //taille d'une image
 const int CT = 21; // taille d'une case graphique
 int origin = 5;
 int *score = 0;
+int *scoreP1 = 0;
+int *scoreP2 = 0;
 
 int default_perso() {return 2;}//1 pour le stitch, 2 pour le pug
 
@@ -112,16 +114,16 @@ int main()
         time_t timestamp = time( NULL );
         struct tm * timeInfos = localtime( & timestamp );
         //if pour le deplacment et le posement de la bombe du perso 1
-        if (key[KEY_D])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin);
-        if (key[KEY_A])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin);
-        if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin);
-        if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin);
+        if (key[KEY_D])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin,&scoreP1);
+        if (key[KEY_A])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,-1,0,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin,&scoreP1);
+        if (key[KEY_W])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,-1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin,&scoreP1);
+        if (key[KEY_S])  appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso,&y_perso,&delta_perso,0,1,BombeX,BombeY,&nb_vie,&nb_Bombe_max,&rayon,Item,RT,CT,MenuPerso,TypePerso1,1,origin,&scoreP1);
         if (key[KEY_SPACE]) appui_touche = BombePlacement(&BombeX,&BombeY,&BombeTimer,&nb_Bombe,nb_Bombe_max,rectangle,x_perso,y_perso,RT,origin,MenuPerso,TypePerso1);
         V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
 
         for (i=0;i<5;i++){
             if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
-                V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle,&score);
+                V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle,&scoreP1);
                 for (j=0;j<2*rayon+1;j++){
                     if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
                     if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1)rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
@@ -129,34 +131,35 @@ int main()
                         for (k=0;k<=rayon;k++){
                             if(rectangle[BombeY[i]+k][BombeX[i]] == 1){rectangle[BombeY[i]+k][BombeX[i]]  = 0;AffichagePosition(rectangle,BombeY[i]+k,BombeX[i],RT,5);}}}}}}
 
-        nb_vie = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso,y_perso,nb_vie,Item);
+        nb_vie = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso,y_perso,nb_vie,Item,&scoreP1,-10);
         if (MenuPlayer == 2)
         {
-            nb_vie2 = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso2,y_perso2,nb_vie2,Item2);
+            nb_vie2 = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso2,y_perso2,nb_vie2,Item2,&scoreP1,10);
             PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
         }
         PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso1,origin);
         V2Bombes_Desaffichage(&BombeX,&BombeY,&BombeTimer,rectangle,rayon,&nb_Bombe,x_perso,y_perso,&nb_vie,Item,MenuPerso,TypePerso1,PowerUpTab,InvisibiliteTimerval);
 
         //if pour le deplacment et le posement de la bombe du perso 2
-        if (key[KEY_RIGHT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin);
-        if (key[KEY_LEFT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,-1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin);
-        if (key[KEY_UP] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,0,-1,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin);
-        if (key[KEY_DOWN] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,0,1,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin);
+        if (key[KEY_RIGHT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin,&scoreP2);
+        if (key[KEY_LEFT] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,-1,0,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin,&scoreP2);
+        if (key[KEY_UP] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,0,-1,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin,&scoreP2);
+        if (key[KEY_DOWN] && MenuPlayer == 2) appui_touche = PersoDeplacement(rectangle,&PowerUpTab,&x_perso2,&y_perso2,&delta_perso2,0,1,BombeX2,BombeY2,&nb_vie2,&nb_Bombe_max2,&rayon2,Item2,RT,CT,MenuPerso2,TypePerso2,2,origin,&scoreP2);
         if (key[KEY_ENTER] && MenuPlayer == 2) appui_touche = BombePlacement(&BombeX2,&BombeY2,&BombeTimer2,&nb_Bombe2,nb_Bombe_max2,rectangle,x_perso2,y_perso2,RT,origin,MenuPerso2,TypePerso2);
         if (MenuPlayer == 2)
         {
             V2Bombes_Affichage(BombeX2,BombeY2,BombeTimer2,&rectangle,rayon2);
             for (i=0;i<5;i++){
                 if (BombeTimer2[i]+1 == timeInfos->tm_sec && BombeTimer2[i] != 0){
+                    V2Bombes_Powerup(BombeX2[i],BombeY2[i],rayon2,&PowerUpTab,rectangle,&scoreP2);
                     for (j=0;j<2*rayon+1;j++){
                         if (rectangle[BombeY2[i]][j+BombeX2[i]-rayon] == 1)rectangle[BombeY2[i]][j+BombeX2[i]-rayon] = 0;
                         if (rectangle[j+BombeY2[i]-rayon][BombeX2[i]] == 1)rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
                         if (BombeY2[i] == 1) {
                             for (k=0;k<=rayon;k++){
                                 if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1)rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;}}}}}
-            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item);
-            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2);
+            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item,&scoreP2,10);
+            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2,&scoreP2,-10);
             PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
             V2Bombes_Desaffichage(&BombeX2,&BombeY2,&BombeTimer2,rectangle,rayon,&nb_Bombe2,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,TypePerso2,PowerUpTab,InvisibiliteTimerval);
 
