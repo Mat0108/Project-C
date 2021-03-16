@@ -18,18 +18,28 @@ void Quitter()
     exit(EXIT_FAILURE);
 }
 //bouton play
-void Play(int RT,int CT,int origin)
+int Play(int RT,int CT,int origin)
 {
-    int MenuBase = 0;;
+    int MenuBase = 0;
+    int result;
     while (MenuBase == 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuBase = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuLoad();
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) {result = MenuLoad();MenuBase = 2;}
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) Quitter();
     }
-    AffichageMenuInv(RT,CT,origin,0);
-    AffichageNiveau(RT,10,origin);
+    if (MenuBase == 1)
+    {
+        AffichageMenuInv(RT,CT,origin,0);
+        AffichageNiveau(RT,10,origin);
+        return 0;
+    }
+    else
+    {
+       return result;
+    }
     Sleep(300);
+
 }
 
 //Affichage du niveau en jeu
@@ -288,7 +298,4 @@ void Invisibilite_Update(int *InvisibiliteTimerval,int InvisibiliteTimer,int val
 }
 
 
-void SaveFichier()
-{
 
-}

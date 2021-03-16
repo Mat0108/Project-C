@@ -79,6 +79,10 @@ void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* p
         exit( -1 );
     }
 }
+void playerAffichage(Player* perso)
+{
+    printf("\n%s %d %d %d %d %d %d %d",perso->nom,perso->x,perso->y,perso->color,perso->type,perso->bombe,perso->rayon,perso->vie);
+}
 //recuperation des tableaux
 void CharTabtoInt(FILE *file,int *tableau[21][21],int pos)
 {
@@ -121,7 +125,7 @@ void extractPlayer(char text[200], Player * player)
         k++;
     }
     extract(15,k-1,text,player->nom);
-    printf("%s",player->nom);
+
     extract(k+3,k+4,text,xc);
     if(xc[0] == ' ') player->x = (int) xc[1]-48;
     else player->x = ((int) xc[0]-48)*10 + (int) xc[1]-48;
@@ -138,6 +142,7 @@ void extractPlayer(char text[200], Player * player)
     player->rayon = (int)rayonc[0]-48;
     extract(k+51,k+51,text,viec);
     player->vie = (int)viec[0]-48;
+    playerAffichage(player);
 
 }
 //charger une partie
@@ -176,7 +181,9 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
              powerUpTab[i][j] =  (int)text[j]-48;
         }
     }
+    printf("\n\n");
     affichage(powerUpTab,21);
+
 
     fgets(text,150,stream);
     fgets(text,150,stream);
@@ -236,22 +243,18 @@ void AffichageSave()
     image=load_bitmap("image/30/menu/save.bmp",NULL);
     blit(image,screen,0,0,30*26,10,image->w, image->h);
 }
-void MenuLoad()
+int MenuLoad()
 {
     struct dirent *dir;
     DIR *d = opendir("./savegame/");
-    int i=0,imax;
+    int i=0,imax,result=0;
     char tab[12][100];
     if (d)
     {
         while ((dir = readdir(d)) != NULL)
         {
-            if (dir->d_name != "..")
-            {
-                strcpy(tab[i],dir->d_name);
-                if (i<12) i++;
-            }
-
+            strcpy(tab[i],dir->d_name);
+            if (i<12) i++;
         }
         closedir(d);
     }
@@ -259,9 +262,16 @@ void MenuLoad()
     for (int i = 2;i<imax;i++)
     {
 
-        printf("\n%s",tab[i]);
+        printf("\n%d) %s",i-1,tab[i]);
     }
     Sleep(300);
     if (imax == 2) allegro_message("Aucun fichier a charger");
-    return 0;
+    else
+    {
+        printf("\nQuel fichier voulez vous charger ?");
+        fflush(stdout);
+        scanf("%d",&result);
+    }
+    if (imax == 2) return 0;
+    else return result+2;
 }
