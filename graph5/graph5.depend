@@ -800,7 +800,7 @@
 
 1607353351 c:\users\matthieu\documents\github\project-c\graph5\powerup.h
 
-1615885049 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\main.c
+1615886821 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<allegro.h>
@@ -812,7 +812,7 @@
 	<windows.h>
 	"save.h"
 
-1615883408 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\menu.c
+1615885653 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\menu.c
 	"menu.h"
 	<stdio.h>
 	<stdlib.h>
@@ -825,7 +825,7 @@
 
 1615883408 d:\users\alexa\onedrive\documents\github\project-c2\graph5\menu.h
 
-1615885386 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\personnage.c
+1615886282 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\personnage.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
@@ -853,7 +853,7 @@
 
 1610896298 d:\users\alexa\onedrive\documents\github\project-c2\graph5\powerup.h
 
-1615883408 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\rectangle.c
+1615885653 source:d:\users\alexa\onedrive\documents\github\project-c2\graph5\rectangle.c
 	"rectangle.h"
 	<stdio.h>
 	<stdlib.h>
