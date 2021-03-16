@@ -33,14 +33,14 @@ void BombePlace(int x,int y,int RT,int origin)
     blit(BOMBE,screen,0,0,RT*(x+origin),RT*y,BOMBE->w, BOMBE->h);
 }
 //deplacement du perso
-int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int persotype,int choix,int origin)
+int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int persotype,int choix,int origin, int *score)
 {
     int i;
     AffichageAllegro2(tableau,1,RT,CT,origin);
-    if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) (*nb_Bombe_max)++;
-    if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) (*rayon)++;
+    if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) {(*nb_Bombe_max)++;*score+=3;}
+    if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) {(*rayon)++;*score+=3;}
     //if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) (*delta_perso)++;
-    if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) {(*nb_vie)++;printf("%d",*nb_vie);}
+    if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) {(*nb_vie)++;printf("%d",*nb_vie);*score+=6;}
     AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,persochoix,choix,persotype,item);
     PowerUp[*y_perso+dy][*x_perso+dx] = 0;
     if (tableau[*y_perso+dy* *delta_perso][*x_perso+dx* *delta_perso] == 0)
