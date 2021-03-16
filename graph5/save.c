@@ -240,23 +240,28 @@ void MenuLoad()
 {
     struct dirent *dir;
     DIR *d = opendir("./savegame/");
+    int i=0,imax;
+    char tab[12][100];
     if (d)
     {
         while ((dir = readdir(d)) != NULL)
         {
             if (dir->d_name != "..")
             {
-                printf("%s\n", dir->d_name);
+                strcpy(tab[i],dir->d_name);
+                if (i<12) i++;
             }
 
         }
         closedir(d);
-        Sleep(300);
     }
-    else
+    imax = i;
+    for (int i = 2;i<imax;i++)
     {
-        printf("NULL");
-        closedir(d);
+
+        printf("\n%s",tab[i]);
     }
+    Sleep(300);
+    if (imax == 2) allegro_message("Aucun fichier a charger");
     return 0;
 }
