@@ -25,6 +25,8 @@ const int RT = 30; //taille d'une image
 const int CT = 21; // taille d'une case graphique
 int origin = 5;
 int *score = 0;
+int *scoreP1 = 0;
+int *scoreP2 = 0;
 
 int default_perso() {return 2;}//1 pour le stitch, 2 pour le pug
 
@@ -129,10 +131,10 @@ int main()
                         for (k=0;k<=rayon;k++){
                             if(rectangle[BombeY[i]+k][BombeX[i]] == 1){rectangle[BombeY[i]+k][BombeX[i]]  = 0;AffichagePosition(rectangle,BombeY[i]+k,BombeX[i],RT,5);}}}}}}
 
-        nb_vie = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso,y_perso,nb_vie,Item);
+        nb_vie = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso,y_perso,nb_vie,Item,*scoreP1,-2);
         if (MenuPlayer == 2)
         {
-            nb_vie2 = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso2,y_perso2,nb_vie2,Item2);
+            nb_vie2 = V2Bombes_Life(BombeX,BombeY,BombeTimer,rayon,x_perso2,y_perso2,nb_vie2,Item2,*scoreP1,2);
             PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
         }
         PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso1,origin);
@@ -155,8 +157,8 @@ int main()
                         if (BombeY2[i] == 1) {
                             for (k=0;k<=rayon;k++){
                                 if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1)rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;}}}}}
-            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item);
-            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2);
+            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item,*scoreP2,2);
+            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2,*scoreP2,-2);
             PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
             V2Bombes_Desaffichage(&BombeX2,&BombeY2,&BombeTimer2,rectangle,rayon,&nb_Bombe2,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,TypePerso2,PowerUpTab,InvisibiliteTimerval);
 

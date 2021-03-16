@@ -325,7 +325,7 @@ int  V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
     }
 }
 
-int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_perso,int y_perso,int life,int xorigin)
+int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_perso,int y_perso,int life,int xorigin,int *scoreP,int valeur)
 {
     int i,j;
     int modif = 0;
@@ -370,6 +370,8 @@ int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_
             }
         }
     }
+    *scoreP += valeur;
+    printf("\n------%d",*scoreP);
     return life;
 }
 void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score)
@@ -394,7 +396,7 @@ void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],in
             PowerUpTab[i+BombeY-rayon][BombeX] = x;
         }
     }
-    printf("\n%d",*score);
+    printf("\n-%d",*score);
 }
 void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5])
 {
