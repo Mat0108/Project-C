@@ -101,6 +101,7 @@ int main()
     AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe en niveau -1
     show_mouse(screen); //affichage du pointeur de la souris
     load = Play(RT,CT,origin); //affichage du choix du niveau
+
     if (load != 0)
     {
 
@@ -119,6 +120,23 @@ int main()
         sprintf(load3,"./savegame/%s",load2[load-1]);
         printf("%s",load3);
         loadFile(load3,rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2);
+        x_perso = player1.x;y_perso = player1.y;
+        TypePerso1 = player1.type;MenuPerso = player1.color;
+        nb_vie = player1.vie; nb_Bombe_max = player1.bombe; rayon = player1.rayon;
+        printf("%s",player2.nom);
+        if (strstr("false",player2.nom) == 0)
+        {
+            printf("test");
+            x_perso2 = player2.x;y_perso2 = player2.y;
+            TypePerso2 = player2.type;MenuPerso2 = player2.color;
+            nb_vie2 = player2.vie; nb_Bombe_max2 = player2.bombe; rayon2 = player2.rayon;
+
+        }
+        else
+        {
+            printf("test2");
+        }
+
 
 
 
@@ -211,13 +229,12 @@ int main()
             if (MenuPlayer == 2)strcpy(perso2_nom,"Alexandre");
             else strcpy(perso2_nom,"false");
              //{perso1_nom,x_perso,y_perso,MenuPerso,TypePerso1,nb_Bombe,rayon,nb_vie};
-            printf("test");
             strcpy(player1.nom, "Matthieu");
             player1.x = x_perso;
             player1.y = y_perso;
             player1.color = MenuPerso;
             player1.type = TypePerso1;
-            player1.bombe = nb_Bombe;
+            player1.bombe = nb_Bombe_max;
             player1.rayon = rayon;
             player1.vie = nb_vie;
 
@@ -231,7 +248,7 @@ int main()
             player2.y = y_perso2;
             player2.color = MenuPerso2;
             player2.type = TypePerso2;
-            player2.bombe = nb_Bombe2;
+            player2.bombe = nb_Bombe_max2;
             player2.rayon = rayon2;
             player2.vie = nb_vie2;
             for (i = 0;i<5;i++)

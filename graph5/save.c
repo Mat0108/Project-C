@@ -43,11 +43,11 @@ void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* p
     for( int i=0; i<21; i++ ) {
         sprintf(buffer,"");
         for (int j = 0;j<21;j++){
-            sprintf( buffer2, "%d", powerTab[i][j]);
+            sprintf( buffer2,"%2d", powerTab[i][j]);
             strcat(buffer,buffer2);
         }
         strcat(buffer,"\n");
-        if ( 1 != fwrite( buffer,22, 1, stream ) ) {
+        if ( 1 != fwrite( buffer,strlen(buffer), 1, stream ) ) {
             fprintf( stderr, "Cannot write block in file\n" );
         }
     }
@@ -126,6 +126,8 @@ void extractPlayer(char text[200], Player * player)
     }
     extract(15,k-1,text,player->nom);
 
+    if (player->nom[-2] == " ") player->nom[-1] = ' ';
+
     extract(k+3,k+4,text,xc);
     if(xc[0] == ' ') player->x = (int) xc[1]-48;
     else player->x = ((int) xc[0]-48)*10 + (int) xc[1]-48;
@@ -159,7 +161,7 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
     }
     //chargement du niveau
     fgets(text,50,stream);
-    printf("%s",text);
+    printf("\n\n");
     for(i = 0;i<21;i++)
     {
         fgets(text,50,stream);
@@ -178,7 +180,17 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
         fgets(text,50,stream);
         for(j = 0;j<21;j++)
         {
-             powerUpTab[i][j] =  (int)text[j]-48;
+            if (text[2*j+1] == '0'){
+                powerUpTab[i][j] =  (int)text[2*j+1]-48;
+            }
+            else {
+                if (text[2*j] != ' '){
+                    powerUpTab[i][j] =  ((int)text[2*j]-48)*10+(int)text[2*j+1]-48;
+                }
+                else{
+                    powerUpTab[i][j] = (int)text[2*j+1]-48;
+                }
+            }
         }
     }
     printf("\n\n");
@@ -191,10 +203,10 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
     //recuperation des données du joueur 1
     extractPlayer(text,perso1);
 
-
     fgets(text,150,stream);
     fgets(text,150,stream);
     fgets(text,150,stream);
+    printf("%s",text);
     //recuperation des données du joueur 1
     for (i = 0;i<5;i++)
     {
@@ -213,6 +225,7 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
     fgets(text,150,stream);
     extractPlayer(text,perso2);
 
+
     fgets(text,150,stream);
     fgets(text,150,stream);
     fgets(text,150,stream);
@@ -221,6 +234,7 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
     for (i = 0;i<5;i++)
     {
         fgets(text,150,stream);
+
         if(text[0] == ' ') bombe2->X[i] = (int)text[1]-48;
         else bombe2->X[i] = ((int)text[0] - 48)*10 + (int)text[1]-48;
         if(text[3] == ' ') bombe2->Y[i] = (int)text[4]-48;
@@ -268,7 +282,7 @@ int MenuLoad()
     if (imax == 2) allegro_message("Aucun fichier a charger");
     else
     {
-        printf("\nQuel fichier voulez vous charger ?");
+        printf("\nQuel fichier voulez vous charger ? ");
         fflush(stdout);
         scanf("%d",&result);
     }

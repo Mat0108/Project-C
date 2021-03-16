@@ -8,7 +8,7 @@
 typedef struct Player Player;
 struct Player
 {
-    char nom[100];
+    char nom[50];
     int x;
     int y;
     int type;
