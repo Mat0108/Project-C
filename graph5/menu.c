@@ -51,7 +51,7 @@ int ChoixNiveau(int tableau[21][21],int RT,int CT,int origin)
     int MenuNiveau = 0;
     while (MenuNiveau == 0)
     {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y<=RT*1.5 && mouse_x<= RT*5 ) MenuNiveau = -2;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y<=RT*2 && mouse_x<= RT*5 ) MenuNiveau = -2;
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuNiveau = 1;
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) MenuNiveau = 2;
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) MenuNiveau = 3;
