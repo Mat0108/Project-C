@@ -157,7 +157,60 @@ int main()
         //permet l'appui de plusieurs touches en même temps
         if (appui_touche == 1){
             appui_touche = 0;
+<<<<<<< Updated upstream
             Sleep(300);
+=======
+            Sleep(250);
+        }
+        if ((mouse_b&1 || mouse_b&2) && mouse_x>RT*26 && mouse_y<=60)
+        {
+            strcpy(perso1_nom,"Matthieu");
+            if (MenuPlayer == 2)strcpy(perso2_nom,"Alexandre");
+            else strcpy(perso2_nom,"false");
+            Player player1;
+            strcpy(player1.nom, "Matthieu");
+            player1.x = x_perso;
+            player1.y = y_perso;
+            player1.color = MenuPerso;
+            player1.type = TypePerso1;
+            player1.bombe = nb_Bombe;
+            player1.rayon = rayon;
+            player1.vie = nb_vie;
+            Bombe bombe1;
+            for (i = 0;i<5;i++)
+            {
+                bombe1.X[i] = BombeX[i];
+                bombe1.Y[i] = BombeY[i];
+                bombe1.Timer[i] = BombeTimer[i];
+            }
+            Player player2;
+            player2.x = x_perso2;
+            player2.y = y_perso2;
+            player2.color = MenuPerso2;
+            player2.type = TypePerso2;
+            player2.bombe = nb_Bombe2;
+            player2.rayon = rayon2;
+            player2.vie = nb_vie2;
+            Bombe bombe2;
+            for (i = 0;i<5;i++)
+            {
+                bombe2.X[i] = BombeX2[i];
+                bombe2.Y[i] = BombeY2[i];
+                bombe2.Timer[i] = BombeTimer2[i];
+            }
+            if (MenuPlayer == 2)
+            {
+                strcpy(player2.nom, "Alexandre");
+            }
+            else
+            {
+                strcpy(player2.nom, "false");
+            }
+
+            writeFile(rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2);
+            Sleep(250);
+            allegro_message("Partie sauvergarde");
+>>>>>>> Stashed changes
         }
     }
     readkey();

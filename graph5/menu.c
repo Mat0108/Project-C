@@ -24,7 +24,12 @@ void Play(int RT,int CT,int origin)
     while (MenuBase == 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuBase = 1;
+<<<<<<< Updated upstream
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) Quitter();
+=======
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuLoad();
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) Quitter();
+>>>>>>> Stashed changes
     }
     AffichageMenuInv(RT,CT,origin,0);
     AffichageNiveau(RT,10,origin);
