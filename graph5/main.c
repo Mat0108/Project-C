@@ -7,6 +7,7 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
+#include <dirent.h>
 #include "save.h"
 /*---------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------Programme Bomberman----------------------------------------------------
@@ -76,8 +77,11 @@ int main()
 
     int MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0,TypePerso1= 0,TypePerso2 = 0, *PowerUpTab[21][21] = {0}; //variable pour les bombes
     int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100; //variable pour le powerup invisibilité pour le perso 1
-    int i,j,k,appui_touche = 0;
-    char perso1_nom[50],perso2_nom[50];
+    int i,j,k,appui_touche = 0,load = 0;
+    char perso1_nom[50],perso2_nom[50],load2[10][100],load3[100];
+
+    Player player1 = {"",0,0,0,0,0,0,0},player2;
+    Bombe bombe1,bombe2;
 
     Create(rectangle,-1,CT); //Initialisation du labyrinthe
     allegro_init();
@@ -96,7 +100,30 @@ int main()
     AffichageMenu(RT,CT,origin); //affichage du choix du menu
     AffichageAllegro(rectangle,0,RT,CT,origin); // affichage de labyrinthe en niveau -1
     show_mouse(screen); //affichage du pointeur de la souris
-    Play(RT,CT,origin); //affichage du choix du niveau
+    load = Play(RT,CT,origin); //affichage du choix du niveau
+    if (load != 0)
+    {
+
+        struct dirent *dir;
+        DIR *d = opendir("./savegame/");
+        i = 0;
+        if (d)
+        {
+            while ((dir = readdir(d)) != NULL)
+            {
+                strcpy(load2[i],dir->d_name);
+                if (i<12) i++;
+            }
+            closedir(d);
+        }
+        sprintf(load3,"./savegame/%s",load2[load-1]);
+        printf("%s",load3);
+        loadFile(load3,rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2);
+
+
+
+    }
+    else
     MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
     MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
     AffichageTypePerso(RT,CT,1,MenuPlayer);
@@ -185,7 +212,6 @@ int main()
             else strcpy(perso2_nom,"false");
              //{perso1_nom,x_perso,y_perso,MenuPerso,TypePerso1,nb_Bombe,rayon,nb_vie};
             printf("test");
-            Player player1;
             strcpy(player1.nom, "Matthieu");
             player1.x = x_perso;
             player1.y = y_perso;
@@ -194,14 +220,13 @@ int main()
             player1.bombe = nb_Bombe;
             player1.rayon = rayon;
             player1.vie = nb_vie;
-            Bombe bombe1;
+
             for (i = 0;i<5;i++)
             {
                 bombe1.X[i] = BombeX[i];
                 bombe1.Y[i] = BombeY[i];
                 bombe1.Timer[i] = BombeTimer[i];
             }
-            Player player2;
             player2.x = x_perso2;
             player2.y = y_perso2;
             player2.color = MenuPerso2;
@@ -209,7 +234,6 @@ int main()
             player2.bombe = nb_Bombe2;
             player2.rayon = rayon2;
             player2.vie = nb_vie2;
-            Bombe bombe2;
             for (i = 0;i<5;i++)
             {
                 bombe2.X[i] = BombeX2[i];
