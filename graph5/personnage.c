@@ -325,7 +325,7 @@ int  V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
     }
 }
 
-int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_perso,int y_perso,int life,int xorigin,int *score,int valeur)
+int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_perso,int y_perso,int life,int xorigin,int *score,int valeur,char *joueur)
 {
     int i,j;
     int modif = 0;
@@ -344,8 +344,8 @@ int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_
             {
                 //printf("\nbx = %d by = %d px = %d py = %d",BombeX-rayon+i,BombeY,x_perso,y_perso);
                 //printf("\nbx = %d by = %d px = %d py = %d",BombeX,BombeY-rayon+i,x_perso,y_perso);
-                if ((BombeX[j]-rayon+i) == x_perso && BombeY[j] == y_perso) {life--;*score += valeur;printf("\n(%d)",*score);modif = 1;}
-                if (BombeX[j] == x_perso && (BombeY[j]-rayon+i) == y_perso){life--;*score += valeur;printf("\n(%d)",*score);modif = 1;}
+                if ((BombeX[j]-rayon+i) == x_perso && BombeY[j] == y_perso) {life--;*score += valeur;printf("\n%s %d",joueur,*score);modif = 1;}
+                if (BombeX[j] == x_perso && (BombeY[j]-rayon+i) == y_perso){life--;*score += valeur;printf("\n%s %d",joueur,*score);modif = 1;}
                 if (modif == 1)
                 {
                     if (xorigin == 0)
@@ -372,7 +372,7 @@ int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_
     }
     return life;
 }
-void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score)
+void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score,char *joueur)
 {
     int i;
     int origin = 5,RT = 30,CT = 21;
@@ -382,7 +382,7 @@ void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],in
         if (tableau[BombeY][i+BombeX-rayon] == 1)
         {
             *score+=2;
-            printf("\n%d",*score);
+            printf("\n%s %d",joueur,*score);
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[BombeY][i+BombeX-rayon] = x;
@@ -390,7 +390,7 @@ void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],in
         if (tableau[i+BombeY-rayon][BombeX] == 1)
         {
             *score+=2;
-            printf("\n%d",*score);
+            printf("\n%s %d",joueur,*score);
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[i+BombeY-rayon][BombeX] = x;
