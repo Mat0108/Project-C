@@ -226,7 +226,7 @@ int main()
 
             writeFile(rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2);
             Sleep(250);
-            printf("Save !!");
+            allegro_message("Partie sauvergarde");
         }
     }
 
