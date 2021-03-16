@@ -4,14 +4,19 @@
 #include <string.h>
 #include <time.h>
 #include <string.h>
+#include <allegro.h>
 //savegarde une partie
-void writeFile( const char * filename, int tableau[21][21],int powerTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2)
+void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2)
 {
     char buffer[100];
     char buffer2[100];
     int returnCode;
     int index;
 
+    char filename[100];
+    time_t timestamp = time( NULL );
+    struct tm * timeInfos = localtime( & timestamp );
+    sprintf(filename,"./savegame/save_%d.%d_%dh%d.data",timeInfos->tm_mday+1,timeInfos->tm_mon+1,timeInfos->tm_hour,timeInfos->tm_min);
 
 
     FILE * stream = fopen( filename, "w" );
@@ -48,7 +53,7 @@ void writeFile( const char * filename, int tableau[21][21],int powerTab[21][21],
 
     //savegardes des infos des deux persos
     sprintf(buffer,"\n\nplayer 1 : nom:%s ,x:%2d,y:%2d,color:%d,type:%d,nb_b:%d,nb_rayon:%d,nb_vie:%d",perso1->nom,perso1->x,perso1->y,perso1->color,perso1->type,perso1->bombe,perso1->rayon,perso1->vie);
-    fwrite(buffer,69+strlen(perso1->nom),1,stream);
+    fwrite(buffer,70+strlen(perso1->nom),1,stream);
     fwrite("\n\nPosition des bombes du player 1\nX  Y  T",41,1,stream);
     for (int i = 0;i<5;i++)
     {
@@ -56,7 +61,7 @@ void writeFile( const char * filename, int tableau[21][21],int powerTab[21][21],
         fwrite(buffer,9,1,stream);
     }
     sprintf(buffer,"\n\nplayer 2 : nom:%s ,x:%2d,y:%2d,color:%d,type:%d,nb_b:%d,nb_rayon:%d,nb_vie:%d",perso2->nom,perso2->x,perso2->y,perso2->color,perso2->type,perso2->bombe,perso2->rayon,perso2->vie);
-    fwrite(buffer,69+strlen(perso2->nom),1,stream);
+    fwrite(buffer,70+strlen(perso2->nom),1,stream);
     sprintf(buffer,"");
 
     fwrite("\n\nPosition des bombes du player 2\nX  Y  T",41,1,stream);
@@ -222,6 +227,11 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
         fprintf( stderr, "Erreur durant la fermeture du fichier" );
         exit( -1 );
     }
+}
 
-
+void AffichageSave()
+{
+    BITMAP *image;
+    image=load_bitmap("image/30/menu/save.bmp",NULL);
+    blit(image,screen,0,0,30*26,10,image->w, image->h);
 }

@@ -7,7 +7,7 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
-
+#include "save.h"
 /*---------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------Programme Bomberman----------------------------------------------------
 -------------------------Matthieu Barnabé-------Alexandre La Fonta-------Nhat Khoa Tran------------------------
@@ -75,7 +75,7 @@ int main()
     int MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0,TypePerso1= 0,TypePerso2 = 0, *PowerUpTab[21][21] = {0}; //variable pour les bombes
     int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100; //variable pour le powerup invisibilité pour le perso 1
     int i,j,k,appui_touche = 0;
-
+    char perso1_nom[50],perso2_nom[50];
 
     Create(rectangle,-1,CT); //Initialisation du labyrinthe
     allegro_init();
@@ -105,7 +105,7 @@ int main()
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,TypePerso1,Item); //affichage des powerup du perso 1
     if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,TypePerso2,Item2);//affichage des powerup du perso 2
     install_int_ex(timer,BPS_TO_TIMER(1)); //initialisation du timer
-
+    AffichageSave();
 
     while (!key[KEY_ESC])//boucle d'animation
     {
@@ -165,6 +165,7 @@ int main()
 
 
 
+
         //Powerup Invisibilité (purement visuelle)
         if (key[KEY_ENTER_PAD]) Invisibilite_Activable(&InvisibiliteOn,&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
         Invisibilite_Update(&InvisibiliteTimerval,InvisibiliteTimer,Item,RT);
@@ -174,7 +175,59 @@ int main()
             appui_touche = 0;
             Sleep(250);
         }
+        if ((mouse_b&1 || mouse_b&2) && mouse_x>RT*26 && mouse_y<=60)
+        {
+            strcpy(perso1_nom,"Matthieu");
+            if (MenuPlayer == 2)strcpy(perso2_nom,"Alexandre");
+            else strcpy(perso2_nom,"false");
+             //{perso1_nom,x_perso,y_perso,MenuPerso,TypePerso1,nb_Bombe,rayon,nb_vie};
+            printf("test");
+            Player player1;
+            strcpy(player1.nom, "Matthieu");
+            player1.x = x_perso;
+            player1.y = y_perso;
+            player1.color = MenuPerso;
+            player1.type = TypePerso1;
+            player1.bombe = nb_Bombe;
+            player1.rayon = rayon;
+            player1.vie = nb_vie;
+            Bombe bombe1;
+            for (i = 0;i<5;i++)
+            {
+                bombe1.X[i] = BombeX[i];
+                bombe1.Y[i] = BombeY[i];
+                bombe1.Timer[i] = BombeTimer[i];
+            }
+            Player player2;
+            player2.x = x_perso2;
+            player2.y = y_perso2;
+            player2.color = MenuPerso2;
+            player2.type = TypePerso2;
+            player2.bombe = nb_Bombe2;
+            player2.rayon = rayon2;
+            player2.vie = nb_vie2;
+            Bombe bombe2;
+            for (i = 0;i<5;i++)
+            {
+                bombe2.X[i] = BombeX2[i];
+                bombe2.Y[i] = BombeY2[i];
+                bombe2.Timer[i] = BombeTimer2[i];
+            }
+            if (MenuPlayer == 2)
+            {
+                strcpy(player2.nom, "Alexandre");
+            }
+            else
+            {
+                strcpy(player2.nom, "false");
+            }
+
+            writeFile(rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2);
+            Sleep(250);
+            printf("Save !!");
+        }
     }
+
     readkey();
 
     return 0;
