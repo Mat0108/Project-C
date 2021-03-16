@@ -9,12 +9,11 @@
 #include <windows.h>
 
 //affichege du perso
-void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int origin)
+void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int typeperso,int origin)
 {
 
     char adress[100];
     BITMAP *perso;
-    int typeperso = default_perso();
     if (typeperso == 1) sprintf(adress, "image/%d/stitch/stitch_%d.bmp",RT, choix);
     if (typeperso == 2) sprintf(adress, "image/%d/pug/pug_%d.bmp",RT, choix);
 
@@ -34,15 +33,15 @@ void BombePlace(int x,int y,int RT,int origin)
     blit(BOMBE,screen,0,0,RT*(x+origin),RT*y,BOMBE->w, BOMBE->h);
 }
 //deplacement du perso
-int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int choix,int origin)
+int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int persotype,int choix,int origin)
 {
     int i;
     AffichageAllegro2(tableau,1,RT,CT,origin);
     if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) (*nb_Bombe_max)++;
     if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) (*rayon)++;
     //if (PowerUp[*y_perso+dy][*x_perso+dx]> 25 && PowerUp[*y_perso+dy][*x_perso+dx]< 28 && *delta_perso< 3) (*delta_perso)++;
-    if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) *nb_vie++;
-    AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,persochoix,choix,item);
+    if (PowerUp[*y_perso+dy][*x_perso+dx]== 28 && *nb_vie<3) {(*nb_vie)++;printf("%d",*nb_vie);}
+    AffichageItem(RT,CT,*nb_vie,*nb_Bombe_max,*rayon,*delta_perso,persochoix,choix,persotype,item);
     PowerUp[*y_perso+dy][*x_perso+dx] = 0;
     if (tableau[*y_perso+dy* *delta_perso][*x_perso+dx* *delta_perso] == 0)
     {
@@ -55,12 +54,12 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
         if (dy == 1) (*y_perso)++;
         if (dx == -1) (*x_perso)--;
         if (dy == -1) (*y_perso)--;
-        PersoAffichage(*x_perso,*y_perso,RT,persochoix,origin);
+        PersoAffichage(*x_perso,*y_perso,RT,persochoix,persotype,origin);
     }
     return 1;
 }
 //Creation de la bombe
-int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso)
+int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bombe,int nb_Bombe_max,int tableau[21][21] ,int x_perso,int y_perso,int RT,int origin,int MenuPerso,int TypePerso)
 {
      if (*nb_Bombe < nb_Bombe_max)
     {
@@ -72,7 +71,7 @@ int BombePlacement(int *BombeX[5],int *BombeY[5], int *BombeTimer[5], int *nb_Bo
         if (BombeTimer[*nb_Bombe]>= 60) BombeTimer[*nb_Bombe] = BombeTimer[*nb_Bombe] - 60;
         AffichagePosition(tableau,x_perso,y_perso,RT,origin);
         BombePlace(x_perso,y_perso,RT,origin);
-        PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+        PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso,origin);
         (*nb_Bombe)++;
     }
     return 1;
@@ -230,7 +229,7 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                 //}
 
             }
-            PersoAffichage(x_perso,y_perso,RT,MenuPerso,origin);
+            PersoAffichage(x_perso,y_perso,RT,MenuPerso,1,origin);
             //AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,0);
             AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,xorigin);
             PowerUpAffichage(PowerUpTab,origin,RT,CT);
@@ -288,20 +287,19 @@ void V2Bombes_Affichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],i
     }
 
 }
-void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int PowerUptab,int InvisibiliteTimerval)
+int  V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5],int (*tableau)[21][21],int rayon,int *nb_bombe,int x_perso,int y_perso,int *life,int xorigin,int choixperso,int typeperso,int PowerUptab,int InvisibiliteTimerval)
 {
     time_t timestamp = time( NULL );
     struct tm * timeInfos = localtime( & timestamp );
     int RT = 30,origin =5;
     int i,l;
+
     for (i=0;i<5;i++)
     {
-        if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeTimer)[i] != 0)
+        if ((*BombeTimer)[i] + 2 == timeInfos->tm_sec && (*BombeX)[i] != 0)
         {
             *nb_bombe = *nb_bombe - 1;
             BombeEffectInv((*BombeX)[i],(*BombeY)[i],rayon,tableau,BombeX,BombeY,RT,origin); //deaffichage du rayon de la bombe
-            if (InvisibiliteTimerval == 100)V2Bombes_Life(*BombeX[i],*BombeY[i],rayon,x_perso,y_perso,life,xorigin);
-            PersoAffichage(x_perso,y_perso,RT,choixperso,origin);
             PowerUpAffichage(PowerUptab,origin,RT,21);
             for ( l=0;l<4;l++)
             {
@@ -321,49 +319,60 @@ void V2Bombes_Desaffichage(int (*BombeX)[5],int (*BombeY)[5],int (*BombeTimer)[5
             (*BombeX)[4] = 0;
             (*BombeY)[4] = 0;
             (*BombeTimer)[4] = 0;
-
+            return 1;
         }
+        return 0;
     }
 }
 
-void V2Bombes_Life(int BombeX,int BombeY,int rayon,int x_perso,int y_perso,int *life,int xorigin)
+int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_perso,int y_perso,int life,int xorigin)
 {
-    int i;
+    int i,j;
     int modif = 0;
     BITMAP *image;
     char adress[100];
     int debut = 3;
     int RT = 30;
-    for (i=0;i<2*rayon+1;i++)
+    time_t timestamp = time( NULL );
+    struct tm * timeInfos = localtime( & timestamp );
+    for (j = 0;j<5;j++)
     {
-        //printf("\nbx = %d by = %d px = %d py = %d",BombeX-rayon+i,BombeY,x_perso,y_perso);
-        //printf("\nbx = %d by = %d px = %d py = %d",BombeX,BombeY-rayon+i,x_perso,y_perso);
-        if ((BombeX-rayon+i) == x_perso && BombeY == y_perso) {(*life)--;modif = 1;}
-        if (BombeX == x_perso && (BombeY-rayon+i) == y_perso){(*life)--;modif = 1;}
-        if (modif == 1)
+        if (BombeTimer[j]+2== timeInfos->tm_sec && BombeX[j] != 0)
         {
-            if (xorigin == 0)
+
+            for (i=0;i<2*rayon+1;i++)
             {
-                AffichageItemLoad(RT,debut+2,xorigin,*life,"PowerUp/Life/LIFE ");
-            }
-            else
-            {
-                AffichageItemLoad(RT,debut+2,xorigin+2,*life,"PowerUp/Life/LIFE ");
-                /*sprintf(adress, "image/%d/menu/ligne.bmp",RT);
-                image=load_bitmap(adress,NULL);
-                testload(image,adress);
-                blit(image,screen,0,0,RT*(xorigin),RT*debut,image->w, image->h);*/
-            }
-            if (*life == 0)
-            {
-                allegro_message("Vous avez perdu");
-                allegro_exit();
-                exit(EXIT_FAILURE);
+                //printf("\nbx = %d by = %d px = %d py = %d",BombeX-rayon+i,BombeY,x_perso,y_perso);
+                //printf("\nbx = %d by = %d px = %d py = %d",BombeX,BombeY-rayon+i,x_perso,y_perso);
+                if ((BombeX[j]-rayon+i) == x_perso && BombeY[j] == y_perso) {life--;modif = 1;}
+                if (BombeX[j] == x_perso && (BombeY[j]-rayon+i) == y_perso){life--;modif = 1;}
+                if (modif == 1)
+                {
+                    if (xorigin == 0)
+                    {
+                        AffichageItemLoad(RT,debut+2,xorigin,life,"PowerUp/Life/LIFE ");
+                    }
+                    else
+                    {
+                        AffichageItemLoad(RT,debut+2,xorigin+2,life,"PowerUp/Life/LIFE ");
+                        /*sprintf(adress, "image/%d/menu/ligne.bmp",RT);
+                        image=load_bitmap(adress,NULL);
+                        testload(image,adress);
+                        blit(image,screen,0,0,RT*(xorigin),RT*debut,image->w, image->h);*/
+                    }
+                    if (life == 0)
+                    {
+                        allegro_message("Vous avez perdu");
+                        allegro_exit();
+                        exit(EXIT_FAILURE);
+                    }
+                }
             }
         }
     }
+    return life;
 }
-void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21])
+void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score)
 {
     int i;
     int origin = 5,RT = 30,CT = 21;
@@ -372,17 +381,20 @@ void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],in
     {
         if (tableau[BombeY][i+BombeX-rayon] == 1)
         {
+            *score+=2;
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[BombeY][i+BombeX-rayon] = x;
         }
         if (tableau[i+BombeY-rayon][BombeX] == 1)
         {
+            *score+=2;
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[i+BombeY-rayon][BombeX] = x;
         }
     }
+    printf("\n%d",*score);
 }
 void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5])
 {
@@ -393,3 +405,4 @@ void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5])
         if (BombeX[i]!=0)printf("\n%d eme bombe x=%d y=%d timer=%d",i,BombeX[i],BombeY[i],BombeTimer[i]);
     }
 }
+

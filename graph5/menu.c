@@ -24,12 +24,8 @@ void Play(int RT,int CT,int origin)
     while (MenuBase == 0)
     {
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*3 && mouse_y<=RT*4.5 && mouse_x<= RT*5 ) MenuBase = 1;
-<<<<<<< Updated upstream
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) Quitter();
-=======
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) MenuLoad();
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) Quitter();
->>>>>>> Stashed changes
     }
     AffichageMenuInv(RT,CT,origin,0);
     AffichageNiveau(RT,10,origin);
@@ -42,7 +38,7 @@ void AffichageNiveauJeu(int MenuNiveau)
     BITMAP *image;
     char adress[100];
 
-    sprintf(adress, "image/%d/menu/niveau %d.bmp",30,MenuNiveau);
+    sprintf(adress, "image/%d/menu/v2 niveau %d.bmp",30,MenuNiveau);
     image=load_bitmap(adress,NULL);
     testload(image,adress);
     blit(image,screen,0,0,30,10,image->w, image->h);
@@ -79,8 +75,8 @@ int ChoixPlayer(int RT,int CT,int origin)
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 && mouse_x<= RT*5 ) Quitter();
     }
     AffichageMenuInv(RT,CT,origin,0);
-    AffichagePerso(RT,CT,1,1);
-    if (MenuPlayer == 2) AffichagePerso(RT,CT,1+origin+21,2);
+    AffichageTypePerso(RT,CT,1,MenuPlayer);
+    if (MenuPlayer == 2) AffichageTypePerso(RT,CT,1+origin+21,MenuPlayer);
     Sleep(300);
     return MenuPlayer;
 }
@@ -100,10 +96,14 @@ void ChoixTypePerso(int *ChoixPerso1,int *ChoixPerso2,int nbplayer,int RT,int CT
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 ) Quitter();
         if (*ChoixPerso1 != 0 &&( *ChoixPerso2 !=0 || nbplayer != 2)) condition = 0;
     }
+    AffichageMenuInv(RT,CT,origin,0);
+    AffichagePerso(RT,CT,1,1,1,*ChoixPerso1);
+    if(*ChoixPerso2 != 0)AffichagePerso(RT,CT,1+origin+21,2,*ChoixPerso2);
+    Sleep(300);
 }
 
 //bouton choix perso
-void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer)
+void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso2 ,int *MenuPerso2,int RT,int CT,int origin,int MenuPlayer,int typeperso1,int typeperso2)
 {
     int varaffichage = 1, condition = 1;
 
@@ -121,14 +121,14 @@ void ChoixPerso(int x_perso,int y_perso,int *MenuPerso, int x_perso2,int y_perso
 
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*13 && mouse_y<=RT*14.5 ) Quitter();
 
-        if (*MenuPerso == *MenuPerso2&& *MenuPerso !=0 && varaffichage == 1)
+        if (*MenuPerso == *MenuPerso2&& *MenuPerso !=0 && varaffichage == 1 && typeperso1 == typeperso2)
         {
             allegro_message("Merci de selectionner deux perso differents  !!!");
             varaffichage = 0;
         }
-        if (*MenuPerso != 0) PersoAffichage(x_perso,y_perso,RT,*MenuPerso,origin);
-        if (*MenuPerso2 != 0 && MenuPlayer == 2) PersoAffichage(24,19,RT,*MenuPerso2,0);
-        if ((*MenuPerso != 0 && (*MenuPerso2 != 0 || MenuPlayer != 2))&& *MenuPerso != *MenuPerso2 )condition = 0;
+        if (*MenuPerso != 0) PersoAffichage(x_perso,y_perso,RT,*MenuPerso,typeperso1,origin);
+        if (*MenuPerso2 != 0 && MenuPlayer == 2) PersoAffichage(24,19,RT,*MenuPerso2,typeperso2,0);
+        if ((*MenuPerso != 0 && (*MenuPerso2 != 0 || MenuPlayer != 2))&& (*MenuPerso != *MenuPerso2 || typeperso1 != typeperso2))condition = 0;
     }
     AffichageMenuInv(RT,CT,origin,CT+origin);
     AffichageMenuInv(RT,CT,origin,0);
@@ -161,7 +161,7 @@ void AffichageItemLoad(int RT,int debut,float x,int choix,char adress2[100])
     blit(image,screen,0,0,RT*x,RT*debut,image->w, image->h);
 }
 //affichages des powerups des persos
-void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int choixperso,int perso,int xorigin)
+void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,int choixperso,int perso,int typeperso,int xorigin)
 {
     BITMAP *image;
     char adress[100];
@@ -171,14 +171,14 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
     if (xorigin == 0)
     {
         AffichageItemLoad(RT,debut,xorigin,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,debut-2,1,perso,"player ");
+        AffichageItemLoad(RT,debut-2,1,perso,"v2 player ");
         AffichageLigne(2,debut,RT);
 
     }
     else
     {
         AffichageItemLoad(RT,debut,xorigin+2,nb_vie,"PowerUp/Life/LIFE ");
-        AffichageItemLoad(RT,debut-2,xorigin,perso,"player ");
+        AffichageItemLoad(RT,debut-2,xorigin,perso,"v2 player ");
         sprintf(adress, "image/%d/menu/ligne.bmp",RT);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
@@ -195,7 +195,7 @@ void AffichageItem(int RT,int CT,int nb_vie,int nb_bombes,int rayon ,int speed,i
 
     AffichageLigne(3+xorigin,debut+3*delta,RT);
     AffichageItemLoad(RT,debut+3*delta,xorigin,speed,"PowerUp/Speed/Speed ");
-    int typeperso = default_perso();
+
     if (xorigin == 0){
         AffichageItemLoad(RT,debut+6.5*delta,xorigin,perso,"Touche ");
         if (typeperso == 1) AffichageItemLoad(RT,debut+6.5*delta,xorigin,choixperso,"stitch/stitch_gris_");
@@ -282,4 +282,10 @@ void Invisibilite_Update(int *InvisibiliteTimerval,int InvisibiliteTimer,int val
             (*InvisibiliteTimerval) = 100;
         }
     }
+}
+
+
+void SaveFichier()
+{
+
 }
