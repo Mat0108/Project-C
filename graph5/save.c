@@ -7,7 +7,7 @@
 #include <allegro.h>
 #include <dirent.h>
 //savegarde une partie
-void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2)
+void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2,int niveau)
 {
     char buffer[100];
     char buffer2[100];
@@ -72,12 +72,14 @@ void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* p
         fwrite(buffer,9,1,stream);
     }
 
-
+    sprintf(buffer,"\n\n niveau %d",niveau);
+    fwrite(buffer,strlen(buffer),1,stream);
     returnCode = fclose( stream );
     if ( returnCode == EOF ) {
         fprintf( stderr, "Cannot close file\n" );
         exit( -1 );
     }
+
 }
 void playerAffichage(Player* perso)
 {
@@ -148,7 +150,7 @@ void extractPlayer(char text[200], Player * player)
 
 }
 //charger une partie
-void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2)
+void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2,int *niveau)
 {
     int niv;
     int i,j,k;
@@ -206,7 +208,6 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
     fgets(text,150,stream);
     fgets(text,150,stream);
     fgets(text,150,stream);
-    printf("%s",text);
     //recuperation des données du joueur 1
     for (i = 0;i<5;i++)
     {
@@ -243,7 +244,9 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
         else bombe2->Timer[i] = ((int)text[6]-48)*10 + (int)text[7]-48;
         printf("\n%d %d %d",bombe2->X[i],bombe2->Y[i],bombe2->Timer[i]);
     }
-
+    fgets(text,100,stream);
+    fgets(text,100,stream);
+    *niveau = (int)text[8] - 48;
     int returnCode = fclose(stream);
     if ( returnCode == EOF ) {
         fprintf( stderr, "Erreur durant la fermeture du fichier" );

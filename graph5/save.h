@@ -25,12 +25,12 @@ struct Bombe
     int Y[5];
     int Timer[5];
 };
-void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2);
+void writeFile(int tableau[21][21],int powerTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2,int niveau);
 void playerAffichage(Player* perso);
 void CharTabtoInt(FILE *file,int *tableau[21][21],int pos);
 int extract(int from, int to, char *chaine, char *sousChaine);
 void extractPlayer(char text[200], Player * player);
-void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2);
+void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2,int *niveau);
 void AffichageSave();
 int MenuLoad();
 

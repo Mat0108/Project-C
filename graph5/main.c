@@ -119,41 +119,72 @@ int main()
         }
         sprintf(load3,"./savegame/%s",load2[load-1]);
         printf("%s",load3);
-        loadFile(load3,rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2);
+        loadFile(load3,rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2,&MenuNiveau);
         x_perso = player1.x;y_perso = player1.y;
         TypePerso1 = player1.type;MenuPerso = player1.color;
         nb_vie = player1.vie; nb_Bombe_max = player1.bombe; rayon = player1.rayon;
-        printf("%s",player2.nom);
+        for (i = 0;i<5;i++)
+        {
+            BombeX[i] = bombe1.X[i];
+            BombeY[i] = bombe1.Y[i];
+            BombeTimer[i] = bombe1.Timer[i];
+            if (BombeTimer[i] != 0)
+            {
+                time_t timestamp = time( NULL );
+                struct tm * timeInfos = localtime( & timestamp );
+                BombeTimer[i] = timeInfos->tm_sec+5;
+            }
+        }
         if (strstr("false",player2.nom) == 0)
         {
-            printf("test");
+            MenuPlayer = 2;
             x_perso2 = player2.x;y_perso2 = player2.y;
             TypePerso2 = player2.type;MenuPerso2 = player2.color;
             nb_vie2 = player2.vie; nb_Bombe_max2 = player2.bombe; rayon2 = player2.rayon;
-
+            for (i = 0;i<5;i++)
+            {
+                BombeX2[i] = bombe2.X[i];
+                BombeY2[i] = bombe2.Y[i];
+                BombeTimer2[i] = bombe2.Timer[i];
+                if (BombeTimer2[i] != 0)
+                {
+                    time_t timestamp = time( NULL );
+                    struct tm * timeInfos = localtime( & timestamp );
+                    BombeTimer2[i] = timeInfos->tm_sec+5;
+                }
+            }
+            AffichageAllegro(rectangle,1,RT,CT,origin);
         }
         else
         {
-            printf("test2");
+            MenuPlayer = 1;
+
         }
-
-
-
-
     }
     else
-    MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
-    MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
-    AffichageTypePerso(RT,CT,1,MenuPlayer);
-    ChoixTypePerso(&TypePerso1,&TypePerso2,MenuPlayer,RT,CT,origin);
+    {
+        MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
+        MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
+        AffichageTypePerso(RT,CT,1,MenuPlayer);
+        ChoixTypePerso(&TypePerso1,&TypePerso2,MenuPlayer,RT,CT,origin);
+        ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer,TypePerso1,TypePerso2);//choix des persos
+    }
+    AffichageMenuInv(RT,CT,origin,0);
 
-    ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer,TypePerso1,TypePerso2);//choix des persos
-    AffichageNiveauJeu(MenuNiveau);//Affichage du niveau en jeu
     AffichageItem(RT,CT,nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,1,TypePerso1,Item); //affichage des powerup du perso 1
     if (MenuPlayer == 2) AffichageItem(RT,CT,nb_vie2,nb_Bombe_max2,rayon2,delta_perso2,MenuPerso2,2,TypePerso2,Item2);//affichage des powerup du perso 2
     install_int_ex(timer,BPS_TO_TIMER(1)); //initialisation du timer
     AffichageSave();
-
+    AffichageNiveauJeu(MenuNiveau);//Affichage du niveau en jeu
+    PowerUpAffichage(PowerUpTab,origin,RT,CT);
+    if (load != 0)
+    {
+        for (int i = 0;i<5;i++)
+        {
+            if (BombeX[i] != 0 && BombeY[i] != 0) BombePlace(BombeX[i],BombeY[i],RT,origin);
+            if (BombeX2[i] != 0 && BombeY2[i] != 0 && MenuPlayer == 2) BombePlace(BombeX2[i],BombeY2[i],RT,origin);
+        }
+    }
     while (!key[KEY_ESC])//boucle d'animation
     {
         time_t timestamp = time( NULL );
@@ -266,7 +297,7 @@ int main()
                 strcpy(player2.nom, "false");
             }
 
-            writeFile(rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2);
+            writeFile(rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2,MenuNiveau);
             Sleep(250);
             allegro_message("Partie sauvergarde");
         }
