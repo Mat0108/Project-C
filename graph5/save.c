@@ -252,6 +252,7 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
         fprintf( stderr, "Erreur durant la fermeture du fichier" );
         exit( -1 );
     }
+    allegro_message("Partie charge");
 }
 
 void AffichageSave()
@@ -291,4 +292,5 @@ int MenuLoad()
     }
     if (imax == 2) return 0;
     else return result+2;
+
 }

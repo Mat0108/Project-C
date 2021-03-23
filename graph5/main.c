@@ -184,6 +184,7 @@ int main()
             if (BombeX[i] != 0 && BombeY[i] != 0) BombePlace(BombeX[i],BombeY[i],RT,origin);
             if (BombeX2[i] != 0 && BombeY2[i] != 0 && MenuPlayer == 2) BombePlace(BombeX2[i],BombeY2[i],RT,origin);
         }
+
     }
     while (!key[KEY_ESC])//boucle d'animation
     {

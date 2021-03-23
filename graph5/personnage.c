@@ -374,7 +374,6 @@ int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_
 }
 int V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score,char *joueur)
 {
-    printf("\n%s","test");
     int i;
     int origin = 5,RT = 30,CT = 21;
     srand(time(NULL));
