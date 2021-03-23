@@ -8,6 +8,7 @@
 #include <winalleg.h>
 #include <windows.h>
 #include <dirent.h>
+
 #include "save.h"
 /*---------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------Programme Bomberman----------------------------------------------------
@@ -34,6 +35,7 @@ int default_perso() {return 2;}//1 pour le stitch, 2 pour le pug
 //fonction pour afficher un timer au cours de la partie
 void timer()
 {
+
     BITMAP *image;
     char adress[100];
     sprintf(adress, "image/%d/chrono.bmp",RT);
@@ -81,11 +83,8 @@ int main()
     int i,j,k,appui_touche = 0,load = 0;
     char perso1_nom[50],perso2_nom[50],load2[10][100],load3[100];
     int result = 0,result2 = 0;
-    ChoixNom(2,&perso1_nom,&perso2_nom);
-    printf("perso1 %s",perso1_nom);
-    printf("\nperso2 %s",perso2_nom);
 
-    Player player1 = {"",0,0,0,0,0,0,0},player2;
+    Player player1,player2;
     Bombe bombe1,bombe2;
 
     Create(rectangle,-1,CT); //Initialisation du labyrinthe
@@ -123,11 +122,11 @@ int main()
             closedir(d);
         }
         sprintf(load3,"./savegame/%s",load2[load-1]);
-        printf("%s",load3);
         loadFile(load3,rectangle,PowerUpTab,&player1,&player2,&bombe1,&bombe2,&MenuNiveau);
         x_perso = player1.x;y_perso = player1.y;
         TypePerso1 = player1.type;MenuPerso = player1.color;
         nb_vie = player1.vie; nb_Bombe_max = player1.bombe; rayon = player1.rayon;
+        strcpy(perso1_nom,player1.nom);
         for (i = 0;i<5;i++)
         {
             BombeX[i] = bombe1.X[i];
@@ -146,6 +145,7 @@ int main()
             x_perso2 = player2.x;y_perso2 = player2.y;
             TypePerso2 = player2.type;MenuPerso2 = player2.color;
             nb_vie2 = player2.vie; nb_Bombe_max2 = player2.bombe; rayon2 = player2.rayon;
+            strcpy(perso2_nom,player2.nom);
             for (i = 0;i<5;i++)
             {
                 BombeX2[i] = bombe2.X[i];
@@ -168,8 +168,10 @@ int main()
     }
     else
     {
+
         MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
         MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
+        ChoixNom(MenuPlayer,&perso1_nom,&perso2_nom);
         AffichageTypePerso(RT,CT,1,MenuPlayer);
         ChoixTypePerso(&TypePerso1,&TypePerso2,MenuPlayer,RT,CT,origin);
         ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer,TypePerso1,TypePerso2);//choix des persos
@@ -182,6 +184,7 @@ int main()
     AffichageSave();
     AffichageNiveauJeu(MenuNiveau);//Affichage du niveau en jeu
     PowerUpAffichage(PowerUpTab,origin,RT,CT);
+    ChoixNomAffichage(perso1_nom,perso2_nom,MenuPlayer);
     if (load != 0)
     {
         for (int i = 0;i<5;i++)
@@ -191,6 +194,7 @@ int main()
         }
 
     }
+
     while (!key[KEY_ESC])//boucle d'animation
     {
         time_t timestamp = time( NULL );
@@ -242,8 +246,8 @@ int main()
                             for (k=0;k<=rayon;k++){
                                 if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1){rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;AffichagePosition(rectangle,BombeY2[i]+k,BombeX2[i],RT,5);}}}}}}
 
-            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item,&scoreP2,-10,"Joueur 2 :");
-            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2,&scoreP2,10,"Joueur 2 :");
+            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item,&scoreP2,10,"Joueur 2 :");
+            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2,&scoreP2,-10,"Joueur 2 :");
             PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
             PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso1,origin);
             V2Bombes_Desaffichage(&BombeX2,&BombeY2,&BombeTimer2,rectangle,rayon2,&nb_Bombe2,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,TypePerso2,PowerUpTab,InvisibiliteTimerval);
@@ -265,11 +269,7 @@ int main()
         }
         if ((mouse_b&1 || mouse_b&2) && mouse_x>RT*26 && mouse_y<=60)
         {
-            strcpy(perso1_nom,"Matthieu");
-            if (MenuPlayer == 2)strcpy(perso2_nom,"Alexandre");
-            else strcpy(perso2_nom,"false");
-             //{perso1_nom,x_perso,y_perso,MenuPerso,TypePerso1,nb_Bombe,rayon,nb_vie};
-            strcpy(player1.nom, "Matthieu");
+            strcpy(player1.nom, perso1_nom);
             player1.x = x_perso;
             player1.y = y_perso;
             player1.color = MenuPerso;
@@ -299,7 +299,7 @@ int main()
             }
             if (MenuPlayer == 2)
             {
-                strcpy(player2.nom, "Alexandre");
+                strcpy(player2.nom, perso2_nom);
             }
             else
             {

@@ -375,6 +375,14 @@ void ChoixNom(int MenuPlayer,char *player1_nom,char *player2_nom)
             sprintf(player2_nom,"%s",nom[result-1]);
         }
     }
-
+    allegro_message("Nom(s) Choisi(s)");
+}
+void ChoixNomAffichage(char player1[20],char player2[20],int Menuplayer)
+{
+    FONT *font1;
+    PALLETE pallete;
+    font1 = load_font("score/8x16.pcx",pallete,NULL);
+    textprintf_ex(screen,font1,15,30*17.25,makecol(0,0,0),-1,"%s",player1);
+    if (Menuplayer == 2) textprintf_right_ex(screen,font1,30*31,30*17.25,makecol(0,0,0),-1,"%s",player2);
 
 }

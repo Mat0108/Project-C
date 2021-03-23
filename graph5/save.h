@@ -34,4 +34,5 @@ void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],
 void AffichageSave();
 int MenuLoad();
 void ChoixNom(int MenuPlayer,char *player1_nom,char *player2_nom);
+void ChoixNomAffichage(char player1[100],char player2[100],int Menuplayer);
 #endif // _SAVE_H
