@@ -294,3 +294,87 @@ int MenuLoad()
     else return result+2;
 
 }
+
+void ChoixNom(int MenuPlayer,char *player1_nom,char *player2_nom)
+{
+    int i=0,result=0;
+    char nom[11][100];
+    char text[100];
+    char result2[100],result3[100];
+    char rep = 'n';
+
+    int nb_line = 1,c;
+    FILE * stream = fopen("./score/Perso.data", "r" );
+    if ( stream == NULL ) {
+        fprintf( stderr, "Cannot open file for writing\n" );
+        exit( -1 );
+    }
+
+    while ((c = getc(stream)) != EOF){
+        if (c == '\n')++nb_line;
+    }
+    fclose(stream);
+    FILE * stream2 = fopen("./score/Perso.data", "r" );
+    for (i = 0;i<nb_line;i++)
+    {
+        fgets(nom[i],100,stream2);
+        printf("%d) %s",i+1,nom[i]);
+    }
+    fclose(stream2);
+    printf("\n%d) Rajouter un nouveau nom",nb_line+1);
+    printf("\nQuel nom pour le joueur 1 ? ");
+    fflush(stdout);
+    scanf("%d",&result);
+    if (result == nb_line+1)
+    {
+        while (rep == 'n')
+        {
+            printf("Entrez le nouveau nom : ");
+            fflush(stdout);
+            scanf("%s",result2);
+            printf("Le nom %s a-t-il bien ete rentree ? (o/n)",result2);
+            fflush(stdout);
+            scanf("%s",&rep);
+            rep = tolower(rep);
+        }
+        FILE * stream3 = fopen("./score/Perso.data", "a" );
+        sprintf(result3,"\n%s",result2);
+        fwrite(result3,strlen(result3),1,stream3);
+        fclose(stream3);
+        sprintf(player1_nom,"%s",result2);
+    }
+    else
+    {
+        sprintf(player1_nom,"%s",nom[result-1]);
+    }
+    if (MenuPlayer == 2)
+    {
+        printf("Quel nom pour le joueur 2 ? ");
+        fflush(stdout);
+        scanf("%d",&result);
+        if (result == nb_line+1)
+        {
+            while (rep == 'n')
+            {
+                printf("Entrez le nouveau nom : ");
+                fflush(stdout);
+                scanf("%s",result2);
+                printf("Le nom %s a-t-il bien ete rentree ? (o/n)",result2);
+                fflush(stdout);
+                scanf("%s",&rep);
+                rep = tolower(rep);
+            }
+            FILE * stream3 = fopen("./score/Perso.data", "a" );
+            sprintf(result3,"\n%s",result2);
+            fwrite(result3,strlen(result3),1,stream3);
+            fclose(stream3);
+            sprintf(player2_nom,"%s",result2);
+        }
+        else
+        {
+            sprintf(player2_nom,"%s",nom[result-1]);
+        }
+    }
+
+
+}

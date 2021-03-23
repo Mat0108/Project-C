@@ -33,5 +33,5 @@ void extractPlayer(char text[200], Player * player);
 void loadFile(const char *filename,int *tableau[21][21],int *powerUpTab[21][21],Player* perso1,Player* perso2,Bombe* bombe1,Bombe* bombe2,int *niveau);
 void AffichageSave();
 int MenuLoad();
-
+void ChoixNom(int MenuPlayer,char *player1_nom,char *player2_nom);
 #endif // _SAVE_H

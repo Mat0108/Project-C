@@ -67,6 +67,7 @@ void testload(BITMAP *image,char adress[100])
 
 int main()
 {
+
     int *rectangle[21][21] = {0}; // 0 case libre, 1 case cassable, 2 case incassable
 
     int x_perso = 1,y_perso = 1,delta_perso = 1,nb_vie = 3,Item = 0;
@@ -80,6 +81,10 @@ int main()
     int i,j,k,appui_touche = 0,load = 0;
     char perso1_nom[50],perso2_nom[50],load2[10][100],load3[100];
     int result = 0,result2 = 0;
+    ChoixNom(2,&perso1_nom,&perso2_nom);
+    printf("perso1 %s",perso1_nom);
+    printf("\nperso2 %s",perso2_nom);
+
     Player player1 = {"",0,0,0,0,0,0,0},player2;
     Bombe bombe1,bombe2;
 
