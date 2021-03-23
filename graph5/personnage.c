@@ -372,8 +372,9 @@ int V2Bombes_Life(int BombeX[5],int BombeY[5],int BombeTimer[5],int rayon,int x_
     }
     return life;
 }
-void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score,char *joueur)
+int V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],int tableau[21][21],int *score,char *joueur)
 {
+    printf("\n%s","test");
     int i;
     int origin = 5,RT = 30,CT = 21;
     srand(time(NULL));
@@ -381,21 +382,24 @@ void V2Bombes_Powerup(int BombeX,int BombeY,int rayon,int *PowerUpTab[21][21],in
     {
         if (tableau[BombeY][i+BombeX-rayon] == 1)
         {
-            *score+=2;
+            (*score) = (*score) + 2;
             printf("\n%s %d",joueur,*score);
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[BombeY][i+BombeX-rayon] = x;
+            return 1;
         }
         if (tableau[i+BombeY-rayon][BombeX] == 1)
         {
-            *score+=2;
+            (*score) = (*score) + 2;
             printf("\n%s %d",joueur,*score);
             int x = rand()%30;
             if (x < 20 && x>29 ) x=0;
             PowerUpTab[i+BombeY-rayon][BombeX] = x;
+            return 1;
         }
     }
+
 }
 void V2Bombes_Print(int BombeX[5],int BombeY[5],int BombeTimer[5])
 {

@@ -79,7 +79,7 @@ int main()
     int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100; //variable pour le powerup invisibilité pour le perso 1
     int i,j,k,appui_touche = 0,load = 0;
     char perso1_nom[50],perso2_nom[50],load2[10][100],load3[100];
-
+    int result = 0,result2 = 0;
     Player player1 = {"",0,0,0,0,0,0,0},player2;
     Bombe bombe1,bombe2;
 
@@ -198,8 +198,8 @@ int main()
         V2Bombes_Affichage(BombeX,BombeY,BombeTimer,&rectangle,rayon);
 
         for (i=0;i<5;i++){
-            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeTimer[i] != 0){
-                V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle,&scoreP1,"Joueur 1:");
+            if (BombeTimer[i]+1 == timeInfos->tm_sec && BombeX[i] != 0){
+                if (result == 0) result = V2Bombes_Powerup(BombeX[i],BombeY[i],rayon,&PowerUpTab,rectangle,&scoreP1,"Joueur 1:");
                 for (j=0;j<2*rayon+1;j++){
                     if (rectangle[BombeY[i]][j+BombeX[i]-rayon] == 1)rectangle[BombeY[i]][j+BombeX[i]-rayon] = 0;
                     if (rectangle[j+BombeY[i]-rayon][BombeX[i]] == 1)rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
@@ -225,21 +225,22 @@ int main()
         if (MenuPlayer == 2)
         {
             V2Bombes_Affichage(BombeX2,BombeY2,BombeTimer2,&rectangle,rayon2);
+
             for (i=0;i<5;i++){
-                if (BombeTimer2[i]+1 == timeInfos->tm_sec && BombeTimer2[i] != 0){
-                    V2Bombes_Powerup(BombeX2[i],BombeY2[i],rayon2,&PowerUpTab,rectangle,&scoreP2,"Joueur 2 :");
-                    for (j=0;j<2*rayon+1;j++){
-                        if (rectangle[BombeY2[i]][j+BombeX2[i]-rayon] == 1)rectangle[BombeY2[i]][j+BombeX2[i]-rayon] = 0;
-                        if (rectangle[j+BombeY2[i]-rayon][BombeX2[i]] == 1)rectangle[j+BombeY[i]-rayon][BombeX[i]] = 0;
+                if (BombeTimer2[i]+1 == timeInfos->tm_sec && BombeX2[i] != 0){
+                    if (result2 == 0) result2 = V2Bombes_Powerup(BombeX2[i],BombeY2[i],rayon2,&PowerUpTab,rectangle,&scoreP2,"Joueur 2:");
+                    for (j=0;j<2*rayon2+1;j++){
+                        if (rectangle[BombeY2[i]][j+BombeX2[i]-rayon2] == 1)rectangle[BombeY2[i]][j+BombeX2[i]-rayon2] = 0;
+                        if (rectangle[j+BombeY2[i]-rayon2][BombeX2[i]] == 1)rectangle[j+BombeY2[i]-rayon2][BombeX2[i]] = 0;
                         if (BombeY2[i] == 1) {
                             for (k=0;k<=rayon;k++){
-                                if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1)rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;}}}}}
-            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item,&scoreP2,10,"Joueur 2 :");
-            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2,&scoreP2,-10,"Joueur 2 :");
+                                if(rectangle[BombeY2[i]+k][BombeX2[i]] == 1){rectangle[BombeY2[i]+k][BombeX2[i]]  = 0;AffichagePosition(rectangle,BombeY2[i]+k,BombeX2[i],RT,5);}}}}}}
+
+            nb_vie = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso,y_perso,nb_vie,Item,&scoreP2,-10,"Joueur 2 :");
+            nb_vie2 = V2Bombes_Life(BombeX2,BombeY2,BombeTimer2,rayon2,x_perso2,y_perso2,nb_vie2,Item2,&scoreP2,10,"Joueur 2 :");
             PersoAffichage(x_perso2,y_perso2,RT,MenuPerso2,TypePerso2,origin);
-            V2Bombes_Desaffichage(&BombeX2,&BombeY2,&BombeTimer2,rectangle,rayon,&nb_Bombe2,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,TypePerso2,PowerUpTab,InvisibiliteTimerval);
-
-
+            PersoAffichage(x_perso,y_perso,RT,MenuPerso,TypePerso1,origin);
+            V2Bombes_Desaffichage(&BombeX2,&BombeY2,&BombeTimer2,rectangle,rayon2,&nb_Bombe2,x_perso2,y_perso2,&nb_vie2,Item2,MenuPerso2,TypePerso2,PowerUpTab,InvisibiliteTimerval);
         }
 
 
@@ -252,6 +253,8 @@ int main()
         //permet l'appui de plusieurs touches en même temps
         if (appui_touche == 1){
             appui_touche = 0;
+            result = 0;
+            result2 = 0;
             Sleep(250);
         }
         if ((mouse_b&1 || mouse_b&2) && mouse_x>RT*26 && mouse_y<=60)

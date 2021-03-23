@@ -50,7 +50,6 @@ void AffichageNiveauJeu(int MenuNiveau)
     char adress[100];
     if (MenuNiveau != -2)
     {
-        printf("test");
         sprintf(adress, "image/%d/menu/v2 niveau %d.bmp",30,MenuNiveau);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
