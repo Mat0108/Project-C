@@ -20,7 +20,6 @@ int timerval=0;
 int timerminutes = 0;
 
 
-
 const int RT = 30; //taille d'une image
 // IMPORTANT CHANGER LA TAILLE DANS TOUT LES TABLEAUX SI CHANGEMENT(CTRL+R)
 const int CT = 21; // taille d'une case graphique

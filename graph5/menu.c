@@ -47,7 +47,7 @@ void AffichageNiveauJeu(int MenuNiveau)
 {
     BITMAP *image;
     char adress[100];
-    if (MenuNiveau != -2)
+    if (MenuNiveau > 0)
     {
        sprintf(adress, "image/%d/menu/v2 niveau %d.bmp",30,MenuNiveau);
         image=load_bitmap(adress,NULL);

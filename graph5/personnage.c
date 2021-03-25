@@ -7,7 +7,26 @@
 #include <process.h>
 #include <winalleg.h>
 #include <windows.h>
-
+//Animation du personnage
+void PersoAnimation(int x,int y,int dx,int dy,int RT,int choix,int typeperso,int origin,int tableau[21][21])
+{
+    char adress[100],personame[20];
+    int i=1,pas = 0.01,delay = 20,sens;
+    BITMAP *perso;
+    if (typeperso == 1) sprintf(personame, "stitch");
+    if (typeperso == 2) sprintf(personame, "pug");
+    if (dx != 0)sens = 1;
+    if (dy != 0)sens = 2;
+    for (i=1;i<30;i++)
+    {
+        if (dx == -1 || dy == -1) sprintf(adress,"animation/%s/%d/%s_%d_%d.bmp",personame,choix,personame,sens,30-i);
+        else sprintf(adress,"animation/%s/%d/%s_%d_%d.bmp",personame,choix,personame,sens,i);
+        perso = load_bitmap(adress,NULL);
+        if (!perso) printf("\n%s",adress);
+        blit(perso,screen,0,0,RT*(x+origin),RT*y,perso->w, perso->h);
+        Sleep(delay);
+    }
+}
 //affichege du perso
 void PersoAffichage(int x_perso,int y_perso,int RT,int choix,int typeperso,int origin)
 {
@@ -36,6 +55,7 @@ void BombePlace(int x,int y,int RT,int origin)
 int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int *y_perso, int *delta_perso,int dx, int dy,int BombeX[5],int BombeY[5],int *nb_vie,int *nb_Bombe_max,int *rayon,int item,int RT,int CT, int persochoix,int persotype,int choix,int origin, int *score)
 {
     int i;
+    int oldx = *x_perso, oldy = *y_perso;
     AffichageAllegro2(tableau,1,RT,CT,origin);
     if (PowerUp[*y_perso+dy][*x_perso+dx]> 19 && PowerUp[*y_perso+dy][*x_perso+dx]< 23 && *nb_Bombe_max<5) {(*nb_Bombe_max)++;*score+=3;}
     if (PowerUp[*y_perso+dy][*x_perso+dx]> 22 && PowerUp[*y_perso+dy][*x_perso+dx]< 26 && *rayon<5) {(*rayon)++;*score+=3;}
@@ -50,11 +70,12 @@ int PersoDeplacement(int tableau[21][21],int *PowerUp[21][21],int *x_perso, int 
         {
             if (BombeX[i]== *x_perso && BombeY[i] ==*y_perso)BombePlace(*x_perso,*y_perso,RT,origin);
         }
-        if (dx == 1) (*x_perso)++;
-        if (dy == 1) (*y_perso)++;
-        if (dx == -1) (*x_perso)--;
-        if (dy == -1) (*y_perso)--;
+        if (dx == 1) {PersoAnimation(*x_perso,*y_perso,1,0,RT,persochoix,persotype,origin,tableau);(*x_perso)++;}
+        if (dy == 1) {PersoAnimation(*x_perso,*y_perso,0,1,RT,persochoix,persotype,origin,tableau);(*y_perso)++;}
+        if (dx == -1) {PersoAnimation(*x_perso-1,*y_perso,-1,0,RT,persochoix,persotype,origin,tableau);(*x_perso)--;}
+        if (dy == -1) {PersoAnimation(*x_perso,*y_perso-1,0,-1,RT,persochoix,persotype,origin,tableau);(*y_perso)--;}
         PersoAffichage(*x_perso,*y_perso,RT,persochoix,persotype,origin);
+
     }
     return 1;
 }
