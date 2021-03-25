@@ -45,11 +45,12 @@ int Play(int RT,int CT,int origin)
 //Affichage du niveau en jeu
 void AffichageNiveauJeu(int MenuNiveau)
 {
+
     BITMAP *image;
     char adress[100];
     if (MenuNiveau > 0)
     {
-       sprintf(adress, "image/%d/menu/v2 niveau %d.bmp",30,MenuNiveau);
+        sprintf(adress, "image/%d/menu/v2 niveau %d.bmp",30,MenuNiveau);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
         blit(image,screen,0,0,30,10,image->w, image->h);
