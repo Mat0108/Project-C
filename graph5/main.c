@@ -261,6 +261,11 @@ int main()
 
         //permet l'appui de plusieurs touches en même temps
         if (appui_touche == 1){
+            for (int i = 0;i<5;i++)
+            {
+                if (BombeX[i] != 0 && BombeY[i] != 0) BombePlace(BombeX[i],BombeY[i],RT,origin);
+                if (BombeX2[i] != 0 && BombeY2[i] != 0 && MenuPlayer == 2) BombePlace(BombeX2[i],BombeY2[i],RT,origin);
+            }
             appui_touche = 0;
             result = 0;
             result2 = 0;
