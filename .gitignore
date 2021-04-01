@@ -6,3 +6,4 @@ graph5/obj/Debug/menu.o
 *.o
 graph5/bin/Debug/graph5.exe
 graph5/graph5.depend
+*.depend
