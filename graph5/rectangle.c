@@ -274,10 +274,11 @@ void AffichagePerso(int RT,int CT, int yposition,int player,int typeperso)
     testload(image,adress);
     blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);
     */
+
     for (i=1;i<6;i++)
     {
-        if (typeperso == 1) sprintf(adress, "image/%d/menu/stitch/stitch_%d.bmp",RT,i-1);
-        if (typeperso == 2) sprintf(adress, "image/%d/menu/pug/pug_%d.bmp",RT,i-1);
+        if ((typeperso) == 1) sprintf(adress, "image/%d/menu/stitch/stitch_%d.bmp",RT,i-1);
+        if ((typeperso) == 2) sprintf(adress, "image/%d/menu/pug/pug_%d.bmp",RT,i-1);
         image=load_bitmap(adress,NULL);
         testload(image,adress);
         blit(image,screen,0,0,RT*yposition,RT*(1+2*i),image->w, image->h);

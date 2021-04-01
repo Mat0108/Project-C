@@ -80,7 +80,7 @@ int main()
     int MenuNiveau = 0,MenuPlayer  = 0,MenuPerso = 0,MenuPerso2 = 0,TypePerso1= 0,TypePerso2 = 0, *PowerUpTab[21][21] = {0}; //variable pour les bombes
     int InvisibiliteOn = 0,InvisibiliteTimer=0,InvisibiliteTimerval = 100; //variable pour le powerup invisibilité pour le perso 1
     int i,j,k,appui_touche = 0,load = 0;
-    char perso1_nom[50],perso2_nom[50],load2[10][100],load3[100];
+    char perso1_nom[50] = "Nom1",perso2_nom[50] = "Nom2",load2[10][100],load3[100];
     int result = 0,result2 = 0;
 
     Player player1,player2;
@@ -170,7 +170,7 @@ int main()
 
         MenuNiveau = ChoixNiveau(rectangle,RT,CT,origin); //choix du niveau
         MenuPlayer = ChoixPlayer(RT,CT,origin); //choix du nombre de perso
-        ChoixNom(MenuPlayer,&perso1_nom,&perso2_nom);
+        //ChoixNom(MenuPlayer,&perso1_nom,&perso2_nom);
         AffichageTypePerso(RT,CT,1,MenuPlayer);
         ChoixTypePerso(&TypePerso1,&TypePerso2,MenuPlayer,RT,CT,origin);
         ChoixPerso(x_perso,y_perso,&MenuPerso,x_perso2,y_perso2,&MenuPerso2,RT,CT,origin,MenuPlayer,TypePerso1,TypePerso2);//choix des persos

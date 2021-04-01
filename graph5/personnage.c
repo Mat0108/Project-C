@@ -237,7 +237,6 @@ void BombeEffect4(int *BombeX[5],int *BombeY[5],int *BombeTimer[5],int tableau[2
                     printf("test0");*/
                 printf("x %s",j+BombeY[i]-rayon == y_perso);
                 if ((j+BombeY[i]-rayon == y_perso && BombeX[i] == x_perso) || (j+BombeX[i]-rayon == x_perso && BombeY[i] == y_perso)){
-                    printf("test1");
                     (*nb_vie)--;
                     AffichageItem(RT,CT,*nb_vie,nb_Bombe_max,rayon,delta_perso,MenuPerso,player,0);
                     if (nb_vie == 0 )

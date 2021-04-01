@@ -98,21 +98,56 @@ int ChoixPlayer(int RT,int CT,int origin)
 
 void ChoixTypePerso(int *ChoixPerso1,int *ChoixPerso2,int nbplayer,int RT,int CT,int origin)
 {
-    int condition = 1;
+    int condition = 1,i;
+    char adress[50];
+    BITMAP *image;
     while (condition == 1)
     {
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x<= RT*5 ) *ChoixPerso1 = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x<= RT*5 ) *ChoixPerso1 = 2;
+        /*
+        printf("\n x%4d  y%4d",mouse_x/RT,mouse_y/RT);
+        printf(" %u",mouse_x<RT*6);
+        Sleep(500);*/
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*4.5 && mouse_y<=RT*6.8 && mouse_x<= RT*5 ){(*ChoixPerso1) = 1;}
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.8 && mouse_x<= RT*5 ) {(*ChoixPerso1) = 2;}
 
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.5 && mouse_x>= RT*(CT+origin )) *ChoixPerso2 = 1;
-        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.5 && mouse_x>= RT*(CT+origin )) *ChoixPerso2 = 2;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*5 && mouse_y<=RT*6.8 && mouse_x>= RT*(CT+origin )) *ChoixPerso2 = 1;
+        if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*7 && mouse_y<=RT*8.8 && mouse_x>= RT*(CT+origin )) *ChoixPerso2 = 2;
 
         if ( (mouse_b&1 || mouse_b&2) && mouse_y>RT*9 && mouse_y<=RT*10.5 ) Quitter();
         if (*ChoixPerso1 != 0 &&( *ChoixPerso2 !=0 || nbplayer != 2)) condition = 0;
     }
+
     AffichageMenuInv(RT,CT,origin,0);
-    AffichagePerso(RT,CT,1,1,1,*ChoixPerso1);
-    if(*ChoixPerso2 != 0)AffichagePerso(RT,CT,1+origin+21,2,*ChoixPerso2);
+    //AffichagePerso(RT,CT,1,1,1,(*ChoixPerso1));
+
+    for (i=1;i<6;i++)
+    {
+        if ((*ChoixPerso1) == 1) sprintf(adress, "image/%d/menu/stitch/stitch_%d.bmp",RT,i-1);
+        if ((*ChoixPerso1) == 2) sprintf(adress, "image/%d/menu/pug/pug_%d.bmp",RT,i-1);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
+    }
+    sprintf(adress, "image/%d/menu/quit.bmp",RT);
+    image=load_bitmap(adress,NULL);
+    testload(image,adress);
+    blit(image,screen,0,0,RT*1,RT*(1+2*i),image->w, image->h);
+
+    if(*ChoixPerso2 != 0)
+    {
+        for (i=1;i<6;i++)
+        {
+            if ((*ChoixPerso2) == 1) sprintf(adress, "image/%d/menu/stitch/stitch_%d.bmp",RT,i-1);
+            if ((*ChoixPerso2) == 2) sprintf(adress, "image/%d/menu/pug/pug_%d.bmp",RT,i-1);
+            image=load_bitmap(adress,NULL);
+            testload(image,adress);
+            blit(image,screen,0,0,RT*(1+origin+21),RT*(1+2*i),image->w, image->h);
+        }
+        sprintf(adress, "image/%d/menu/quit.bmp",RT);
+        image=load_bitmap(adress,NULL);
+        testload(image,adress);
+        blit(image,screen,0,0,RT*(1+origin+21),RT*(1+2*i),image->w, image->h);
+    }
     Sleep(300);
 }
 
